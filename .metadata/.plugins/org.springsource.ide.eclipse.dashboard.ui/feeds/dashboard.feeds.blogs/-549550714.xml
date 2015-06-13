@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Spring</title>
+  <link rel="alternate" href="https://spring.io/blog" />
+  <link rel="self" href="https://spring.io/blog.atom" />
+  <id>http://spring.io/blog.atom</id>
+  <icon>https://spring.io/favicon.ico</icon>
+  <updated>2015-06-12T08:00:00Z</updated>
+  <entry>
+    <title>Spring Data GemFire supports Apache Geode</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/12/spring-data-gemfire-supports-apache-geode" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>John Blum</name>
+    </author>
+    <id>tag:spring.io,2015-06-04:2154</id>
+    <updated>2015-06-12T08:00:00Z</updated>
+    <content type="html">&lt;p&gt;I am pleased to announce that &lt;em&gt;Spring Data GemFire&lt;/em&gt; now has support for &lt;em&gt;Apache Geode&lt;/em&gt;.&lt;/p&gt;&lt;h4&gt;&lt;a href="#what-is-em-apache-geode-em" class="anchor" name="what-is-em-apache-geode-em"&gt;&lt;/a&gt;What is &lt;em&gt;Apache Geode&lt;/em&gt;?&lt;/h4&gt;&lt;p&gt;In a nutshell, &lt;a href="http://geode.incubator.apache.org/"&gt;Apache Geode&lt;/a&gt; is the &lt;a href="https://github.com/apache/incubator-geode"&gt;open source&lt;/a&gt; core of &lt;a href="https://pivotal.io/big-data/pivotal-gemfire"&gt;Pivotal GemFire&lt;/a&gt;. Geode was recently accepted into the &lt;a href="https://wiki.apache.org/incubator/GeodeProposal"&gt;Apache incubator&lt;/a&gt; after being submitted by Pivotal to the Apache Software Foundation as part of the &lt;a href="https://pivotal.io/big-data/pivotal-big-data-suite"&gt;BDS&lt;/a&gt; open sourcing effort.&lt;/p&gt;&lt;p&gt;Technically, &lt;em&gt;Apace Geode&lt;/em&gt; is an in-memory, distributed database (a.k.a. IMDG) enabling new as well as existing Spring/Java applications to operate at cloud scale with high availability and predictable latency without sacrificing consistency. Applications are able to transact and analyze &lt;em&gt;Big Data&lt;/em&gt; in realtime to achieve meaningful and impactful business results.&lt;/p&gt;&lt;p&gt;While that may sound complicated, &lt;em&gt;Spring Data GemFire&lt;/em&gt; delivers on Spring&amp;rsquo;s promise of enabling developers to effectively build highly-scalable applications with &lt;em&gt;Apache Geode&lt;/em&gt;, or alternatively &lt;em&gt;Pivotal GemFire&lt;/em&gt;, using Spring&amp;rsquo;s comprehensive and powerful programming model to abstract away the complexity.&lt;/p&gt;&lt;h4&gt;&lt;a href="#get-started" class="anchor" name="get-started"&gt;&lt;/a&gt;Get Started&lt;/h4&gt;&lt;p&gt;To start building Spring applications with &lt;em&gt;Apache Geode&lt;/em&gt;, just include the &lt;em&gt;Spring Data GemFire&lt;/em&gt; dependency in your project Gradle build file, or Maven POM, like so&amp;hellip;&lt;/p&gt;&lt;h5&gt;&lt;a href="#build-gradle" class="anchor" name="build-gradle"&gt;&lt;/a&gt;build.gradle&lt;/h5&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;dependencies {
+    compile &amp;quot;org.springframework.data:spring-data-gemfire:1.7.0.APACHE-GEODE-EA-SNAPSHOT&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h5&gt;&lt;a href="#pom-xml" class="anchor" name="pom-xml"&gt;&lt;/a&gt;pom.xml&lt;/h5&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.springframework.data&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spring-data-gemfire&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;1.7.0.APACHE-GEODE-EA-SNAPSHOT&amp;lt;/version&amp;gt;
+    &amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;Spring Data GemFire&lt;/em&gt; artifacts are available in the Spring &lt;code&gt;libs-snapshot&lt;/code&gt; repository&amp;hellip;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;&amp;lt;repository&amp;gt;
+  &amp;lt;id&amp;gt;spring-libs-snapshot&amp;lt;/id&amp;gt;
+  &amp;lt;name&amp;gt;Spring Maven libs-snapshot Repository&amp;lt;/name&amp;gt;
+  &amp;lt;url&amp;gt;https://repo.spring.io/libs-snapshot&amp;lt;/url&amp;gt;
+&amp;lt;/repository&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Version &lt;strong&gt;1.7.0&lt;/strong&gt; coincides with the first version of SDG to offer &lt;em&gt;Apache Geode&lt;/em&gt; support and includes all the latest developments in SDG as of &lt;strong&gt;1.7&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;The &lt;strong&gt;APACHE-GEODE-EA-SNAPSHOT&lt;/strong&gt; version qualifier distinguishes SDG builds for &lt;em&gt;Apache Geode&lt;/em&gt; from SDG builds for &lt;em&gt;Pivotal GemFire&lt;/em&gt;, 1.7.0- &lt;strong&gt;BUILD-SNAPSHOT&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;So, why announce a &amp;ldquo;snapshot-like&amp;rdquo; release when traditional Spring release announcements center around milestones, release candidates and final GA?&lt;/p&gt;&lt;p&gt;Mainly because &lt;em&gt;Apache Geode&lt;/em&gt; has no official releases yet. But more importantly, we want to give developers a chance to try out &lt;em&gt;Apache Geode&lt;/em&gt; in Spring-based applications using &lt;em&gt;Spring Data GemFire&lt;/em&gt; in order to get feedback as soon as possible. &lt;/p&gt;&lt;p&gt;While the &lt;a href="https://github.com/spring-projects/spring-data-gemfire/tree/apache-geode"&gt;&lt;em&gt;Spring Data GemFire&lt;/em&gt; version with &lt;em&gt;Apache Geode&lt;/em&gt; support&lt;/a&gt; is stable enough for development purposes, it is not quite ready to be integrated into &lt;code&gt;master&lt;/code&gt; given technical differences between &lt;em&gt;Apache Geode&lt;/em&gt; and &lt;em&gt;Pivotal GemFire&lt;/em&gt;. Essentially, &lt;em&gt;Pivotal GemFire&lt;/em&gt; must converge with &lt;em&gt;Apache Geode&lt;/em&gt; to support both on the same &lt;em&gt;Spring Data GemFire&lt;/em&gt; branch.&lt;/p&gt;&lt;p&gt;If you are familiar with developing &lt;em&gt;Pivotal GemFire&lt;/em&gt; applications using &lt;em&gt;Spring Data GemFire&lt;/em&gt;, then you already know how to use &lt;em&gt;Apache Geode&lt;/em&gt;. If not, the &lt;em&gt;Spring Data GemFire&lt;/em&gt; &lt;a href="http://docs.spring.io/spring-data-gemfire/docs/1.7.0.M1/reference/html/"&gt;reference guide&lt;/a&gt; and &lt;a href="https://github.com/spring-projects/spring-gemfire-examples"&gt;examples&lt;/a&gt; are a good starting place as is the &lt;a href="https://spring.io/guides"&gt;Guides&lt;/a&gt; on &lt;a href="https://spring.io/"&gt;spring.io&lt;/a&gt;. In particular, check out &lt;a href="https://spring.io/guides/gs/accessing-data-gemfire/"&gt;Accessing Data with GemFire&lt;/a&gt; and &lt;a href="https://spring.io/guides/gs/caching-gemfire/"&gt;Caching Data with GemFire&lt;/a&gt;, or &lt;a href="https://spring.io/guides/gs/accessing-gemfire-data-rest/"&gt;Accessing GemFire Data with REST&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Try things out. If you have any feedback, I welcome your ideas and questions in &lt;a href="https://jira.spring.io/browse/SGF"&gt;JIRA&lt;/a&gt; and on &lt;a href="http://stackoverflow.com/questions/tagged/spring-data-gemfire"&gt;StackOverflow&lt;/a&gt; as well as any contributions by submitting &lt;a href="https://github.com/spring-projects/spring-data-gemfire/pulls"&gt;PRs on GitHub&lt;/a&gt;.&lt;/p&gt;&lt;h4&gt;&lt;a href="#get-involved" class="anchor" name="get-involved"&gt;&lt;/a&gt;Get Involved&lt;/h4&gt;&lt;p&gt;In addition to building Spring applications with &lt;em&gt;Apache Geode&lt;/em&gt;, now is the perfect time to get involved in the Geode community and contribute to a growing Apache project from the ground up. There are many ways you can &lt;a href="http://geode.incubator.apache.org/contribute/"&gt;participate&lt;/a&gt;.&lt;/p&gt;&lt;h4&gt;&lt;a href="#conclusion" class="anchor" name="conclusion"&gt;&lt;/a&gt;Conclusion&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Apache Geode&lt;/em&gt; was a significant contribution to ASF given the only &lt;a href="http://gemfire.docs.pivotal.io/latest/userguide/index.html#getting_started/product_intro.html#concept_3B5E445B19884680900161BDF25E32C9"&gt;features&lt;/a&gt; of &lt;em&gt;Pivotal GemFire&lt;/em&gt; not available in &lt;em&gt;Apache Geode&lt;/em&gt; were &lt;a href="http://gemfire.docs.pivotal.io/latest/userguide/index.html#developing/continuous_querying/chapter_overview.html"&gt;Continuous Queries (CQs)&lt;/a&gt; and multi-site, &lt;a href="http://gemfire.docs.pivotal.io/latest/userguide/index.html#topologies_and_comm/multi_site_configuration/chapter_overview.html"&gt;WAN replication&lt;/a&gt;. To gain a better understanding of &lt;em&gt;Apache Geode&lt;/em&gt;, check out the &lt;a href="http://geode.incubator.apache.org/getting-started/"&gt;Getting Started&lt;/a&gt; page.&lt;/p&gt;&lt;p&gt;If you are in the area, you can also learn more by attending a session on &lt;em&gt;Apache Geode&lt;/em&gt; during this &lt;a href="http://www.meetup.com/Toronto-Pivotal-User-Group/events/222239293/"&gt;Meetup&lt;/a&gt; at the Pivotal Labs office in Toronto, ON, Canada on Wednesday, June 24th, 2015, 6:30 PM.&lt;/p&gt;&lt;p&gt;Finally, &lt;em&gt;Luke Shannon&lt;/em&gt; and I will also be talking about &lt;em&gt;Apache Geode&lt;/em&gt; and &lt;em&gt;Spring Data GemFire&lt;/em&gt; in our session, &lt;a href="https://2015.event.springone2gx.com/schedule/sessions/building_highly_scalable_spring_applications_with_in_memory_distributed_data_grids.html"&gt;&amp;ldquo;Building Highly-Scalable Spring Applications with In-Memory, Distributed Data Grids&amp;rdquo;&lt;/a&gt; at SpringOne again this year.&lt;/p&gt;&lt;p&gt;Don&amp;rsquo;t miss it!&lt;/p&gt;
+&lt;hr/&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback.&lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Boot 1.3.0.M1 Available Now</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/12/spring-boot-1-3-0-m1-available-now" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Phil Webb</name>
+    </author>
+    <id>tag:spring.io,2015-06-12:2160</id>
+    <updated>2015-06-12T06:49:17Z</updated>
+    <content type="html">&lt;p&gt;I&amp;rsquo;m pleased to announce that Spring Boot v1.3.0.M1 is available now from the &lt;a href="http://repo.springsource.org/milestone/"&gt;Spring milestone repository&lt;/a&gt;. This release builds on &lt;a href="https://spring.io/blog/2015/05/26/spring-framework-4-2-goes-rc1"&gt;Spring Framework 4.2.0.RC1&lt;/a&gt; and provides a number of &lt;a href="https://github.com/spring-projects/spring-boot/issues?q=milestone%3A1.3.0.M1+is%3Aclosed"&gt;improvements and new features&lt;/a&gt; over Spring Boot 1.2. Highlights include:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A new &lt;code&gt;spring-boot-devtools&lt;/code&gt; module with support for automatic restart, LiveReload and remote update.&lt;/li&gt;
+  &lt;li&gt;Extensive caching support for EhCache, Hazelcast, Infinispan, Redis, Guava or any compliant JSR-107 (JCache) implementation. Cache metric information is now also exposed via the actuator (when the underlying technology supports it).&lt;/li&gt;
+  &lt;li&gt;Improved metrics support, include export and aggregation features and big performance improvements if you&amp;rsquo;re using Java 8.&lt;/li&gt;
+  &lt;li&gt;Fully executable JARs for Linux based operating systems, including &amp;ldquo;service&amp;rdquo; support. Starting a Boot application as a Linux service is now as easy as typing: &lt;code&gt;sudo ln -s /var/myapp/myapp.jar /etc/init.d/myapp&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Additional OAuth2 Support, including &lt;code&gt;@EnableAuthorizationServer&lt;/code&gt;, &lt;code&gt;@EnableResourceServer&lt;/code&gt; and &lt;code&gt;@EnableOAuth2Client&lt;/code&gt; annotations.&lt;/li&gt;
+  &lt;li&gt;New &lt;code&gt;HealthEndpoints&lt;/code&gt; for Elasticsearch, Email and JMS.&lt;/li&gt;
+  &lt;li&gt;Maven &lt;code&gt;start&lt;/code&gt; and &lt;code&gt;stop&lt;/code&gt; goals to help with integration testing.&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;For a complete list of changes, and upgrade instructions, see the &lt;a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-1.3-Release-Notes"&gt;Spring Boot 1.3 Release Notes&lt;/a&gt; on the WIKI and the updated &lt;a href="http://docs.spring.io/spring-boot/docs/1.3.0.M1/reference/htmlsingle/"&gt;reference documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;We&amp;rsquo;ll be releasing milestones at a fairly regular cadence from now on, with an aim to publish &lt;code&gt;1.3.0.RELEASE&lt;/code&gt; in September (sometime around &lt;a href="http://springone2gx.com/"&gt;Spring One&lt;/a&gt;). As always, early feedback and &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;bug reports&lt;/a&gt; are extremely valuable to us and very welcome.&lt;/p&gt;&lt;p&gt;Thanks again to everyone that has contributed to the release and supported the project.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring for Apache Hadoop 2.2 GA released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/11/spring-for-apache-hadoop-2-2-ga-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Thomas Risberg</name>
+    </author>
+    <id>tag:spring.io,2015-06-11:2159</id>
+    <updated>2015-06-11T11:48:00Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce the Spring for Apache Hadoop 2.2 GA release.&lt;/p&gt;&lt;p&gt;The most important changes/enhancements in the Spring for Apache Hadoop 2.2 version are: &lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Remove support for running with JDK 6, Java 7 or later is now required&lt;/li&gt;
+  &lt;li&gt;Improvements to the HDFS writer to support syncable writes and a new timeout option&lt;/li&gt;
+  &lt;li&gt;Improvements in the HBase support - adding PUT and DELETE to HbaseTemplate&lt;/li&gt;
+  &lt;li&gt;Add support for Pivotal HD 3.0&lt;/li&gt;
+  &lt;li&gt;Update Cloudera CDH 5 to use version 5.3.3&lt;/li&gt;
+  &lt;li&gt;Update Hortonworks HDP 2.2 version to 2.2.4.0&lt;/li&gt;
+  &lt;li&gt;Update Kite SDK to version 1.0&lt;/li&gt;
+  &lt;li&gt;Update Spring project versions to the latest&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;We continue to provide version specific artifacts with their respective transitive dependencies in the Spring IO milestone repository:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2.2.0.RELEASE (default - Apache Hadoop stable 2.6.0)&lt;/li&gt;
+  &lt;li&gt;2.2.0.RELEASE-phd21 (Pivotal HD 2.1)&lt;/li&gt;
+  &lt;li&gt;2.2.0.RELEASE-phd30 (Pivotal HD 3.0)&lt;/li&gt;
+  &lt;li&gt;2.2.0.RELEASE-cdh5 (Cloudera CDH5)&lt;/li&gt;
+  &lt;li&gt;2.2.0.RELEASE-hdp22 (Hortonworks HDP 2.2)&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Please provide feedback so we can prioritize the work on new features scheduled for 2.3 (see previous &lt;a href="https://spring.io/blog/2015/05/21/spring-for-apache-hadoop-2-2-rc1-released"&gt;blog post&lt;/a&gt; for a list) and any additional feature requests. You can use JIRA issues or GitHub issues (see project page for links).&lt;/p&gt;&lt;p&gt;The project page is at - &lt;a href="http://projects.spring.io/spring-hadoop/"&gt;http://projects.spring.io/spring-hadoop/&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Feedback welcome: Spring 5 system requirements</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/10/feedback-welcome-spring-5-system-requirements" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Juergen Hoeller</name>
+    </author>
+    <id>tag:spring.io,2015-06-10:2158</id>
+    <updated>2015-06-10T16:00:00Z</updated>
+    <content type="html">&lt;p&gt;As you might have gathered from my &lt;a href="https://spring.io/blog/2015/06/04/happy-second-birthday-java-ee-7-how-is-it-going-in-production"&gt;Java EE 7 blog post&lt;/a&gt;, we are planning for a Spring Framework 5.0 generation with a 2016 availability horizon. We&amp;rsquo;ll be tracking JDK 9&amp;rsquo;s release candidates then since one of our key themes is comprehensive JDK 9 support.&lt;/p&gt;&lt;p&gt;The feature planning for Spring 5 is still in the works. We are going to present a more in-depth plan at &lt;a href="http://www.springone2gx.com/"&gt;SpringOne&lt;/a&gt; this year, so stay tuned! Nevertheless, I would like to take this opportunity to reach out to you for feedback about our intended system requirements:&lt;/p&gt;&lt;p&gt;&lt;b&gt;We will definitely raise our minimum to JDK 8+.&lt;/b&gt;&lt;br/&gt;This is a prerequisite since it allows us to have a cleaner codebase across the framework, to introduce default method implementations in our core interfaces, and to depend on JDK 8 API types (e.g. CompletableFuture, java.util.function interfaces) in our core abstractions.&lt;/p&gt;&lt;p&gt;&lt;b&gt;We intend to softly upgrade the EE baseline as well.&lt;/b&gt;&lt;br/&gt;Now, this is a bit tricky since we effectively have individual requirements here - and we need to consider the enterprise adoption levels in production environments:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;We&amp;rsquo;ll definitely raise to Servlet 3.0+ (from our present Servlet 2.5 runtime compatibility) but no higher since we&amp;rsquo;d like Spring 5 applications to run on EE 6 baselined servers still. See &lt;a href="https://spring.io/blog/2015/06/04/happy-second-birthday-java-ee-7-how-is-it-going-in-production"&gt;my previous blog post&lt;/a&gt; for a discussion on why this is unavoidable, given the market situation with Java EE 7 and the multitude of servers which is still based on the Servlet 3.0 API.&lt;/li&gt;
+  &lt;li&gt;We&amp;rsquo;ll keep our JMS 1.1+ compatibility since, aside from the EE 7 issue, we expect message brokers in the corporate world which are not necessarily upgraded to JMS 2.0 yet. Spring&amp;rsquo;s JMS support automatically adapts to JMS 2.0 anyway, so there shouldn&amp;rsquo;t be any lack in functionality. It&amp;rsquo;s just a shame that we have to keep supporting the 2002-era JMS 1.1 API&amp;hellip;&lt;/li&gt;
+  &lt;li&gt;We&amp;rsquo;d like to raise to JPA 2.1+ and Bean Validation 1.1+ but our hands seem to be tied: TomEE 1.7 and JBoss EAP 6.4 have hard JPA 2.0 and Bean Validation 1.0 APIs in them, and WebLogic 12.1.3 has JPA 2.1 but no Bean Validation 1.1 API (despite them being related).&lt;br/&gt;&lt;i&gt;This means we&amp;rsquo;ll have to keep detecting JPA 2.1 / BV 1.1, automatically adapting to them - or we&amp;rsquo;ll require local bundling of the JPA 2.1 / BV 1.1 API jars and corresponding providers.&lt;/i&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Are the assumptions above feasible from your perspective? Do you have experience with individually upgrading EE 6 servers to JPA 2.1 / Bean Validation 1.1, e.g. through locally shipping the corresponding APIs and providers in the application? Any feedback welcome!&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please note:&lt;/b&gt;&lt;br/&gt;If you are stuck on JDK 6 or 7, no need to worry: We are also planning towards a Spring Framework 4.3 release early next year, within the general Spring 4 system requirements. However, this will then be the last feature release in that line, with Spring Framework 4.x entering a plain maintenance phase afterwards.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>This Week in Spring - June 9th, 2015</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/09/this-week-in-spring-june-9th-2015" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2015-06-09:2157</id>
+    <updated>2015-06-09T23:32:00Z</updated>
+    <content type="html">&lt;p&gt;Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! What a week! This week I&amp;rsquo;m in Kansas City for the 6,000+-strong developer conference &lt;em&gt;of a single company&amp;rsquo;s developers&lt;/em&gt; and then it&amp;rsquo;s back to New York City for QCon NYC where I&amp;rsquo;ll be talking up building cloud-native applications with Spring Boot and Spring Cloud. If you&amp;rsquo;re in either place be sure to reach out to me and let&amp;rsquo;s talk shop (Spring, and, optionally, in Kansas City, BBQ..)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring co-founder and project lead Juergen Hoeller put together two must-read posts this week: the &lt;a href="https://spring.io/blog/2015/06/02/spring-4-and-java-8-adoption"&gt;first looks at Java 8 and Spring 4 adoption&lt;/a&gt;. ALSO, much, much, &lt;em&gt;much&lt;/em&gt; more importantly: &lt;em&gt;HE MENTIONED &lt;strong&gt;THIS WEEK IN SPRING&lt;/strong&gt;&lt;/em&gt; :D &lt;code&gt;#WIN&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Juergen &lt;em&gt;also&lt;/em&gt; posted is one of my favorite in years, &lt;a href="https://spring.io/blog/2015/06/04/happy-second-birthday-java-ee-7-how-is-it-going-in-production"&gt;a brutally honest look at the Java EE 7 landscape&lt;/a&gt; and the depressing lack of (big-vendor) supported implementations options for production-supported Java EE containers. You know, the man has a point..&lt;/li&gt;
+  &lt;li&gt;The amazing Dr. Pollack (see above!) &lt;a href="https://spring.io/blog/2015/06/02/spring-xd-1-2-rc1-released"&gt;announced Spring XD 1.2 RC1&lt;/a&gt;. The new release is packed with lots of new stuff including an Apache Ambari plugin to package and deploy Spring XD into production, new analytics, new features and performance improvements for the Apache Kafka support, improved HA configuration for RabbitMQ, Sqoop metastore support, and a &lt;em&gt;lot&lt;/em&gt; more! Check it out!&lt;/li&gt;
+  &lt;li&gt;Check out this post by Spring XD ninja Janne Valkealahti to learn more about &lt;a href="https://spring.io/blog/2015/06/02/apache-ambari-meets-spring-xd"&gt;the Apache Ambari deployment options for Spring XD&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Spring and Spring Boot ninja Stephane Nicoll just &lt;a href="https://spring.io/blog/2015/06/04/spring-boot-1-2-4-released"&gt;announced Spring Boot 1.2.4&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Sébastien Deleuze just &lt;a href="https://spring.io/blog/2015/06/08/cors-support-in-spring-framework"&gt;released a must-read post on Spring framework 4.2&amp;rsquo;s upcoming CORS support&lt;/a&gt;. This looks &lt;em&gt;so&lt;/em&gt; cool!&lt;/li&gt;
+  &lt;li&gt;Our pal Jacob Severson has a nice post on the recent addition &lt;a href="https://objectpartners.com/2015/06/02/etags-and-spring-data-rest/"&gt;of E-tags to Spring Data REST and on what they offer us developers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Don&amp;rsquo;t miss Jamie O’Meara&amp;rsquo;s upcoming webinar on &lt;a href="https://spring.io/blog/2015/05/28/webinar-ci-on-the-cloud-with-jenkins-spring-and-cloud-foundry"&gt;continuous integration with Jenkins, Spring and Cloud Foundry&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check out Phil Dutson&amp;rsquo;s &lt;a href="https://spring.io/blog/2015/05/28/webinar-jstl-to-thymeleaf-transitioning-your-template"&gt;upcoming webinar on moving &lt;code&gt;.jsp&lt;/code&gt; and JSTL pages to Thymeleaf&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;My pal James Ward has put together yet another brilliant post, this &lt;a href="http://www.jamesward.com/2015/06/08/comparing-application-deployment-2005-vs-2015"&gt;time on deployment circa 2005 vs. application deployment today&lt;/a&gt;. It has only the faintest to do with a specific Spring technology, but it&amp;rsquo;s well worth a read.&lt;/li&gt;
+  &lt;li&gt;Check out this talk from Michael Nygard - author of the &lt;em&gt;epic&lt;/em&gt; tome, &lt;em&gt;Release It!&lt;/em&gt;, &lt;a href="http://jaxenter.com/need-resilient-software-design-115055.html"&gt;on why we need resilient software&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I loved Camille Fournier&amp;rsquo;s interview &lt;a href="http://www.infoq.com/interviews/fournier-consensus"&gt;on various consensus software (like ZooKeeper, and Etcd)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I gave a talk at the local San Francisco Java User Group last month &lt;a href="https://www.youtube.com/watch?v=sbPSjI4tt10&amp;feature=youtu.be"&gt;introducing Spring Boot&lt;/a&gt; and people seem to like it. I hope you will to.&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>CORS support in Spring Framework</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/08/cors-support-in-spring-framework" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Sébastien Deleuze</name>
+    </author>
+    <id>tag:spring.io,2015-05-27:2140</id>
+    <updated>2015-06-08T11:45:24Z</updated>
+    <content type="html">&lt;p&gt;For security reasons, browsers prohibit AJAX calls to resources residing outside the current origin. For example, as you&amp;rsquo;re checking your bank account in one tab, you could have the evil.com website in another tab. The scripts from evil.com shouldn’t be able to make AJAX requests to your bank API (withdrawing money from your account!) using your credentials.&lt;/p&gt;&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing"&gt;Cross-origin resource sharing&lt;/a&gt; (CORS) is a &lt;a href="http://www.w3.org/TR/cors/"&gt;W3C specification&lt;/a&gt; implemented by &lt;a href="http://caniuse.com/#feat=cors"&gt;most browsers&lt;/a&gt; that allows you to specify in a flexible way what kind of cross domain requests are authorized, instead of using some less secured and less powerful hacks like IFrame or JSONP.&lt;/p&gt;&lt;p&gt;The recently released &lt;a href="https://spring.io/blog/2015/05/26/spring-framework-4-2-goes-rc1"&gt;Spring Framework 4.2 RC1&lt;/a&gt; provides &lt;a href="https://jira.spring.io/browse/SPR-9278"&gt;first class support for CORS&lt;/a&gt; out-of-the-box, giving you an easier and more powerful way to configure it than typical &lt;a href="http://software.dzhuvinov.com/cors-filter.html"&gt;filter based&lt;/a&gt; solutions.&lt;/p&gt;&lt;p&gt;Spring MVC provides high-level configuration facilities, described bellow.&lt;/p&gt;&lt;h2&gt;&lt;a href="#controller-method-cors-configuration" class="anchor" name="controller-method-cors-configuration"&gt;&lt;/a&gt;Controller method CORS configuration&lt;/h2&gt;&lt;p&gt;You can add to your &lt;code&gt;@RequestMapping&lt;/code&gt; annotated handler method a &lt;a href="http://docs.spring.io/spring-framework/docs/4.2.x/javadoc-api/org/springframework/web/bind/annotation/CrossOrigin.html"&gt;&lt;code&gt;@CrossOrigin&lt;/code&gt;&lt;/a&gt; annotation in order to enable CORS on it (by default &lt;code&gt;@CrossOrigin&lt;/code&gt; allows all origins and the HTTP methods specified in the &lt;code&gt;@RequestMapping&lt;/code&gt; annotation):&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@RestController&#xD;
+@RequestMapping(&amp;quot;/account&amp;quot;)&#xD;
+public class AccountController {&#xD;
+&#xD;
+	@CrossOrigin&#xD;
+	@RequestMapping(&amp;quot;/{id}&amp;quot;)&#xD;
+	public Account retrieve(@PathVariable Long id) {&#xD;
+		// ...&#xD;
+	}&#xD;
+&#xD;
+	@RequestMapping(method = RequestMethod.DELETE, value = &amp;quot;/{id}&amp;quot;)&#xD;
+	public void remove(@PathVariable Long id) {&#xD;
+		// ...&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is also possible to enable CORS for the whole controller:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@CrossOrigin(origin = &amp;quot;http://domain2.com&amp;quot;, maxAge = 3600)&#xD;
+@RestController&#xD;
+@RequestMapping(&amp;quot;/account&amp;quot;)&#xD;
+public class AccountController {&#xD;
+&#xD;
+	@RequestMapping(&amp;quot;/{id}&amp;quot;)&#xD;
+	public Account retrieve(@PathVariable Long id) {&#xD;
+		// ...&#xD;
+	}&#xD;
+&#xD;
+	@RequestMapping(method = RequestMethod.DELETE, value = &amp;quot;/{id}&amp;quot;)&#xD;
+	public void remove(@PathVariable Long id) {&#xD;
+		// ...&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In this example CORS support is enabled for both &lt;code&gt;retrieve()&lt;/code&gt; and &lt;code&gt;remove()&lt;/code&gt; handler methods, and you can also see how you can customize the CORS configuration using &lt;code&gt;@CrossOrigin&lt;/code&gt; attributes.&lt;/p&gt;&lt;p&gt;You can even use both controller and method level CORS configurations, Spring will then combine both annotation attributes to create a merged CORS configuration.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@CrossOrigin(maxAge = 3600)&#xD;
+@RestController&#xD;
+@RequestMapping(&amp;quot;/account&amp;quot;)&#xD;
+public class AccountController {&#xD;
+&#xD;
+	@CrossOrigin(origin = &amp;quot;http://domain2.com&amp;quot;)&#xD;
+	@RequestMapping(&amp;quot;/{id}&amp;quot;)&#xD;
+	public Account retrieve(@PathVariable Long id) {&#xD;
+		// ...&#xD;
+	}&#xD;
+&#xD;
+	@RequestMapping(method = RequestMethod.DELETE, value = &amp;quot;/{id}&amp;quot;)&#xD;
+	public void remove(@PathVariable Long id) {&#xD;
+		// ...&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&lt;a href="#global-cors-configuration" class="anchor" name="global-cors-configuration"&gt;&lt;/a&gt;Global CORS configuration&lt;/h2&gt;&lt;p&gt;In addition to fine-grained, annotation-based configuration you&amp;rsquo;ll probably want to define some global CORS configuration as well. This is similar to using filters but can be declared withing Spring MVC and combined with fine-grained &lt;code&gt;@CrossOrigin&lt;/code&gt; configuration. By default all origins and &lt;code&gt;GET&lt;/code&gt;, &lt;code&gt;HEAD&lt;/code&gt; and &lt;code&gt;POST&lt;/code&gt; methods are allowed.&lt;/p&gt;&lt;p&gt;The global configuration API &lt;a href="https://github.com/spring-projects/spring-framework/commit/0c3b34f7d5448f26b4484856bdabb5f225d37453"&gt;has changed&lt;/a&gt; after Spring Framework 4.2 RC1, so be sure to use current 4.2.0.BUILD-SNAPSHOT builds or the upcoming 4.2.0.RC2 release.&lt;/p&gt;&lt;h3&gt;&lt;a href="#javaconfig" class="anchor" name="javaconfig"&gt;&lt;/a&gt;JavaConfig&lt;/h3&gt;&lt;p&gt;Enabling CORS for the whole application is as simple as:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Configuration&#xD;
+@EnableWebMvc&#xD;
+public class WebConfig extends WebMvcConfigurerAdapter {&#xD;
+&#xD;
+	@Override&#xD;
+	public void addCorsMappings(CorsRegistry registry) {&#xD;
+		registry.addMapping(&amp;quot;/**&amp;quot;);&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can easily change any properties, as well as only apply this CORS configuration to a specific path pattern:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Configuration&#xD;
+@EnableWebMvc&#xD;
+public class WebConfig extends WebMvcConfigurerAdapter {&#xD;
+&#xD;
+	@Override&#xD;
+	public void addCorsMappings(CorsRegistry registry) {&#xD;
+		registry.addMapping(&amp;quot;/api/**&amp;quot;)&#xD;
+			.allowedOrigins(&amp;quot;http://domain2.com&amp;quot;)&#xD;
+			.allowedMethods(&amp;quot;PUT&amp;quot;, &amp;quot;DELETE&amp;quot;)&#xD;
+			.allowedHeaders(&amp;quot;header1&amp;quot;, &amp;quot;header2&amp;quot;, &amp;quot;header3&amp;quot;)&#xD;
+			.exposedHeaders(&amp;quot;header1&amp;quot;, &amp;quot;header2&amp;quot;)&#xD;
+			.allowCredentials(false).maxAge(3600);&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a href="#xml-namespace" class="anchor" name="xml-namespace"&gt;&lt;/a&gt;XML namespace&lt;/h3&gt;&lt;p&gt;As of Spring Framework 4.2 RC2, it will also be possible to configure CORS with the &lt;a href="https://jira.spring.io/browse/SPR-13046"&gt;mvc XML namespace&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;This minimal XML configuration enable CORS on &lt;code&gt;/**&lt;/code&gt; path pattern with the same default properties than the JavaConfig one:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint xml"&gt;&amp;lt;mvc:cors&amp;gt;&#xD;
+	&amp;lt;mvc:mapping path=&amp;quot;/**&amp;quot; /&amp;gt;&#xD;
+&amp;lt;/mvc:cors&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is also possible to declare several CORS mappings with customized properties:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint xml"&gt;&amp;lt;mvc:cors&amp;gt;&#xD;
+&#xD;
+	&amp;lt;mvc:mapping path=&amp;quot;/api/**&amp;quot;&#xD;
+		allowed-origins=&amp;quot;http://domain1.com, http://domain2.com&amp;quot;&#xD;
+		allowed-methods=&amp;quot;GET, PUT&amp;quot;&#xD;
+		allowed-headers=&amp;quot;header1, header2, header3&amp;quot;&#xD;
+		exposed-headers=&amp;quot;header1, header2&amp;quot; allow-credentials=&amp;quot;false&amp;quot;&#xD;
+		max-age=&amp;quot;123&amp;quot; /&amp;gt;&#xD;
+&#xD;
+	&amp;lt;mvc:mapping path=&amp;quot;/resources/**&amp;quot;&#xD;
+		allowed-origins=&amp;quot;http://domain1.com&amp;quot; /&amp;gt;&#xD;
+&#xD;
+&amp;lt;/mvc:cors&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&lt;a href="#how-does-it-work" class="anchor" name="how-does-it-work"&gt;&lt;/a&gt;How does it work?&lt;/h2&gt;&lt;p&gt;CORS requests (&lt;a href="https://github.com/spring-projects/spring-framework/blob/master/spring-webmvc/src/main/java/org/springframework/web/servlet/FrameworkServlet.java#L906"&gt;including preflight ones with an &lt;code&gt;OPTIONS&lt;/code&gt; method&lt;/a&gt;) are automatically dispatched to the various &lt;code&gt;HandlerMapping&lt;/code&gt;s registered. They handle CORS preflight requests and intercept CORS simple and actual requests thanks to a &lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/cors/CorsProcessor.html"&gt;CorsProcessor&lt;/a&gt; implementation (&lt;a href="https://github.com/spring-projects/spring-framework/blob/master/spring-web/src/main/java/org/springframework/web/cors/DefaultCorsProcessor.java"&gt;DefaultCorsProcessor&lt;/a&gt; by default) in order to add the relevant CORS response headers (like &lt;code&gt;Access-Control-Allow-Origin&lt;/code&gt;). &lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/cors/CorsConfiguration.html"&gt;CorsConfiguration&lt;/a&gt; allows you to specify how the CORS requests should be processed: allowed origins, headers, methods, etc. It can be provided in various ways:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/servlet/handler/AbstractHandlerMapping.html#setCorsConfiguration-java.util.Map-"&gt;&lt;code&gt;AbstractHandlerMapping#setCorsConfiguration()&lt;/code&gt;&lt;/a&gt; allows to specify a &lt;code&gt;Map&lt;/code&gt; with several &lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/cors/CorsConfiguration.html"&gt;CorsConfiguration&lt;/a&gt; mapped on path patterns like &lt;code&gt;/api/**&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Subclasses can provide their own &lt;code&gt;CorsConfiguration&lt;/code&gt; by overriding &lt;code&gt;AbstractHandlerMapping#getCorsConfiguration(Object, HttpServletRequest)&lt;/code&gt; method&lt;/li&gt;
+  &lt;li&gt;Handlers can implement &lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/cors/CorsConfigurationSource.html"&gt;&lt;code&gt;CorsConfigurationSource&lt;/code&gt;&lt;/a&gt; interface (like &lt;a href="https://github.com/spring-projects/spring-framework/blob/master/spring-webmvc/src/main/java/org/springframework/web/servlet/resource/ResourceHttpRequestHandler.java"&gt;&lt;code&gt;ResourceHttpRequestHandler&lt;/code&gt;&lt;/a&gt; now does) in order to provide a &lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/cors/CorsConfiguration.html"&gt;CorsConfiguration&lt;/a&gt; for each request.&lt;/li&gt;
+&lt;/ul&gt;&lt;h2&gt;&lt;a href="#spring-boot-integration" class="anchor" name="spring-boot-integration"&gt;&lt;/a&gt;Spring Boot integration&lt;/h2&gt;&lt;p&gt;CORS support will be available in the upcoming Spring Boot 1.3 release, and is already available in the 1.3.0.BUILD-SNAPSHOT builds.&lt;/p&gt;&lt;p&gt;If fine grained CORS configuration is already a perfect fit for Spring Boot applications, a more &amp;ldquo;Bootiful&amp;rdquo; way to configure global CORS configuration (based on &lt;a href="http://docs.spring.io/spring/docs/4.2.x/javadoc-api/org/springframework/web/cors/CorsConfiguration.html"&gt;CorsConfiguration&lt;/a&gt; bean declaration and dedicated Spring Boot properties) is likely to be provided with Spring Boot 1.3. See &lt;a href="https://github.com/spring-projects/spring-boot/issues/3052#issuecomment-106235392"&gt;this issue&lt;/a&gt; for more details.&lt;/p&gt;&lt;p&gt;As usual, feedbacks are welcome!&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Happy second birthday, Java EE 7! How is it going in production?</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/04/happy-second-birthday-java-ee-7-how-is-it-going-in-production" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Juergen Hoeller</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2149</id>
+    <updated>2015-06-04T17:00:00Z</updated>
+    <content type="html">&lt;p&gt;&lt;i&gt;Note that there&amp;rsquo;s a follow-up blog post about &lt;a href="https://spring.io/blog/2015/06/10/feedback-welcome-spring-5-system-requirements"&gt;Spring 5 system requirements&lt;/a&gt;. You might want to start there if you&amp;rsquo;re primarily interested in the Spring 5 planning process.&lt;/i&gt;&lt;/p&gt;&lt;p&gt;In our quest for Java EE integration, we&amp;rsquo;re trying to actively embrace the latest generation of specifications such as JPA, Bean Validation and of course the Servlet and JMS APIs. As of Spring 4, we&amp;rsquo;re supporting the &lt;a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/new-in-4.0.html#_java_ee_6_and_7"&gt;Java EE 6 and 7 level of specifications side by side&lt;/a&gt;. We would like to raise it to the EE 7+ level (JPA 2.1, Bean Validation 1.1, and in particular Servlet 3.1 and JMS 2.0) soon but are facing a fundamental problem: &lt;b&gt;the lack of EE 7 platform adoption.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;The &lt;a href="https://jcp.org/en/jsr/detail?id=342"&gt;Java EE 7 platform&lt;/a&gt; has been released in May 2013 and is therefore two years old now. Surprisingly, it&amp;rsquo;s hardly to be found in production yet. But then that&amp;rsquo;s not so surprising really: While &lt;a href="http://www.oracle.com/technetwork/java/javaee/overview/compatibility-jsp-136984.html"&gt;a few projects have been certified for EE 7 in the meantime&lt;/a&gt;, the lack of major vendors is apparent: There are no major EE 7 servers with production support yet, not for the web profile and not for the full platform either. As of June 2015, the common EE vendors still sell licenses for servers based on &lt;a href="https://jcp.org/en/jsr/detail?id=316"&gt;2009-era Java EE 6 APIs&lt;/a&gt;. And it&amp;rsquo;s not just the traditional suspects:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Tomitribe provides support for &lt;a href="http://tomee.apache.org/"&gt;TomEE 1.7&lt;/a&gt;, a Tomcat 7 based EE 6 Web Profile stack, based on 2009-era EE 6 APIs but compatible with JSR-356 WebSockets and JDK 8 at least. TomEE 7.0 (as recently rebranded from TomEE 2.0) will be a Java EE 7 Web Profile offering based on Tomcat 8 but hasn&amp;rsquo;t been released yet (as of June 2015).&lt;/li&gt;
+  &lt;li&gt;Red Hat&amp;rsquo;s most recent support offering is &lt;a href="http://www.jboss.org/products/eap/overview/"&gt;JBoss EAP 6.4&lt;/a&gt;, a JBoss 7 based EE 6 stack with JSR-356 WebSockets and JDK 8 support. Note that, from Red Hat&amp;rsquo;s perspective, WildFly is an R&amp;amp;D project: It comes with frequent feature releases (thumbs up for that) but unfortunately without maintenance releases or any kind of production support.&lt;/li&gt;
+  &lt;li&gt;Oracle ships &lt;a href="https://docs.oracle.com/middleware/1213/wls/INTRO/compatibility.htm#INTRO112"&gt;WebLogic 12.1.3&lt;/a&gt;, an EE 6 server with a bit of EE 7 (JPA 2.1, JAX-RS 2.0, JSR-356 WebSockets) and JDK 8 support. WebLogic 12.2.1 (formerly announced as 12.1.4 for a while) as a full EE 7 server is still not released (as of June 2015). And from Oracle&amp;rsquo;s perspective, GlassFish 4 is just an RI, with WebLogic as the production upgrade path.&lt;/li&gt;
+  &lt;li&gt;The IBM WebSphere team does a fine job implementing EE 7 specs for the &lt;a href="https://developer.ibm.com/wasdev/blog/2015/05/20/java-ee-7-in-liberty-so-far/"&gt;WebSphere Liberty Profile&lt;/a&gt; (WAS 8.5.5) but hasn&amp;rsquo;t completed the effort yet. At least, some EE 7 modules and JDK 8 are supported in production already, as a kind of feature pack for the Liberty Profile, and WebSphere&amp;rsquo;s full Java EE 7 certification is likely to happen in 2015 still.&lt;br/&gt;&lt;b&gt;HOT NEWS (June 9):&lt;/b&gt; An EE 7 fixpack for WAS 8.5.5 will go GA on &lt;a href="https://developer.ibm.com/wasdev/blog/2015/06/09/java-ee-7-full-platform-support-in-websphere-liberty-coming-26-june/"&gt;June 26&lt;/a&gt;. Kudos, IBM!&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;While several specifications from the EE 7 umbrella have seen individual adoption, e.g. &lt;a href="https://jcp.org/en/jsr/detail?id=338"&gt;JPA 2.1&lt;/a&gt; through Hibernate 4.3 and &lt;a href="https://jcp.org/en/jsr/detail?id=340"&gt;Servlet 3.1&lt;/a&gt; / &lt;a href="https://jcp.org/en/jsr/detail?id=356"&gt;JSR-356 WebSockets&lt;/a&gt; through Tomcat 8 and Jetty 9, it is fair to say that Java EE 7 failed to enter the market as a platform overall. After all, the point of a “platform” is widespread mainstream availability. Ironically, the later-released JDK 8 (March 2014) got embraced in production rather quickly, even in EE land! So the state of the art as of mid 2015 is a vendor-supported Java EE 6 server running on JDK 8 in production&amp;hellip;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Our consequence:&lt;/b&gt; Given the adoption levels of &lt;a href="https://spring.io/blog/2015/06/02/spring-4-and-java-8-adoption"&gt;Spring 4 and Java 8&lt;/a&gt;, we&amp;rsquo;ll raise the minimum to JDK 8+ in our Spring Framework 5 generation. However, due to the lack of Java EE 7 platform adoption, we&amp;rsquo;ll have to retain compatibility with the current generation of application servers: allowing for upcoming Spring 5 applications to be deployed to the JDK 8 based EE 6 servers commonly found in production - just like we do with Spring 4 already, but at least with the extra benefit of going JDK 8+ for our framework codebase and all of its core interfaces.&lt;/p&gt;&lt;p&gt;&lt;b&gt;P.S. (June 6):&lt;/b&gt;&lt;/p&gt;&lt;p&gt;FWIW, I really appreciate &lt;a href="https://glassfish.java.net/"&gt;GlassFish&lt;/a&gt; and &lt;a href="http://wildfly.org/"&gt;WildFly&lt;/a&gt; as open source engineering efforts. Spring has dedicated support for both, and the &lt;a href="http://undertow.io/"&gt;Undertow&lt;/a&gt; HTTP server (under the WildFly umbrella) is a great fit for embedded deployments with Spring Boot. This doesn&amp;rsquo;t change the fact that the project owners (Oracle and Red Hat, respectively) refrain from supporting them, choosing to invest into WebLogic 12 and JBoss EAP 6 for production purposes instead. External support from the likes of Payara (for GlassFish) can only mitigate this to some degree, with large parts of the Java EE market bound to the vendor production offerings - all EE 6 based - in 2015.&lt;/p&gt;&lt;p&gt;For an example for fine production support from the open source project itself, look no further than &lt;a href="http://tomcat.apache.org/"&gt;Tomcat&lt;/a&gt;. The Tomcat project has an admirable track record of fixing bugs and in particular security vulnerabilities very quickly, even across the past three major generations of the server. So I&amp;rsquo;m not arguing for commercial support per se, I&amp;rsquo;m arguing for proper maintenance releases like Tomcat does (and dare I say: like Spring does), whether from the open source project itself or from a commercial support subscription. WildFly for example doesn&amp;rsquo;t have either of those; GlassFish comes with no support from Oracle but at least has a support option via Payara.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Boot 1.2.4 released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/04/spring-boot-1-2-4-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Stéphane Nicoll</name>
+    </author>
+    <id>tag:spring.io,2015-06-04:2155</id>
+    <updated>2015-06-04T11:46:00Z</updated>
+    <content type="html">&lt;p&gt;Spring Boot 1.2.4 has been released and is available now from &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.springframework.boot%22"&gt;Maven Central&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;This maintenance release includes a &lt;a href="https://github.com/spring-projects/spring-boot/issues?q=milestone%3A1.2.4"&gt;small number of fixes&lt;/a&gt; and is a recommended upgrade for all users.&lt;/p&gt;&lt;p&gt;The first milestone of Spring Boot 1.3 will be released in the coming days and adds &lt;a href="https://github.com/spring-projects/spring-boot/issues?q=milestone%3A1.3.0.M1"&gt;many exciting features&lt;/a&gt;. Stay tuned!&lt;/p&gt;&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Apache Ambari meets Spring XD</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/02/apache-ambari-meets-spring-xd" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Janne Valkealahti</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2146</id>
+    <updated>2015-06-02T21:30:54Z</updated>
+    <content type="html">&lt;p&gt;We’re pleased to announce the first version of the &lt;a href="https://ambari.apache.org/"&gt;Apache Ambari&lt;/a&gt; plugin for &lt;a href="https://projects.spring.io/spring-xd/"&gt;Spring XD&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Ambari is a cluster provisioning tool to install and manage various Apache projects like HDFS, YARN, Zookeeper or Kafka. Ambari has a concept of a stack definition which is used by both Pivotal and Hortonworks. The stack definition is usually made up of components supported by the maintainer.&lt;/p&gt;&lt;p&gt;This Ambari integration adds support for provisioning Spring XD with &lt;a href="http://pivotal.io/big-data/pivotal-hd"&gt;Pivotal HD 3.0&lt;/a&gt; and &lt;a href="http://hortonworks.com/hdp/"&gt;Hortonworks HDP 2.2&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Spring XD is not part of the main Ambari distribution for PHD or HDP. However, it is easy to extend an existing Ambari installation via a simple RPM installation which modifies existing stack definitions.&lt;/p&gt;&lt;p&gt;We&amp;rsquo;ve prepared &lt;a href="https://github.com/spring-projects/spring-xd-ambari/blob/master/src/docs/asciidoc/InstallingXDwithAmbari.asciidoc"&gt;installation instructions&lt;/a&gt; in our repo &lt;a href="https://github.com/spring-projects/spring-xd-ambari"&gt;Github spring-xd-ambari&lt;/a&gt; together with the source code for this plugin.&lt;/p&gt;&lt;p&gt;Spring XD on Pivotal HD 3.0 with external Redis as a message bus:&lt;br/&gt;&lt;img src="https://raw.githubusercontent.com/spring-projects/spring-xd-ambari/master/src/docs/asciidoc/images/xdphd.png" alt="PIC PHD" /&gt;&lt;/p&gt;&lt;p&gt;Spring XD on Hortonworks HDP 2.2 with Ambari hosted Kafka as a message bus:&lt;br/&gt;&lt;img src="https://raw.githubusercontent.com/spring-projects/spring-xd-ambari/master/src/docs/asciidoc/images/xdhdp.png" alt="PIC HDP" /&gt;&lt;/p&gt;&lt;p&gt;After cluster provisioning has been completed successfully, it is easy to connect to a running Spring XD cluster from the XD shell. A command script &lt;code&gt;/etc/springxd/conf/xd-shell.init&lt;/code&gt; is created automatically with correct settings that you can load into the XD shell.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint text"&gt;$ export JAVA_HOME=/usr/jdk64/jdk1.7.0_67&#xD;
+$ xd-shell&#xD;
+server-unknown:&amp;gt;script --file /etc/springxd/conf/xd-shell.init&#xD;
+admin config server http://ambari-2.localdomain:9393&#xD;
+Successfully targeted http://ambari-2.localdomain:9393&#xD;
+hadoop config fs --namenode hdfs://ambari-2.localdomain:8020&#xD;
+Script required 0.625 seconds to execute&#xD;
+&#xD;
+xd:&amp;gt;runtime containers&#xD;
+  Container Id                          Host                  IP Address      PID    Groups  Custom Attributes&#xD;
+  ------------------------------------  --------------------  --------------  -----  ------  -----------------&#xD;
+  44c34156-8b8a-4ada-ad46-e5d955b6f995  ambari-6.localdomain  172.16.101.146  6327&#xD;
+  d8273536-c688-4fdd-b370-6bc0f68bdc25  ambari-5.localdomain  172.16.101.145  31199&#xD;
+&#xD;
+&#xD;
+xd:&amp;gt;hadoop fs ls /&#xD;
+Found 9 items&#xD;
+drwxrwxrwx   - yarn      hadoop           0 2015-06-01 04:55 /app-logs&#xD;
+drwxr-xr-x   - gpadmin   gpadmin          0 2015-06-01 04:52 /hawq_data&#xD;
+drwxr-xr-x   - mapred    hdfs             0 2015-06-01 04:50 /mapred&#xD;
+drwxr-xr-x   - hdfs      hdfs             0 2015-06-01 04:50 /mr-history&#xD;
+drwxr-xr-x   - hdfs      hdfs             0 2015-06-01 04:51 /phd&#xD;
+drwxr-xr-x   - hdfs      hdfs             0 2015-06-01 04:52 /system&#xD;
+drwxrwxrwx   - hdfs      hdfs             0 2015-06-01 04:53 /tmp&#xD;
+drwxr-xr-x   - hdfs      hdfs             0 2015-06-01 04:53 /user&#xD;
+drwxrwxrwx   - spring-xd hdfs             0 2015-06-01 07:29 /xd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Writing into HDFS works out of the box.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint text"&gt;xd:&amp;gt;stream create --name hdfstest --definition &amp;quot;time|hdfs&amp;quot; --deploy&#xD;
+xd:&amp;gt;stream destroy --name hdfstest&#xD;
+&#xD;
+xd:&amp;gt;hadoop fs ls --recursive true --dir /xd&#xD;
+drwxrwxrwx   - spring-xd hdfs          0 2015-06-01 07:29 /xd/hdfstest&#xD;
+-rw-r--r--   3 spring-xd hdfs        680 2015-06-01 07:29 /xd/hdfstest/hdfstest-0.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback.&lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring XD 1.2 RC1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/02/spring-xd-1-2-rc1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mark Pollack</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2150</id>
+    <updated>2015-06-02T21:30:00Z</updated>
+    <content type="html">&lt;p&gt;On behalf of the Spring XD team, I am very pleased to announce that the Spring XD 1.2 Release Candidate is now &lt;a href="http://repo.spring.io/simple/libs-milestone-local/org/springframework/xd/spring-xd/1.2.0.RC1/spring-xd-1.2.0.RC1-dist.zip"&gt;available for download&lt;/a&gt;. You can also install using &lt;a href="http://docs.spring.io/spring-xd/docs/1.2.0.RC1/reference/html/#redhatcentos-installation"&gt;rpm&lt;/a&gt;&lt;/p&gt;&lt;p&gt;The 1.2 RC1 release includes bug fixes as well as several new features and enhancements.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Apache Ambari plugin to automate the deployment of Spring XD to a Hadoop cluster. Read more in the &lt;a href="https://spring.io/blog/2015/06/02/apache-ambari-meets-spring-xd"&gt;release blog for the plugin&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;A new Analytics tab in the UI that allows you to easily view gauges, counters, field-value counters and aggregate counters.&lt;/li&gt;
+  &lt;li&gt;Performance improvements for the Kafka Message Bus that places it on par with the performance benchmark applications that ship with Kafka. An upcoming blog will discuss XD performance in more detail&lt;/li&gt;
+  &lt;li&gt;Improved HA support for the Rabbit Message Bus, XD containers connect to the Rabbit Broker that hosts the queue that is being consumed&lt;/li&gt;
+  &lt;li&gt;Support for the Sqoop metastore and other &lt;a href="https://jira.spring.io/browse/XD-2938"&gt;Sqoop integration improvements&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Support for multiple topics in the Kafka source.&lt;/li&gt;
+  &lt;li&gt;Add rolloverTime option to HDFS sink&lt;/li&gt;
+  &lt;li&gt;Support incremental data import with jdbchdfs job&lt;/li&gt;
+  &lt;li&gt;Ability to tap Spark streaming processors&lt;/li&gt;
+  &lt;li&gt;Support arbitrary JavaMail properties in the mail source&lt;/li&gt;
+  &lt;li&gt;Several new source/sink modules
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="https://github.com/spring-projects/spring-xd-modules/tree/master/videocap"&gt;Video Capture source&lt;/a&gt; (community contributed)&lt;/li&gt;
+    &lt;li&gt;FTP source and sink (community contributed)&lt;/li&gt;
+    &lt;li&gt;&lt;a href="https://github.com/spring-projects/spring-xd-modules/tree/master/load-generator-source"&gt;load-generator&lt;/a&gt; source and &lt;a href="https://github.com/spring-projects/spring-xd-modules/tree/master/throughput"&gt;throughput&lt;/a&gt; sink&lt;/li&gt;
+    &lt;li&gt;&lt;a href="https://github.com/spring-projects/spring-xd-modules/tree/master/xslt-transformer"&gt;xslt-transformer&lt;/a&gt; (community contributed)&lt;/li&gt;
+    &lt;li&gt;&lt;a href="https://github.com/spring-projects/spring-xd-modules/tree/master/spring-xd-lang-detector"&gt;language classifier processor&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;&lt;/li&gt;
+  &lt;li&gt;The gpfdist sink is now included in the XD distribution&lt;/li&gt;
+  &lt;li&gt;Performance improvements for reactor based processor&lt;/li&gt;
+  &lt;li&gt;Support for Oracle as a batch repository&lt;/li&gt;
+  &lt;li&gt;Change from log4j to Logback logging framework&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;The full list of &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=11401&amp;version=14959"&gt;issues fixed for 1.2 RC1&lt;/a&gt; is available in JIRA.&lt;/p&gt;&lt;p&gt;Feedback is very important, so please get in touch with questions and comments via&lt;br/&gt;* &lt;a href="http://stackoverflow.com/questions/tagged/spring-xd"&gt;StackOverflow&lt;/a&gt; &lt;code&gt;spring-xd&lt;/code&gt; tag&lt;br/&gt;* &lt;a href="https://jira.spring.io/browse/XD/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel"&gt;Spring JIRA&lt;/a&gt; or &lt;a href="https://github.com/spring-projects/spring-xd/issues"&gt;GitHub Issues&lt;/a&gt;&lt;/p&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback.&lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring 4 and Java 8 adoption</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/02/spring-4-and-java-8-adoption" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Juergen Hoeller</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2151</id>
+    <updated>2015-06-02T21:25:30Z</updated>
+    <content type="html">&lt;p&gt;As Josh mentioned in &amp;ldquo;This Week in Spring&amp;rdquo; already, Eugen Paraschiv recently did a noteworthy survey on the adoption of Spring 4 and Java 8 as well as Spring Boot:&lt;br/&gt;&lt;a href="http://www.baeldung.com/java-8-spring-4-and-spring-boot-adoption"&gt;http://www.baeldung.com/java-8-spring-4-and-spring-boot-adoption&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Those are interesting numbers for us. Within the Spring universe, Java 8 adoption seems to be approaching 40%! And in terms of Spring Framework versions, Spring 4 is at 65% already, which I&amp;rsquo;m really happy to see. Even taking into account that a large part of the corporate use of Spring might not be represented in those numbers, that&amp;rsquo;s a great trend. And Pivotal&amp;rsquo;s early production support for Spring 4 on JDK 8 certainly helped in the corporate world as well.&lt;/p&gt;&lt;p&gt;It&amp;rsquo;s equally great to see that a third of the responders are using Spring Boot in the meantime. In other words, half of the Spring 4 userbase is also using Spring Boot, which is impressive for such a young project. Spring Boot&amp;rsquo;s immediate inclusion in our Spring I/O Platform with full production support last year might have boosted its adoption quite a bit. But even more importantly, it simply seems to be a fit for today&amp;rsquo;s application development challenges&amp;hellip;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>This Week in Spring  - June 2, 2015</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/02/this-week-in-spring-june-2-2015" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2148</id>
+    <updated>2015-06-02T17:33:22Z</updated>
+    <content type="html">&lt;p&gt;Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! This week I&amp;rsquo;m in New York City in advance of QCon NYC next week talking to customers and working with the local Pivotal Labs team. If you&amp;rsquo;re around &lt;a href="mailto:jlong@pivotal.io"&gt;be sure to say hi&lt;/a&gt; and let&amp;rsquo;s talk code. &lt;/p&gt;&lt;p&gt;So, as usual, we&amp;rsquo;ve got a lot to cover so let&amp;rsquo;s get to it. &lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Our pal Nicolas Frankel&amp;rsquo;s put together an awesome post on &lt;a href="http://blog.frankel.ch/spring-configuration-modularization-for-integration-testing"&gt;modularizing configuration for integration testing with Spring&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring Cloud co-lead Spencer Gibb just announced &lt;a href="https://spring.io/blog/2015/05/27/spring-cloud-consul-1-0-0-m1-available-now"&gt;that Spring Cloud Consul 1.0.0.M1 is now available&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Don&amp;rsquo;t miss Jamie O’Meara&amp;rsquo;s upcoming webinar on &lt;a href="https://spring.io/blog/2015/05/28/webinar-ci-on-the-cloud-with-jenkins-spring-and-cloud-foundry"&gt;continuous integration with Jenkins, Spring and Cloud Foundry&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check out Phil Dutson&amp;rsquo;s &lt;a href="https://spring.io/blog/2015/05/28/webinar-jstl-to-thymeleaf-transitioning-your-template"&gt;upcoming webinar on moving &lt;code&gt;.jsp&lt;/code&gt; and JSTL pages to Thymeleaf&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Integration lead Gary Russell &lt;a href="https://spring.io/blog/2015/05/28/spring-integration-4-2-milestone-1-is-available"&gt;just announced Spring Integration 4.2M1 is now available&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;check out the replay of Marten Deinum&amp;rsquo;s &lt;em&gt;awesome&lt;/em&gt; talk that looks &lt;a href="https://spring.io/blog/2015/05/28/webinar-replay-improving-your-legacy-application-with-spring"&gt;at how to modernize legacy applications with Spring &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Janne Valkealahti just announced that &lt;a href="https://spring.io/blog/2015/06/02/spring-statemachine-1-0-0-m2-released"&gt;Spring Statemachine 1.0.0.M2 has been released&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;our pal Eugen Paraschiv did an interesting &lt;a href="http://www.baeldung.com/java-8-spring-4-and-spring-boot-adoption"&gt;survey on Spring and Java 8&amp;rsquo;s latest adoption numbers &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;our pal Rafal Borowiec did a great post on &lt;a href="http://www.javacodegeeks.com/2015/05/groovier-spring-boot-integration-testing.html"&gt;using the amazing Groovy language to simplify Integration testing&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Yoichi Kikuchi put together a Japanese-language look at &lt;a href="http://yo1000.hateblo.jp/entry/2015/05/27/120647"&gt;using Spring Boot and MyBatis &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Kazuhira put together a Japanese-language post on using &lt;a href="http://d.hatena.ne.jp/Kazuhira/20150530/1432996038"&gt;Hibernate, the Spring Cache abstraction, and RedHat&amp;rsquo;s Infinispan&lt;/a&gt; distributed data grid together&lt;/li&gt;
+  &lt;li&gt;The JavaTechPoint blog has a &lt;em&gt;super&lt;/em&gt; simple &lt;a href="http://www.javatechpoint.com/spring-mvc/hello-world-spring-mvc-4-with-spring-boot-framework/"&gt;look at using Spring Boot&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Christoph Deppisch put together a nice post on &lt;a href="https://www.voxxed.com/blog/2015/05/apache-camel-integration-testing-part-2/"&gt;testing Apache Camel solutions with Spring&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Arvind Rai put together a nice look &lt;a href="http://www.concretepage.com/spring-4/spring-4-quartz-2-scheduler-integration-annotation-example-using-javaconfig"&gt;at using Spring Quartz 2 support with Java configuration&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>First Milestone of Spring Data Release Train Gosling Available</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/02/first-milestone-of-spring-data-release-train-gosling-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Christoph Strobl</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2147</id>
+    <updated>2015-06-02T16:11:00Z</updated>
+    <content type="html">&lt;p&gt;On behalf of the Spring Data team, I am happy to announce the first milestone of the Spring Data release train &lt;a href="https://github.com/spring-projects/spring-data-commons/wiki/Release-Train-Gosling"&gt;Gosling&lt;/a&gt;. The release ships with &lt;a href="https://jira.spring.io/issues/?filter=14962"&gt;164 tickets&lt;/a&gt; fixed as well as &lt;a href="https://github.com/spring-projects/spring-data-keyvalue"&gt;Spring Data KeyValue&lt;/a&gt; joining the Spring Data release train with an initial milestone. The highlights of the release include:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring 4.1 as a new minimum baseline.&lt;/li&gt;
+  &lt;li&gt;Simplified support for adding custom methods to all repositories throughout the individual modules (see this &lt;a href="https://github.com/spring-projects/spring-data-examples/tree/master/jpa/example/src/main/java/example/springdata/jpa/customall"&gt;example&lt;/a&gt;).&lt;/li&gt;
+  &lt;li&gt;Declarative ad-hoc JPA 2.1 fetch graph declarations via &lt;code&gt;@EntityGraph&lt;/code&gt; on repository methods.&lt;/li&gt;
+  &lt;li&gt;Gemfire 8.1 support including multi-index definition operations.&lt;/li&gt;
+  &lt;li&gt;SpEL expressions in &lt;code&gt;@Query&lt;/code&gt; as well as support for &lt;code&gt;$geoIntersects&lt;/code&gt; for MongoDB.&lt;/li&gt;
+  &lt;li&gt;Enhanced &lt;code&gt;ZSET&lt;/code&gt; support for Spring Data Redis including &lt;code&gt;ZRANGEBYLEX&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;A Spring Data REST module shipping the HAL browser as well as support for conditional GETs.&lt;/li&gt;
+  &lt;li&gt;Map-backed repositories (see this &lt;a href="https://github.com/spring-projects/spring-data-examples/tree/master/map"&gt;example&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;Support for Neo4J 2.2.&lt;/li&gt;
+  &lt;li&gt;Support for derived &lt;code&gt;deleteBy...&lt;/code&gt; queries and bulk updates in Spring Data Elasticsearch.&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Here are the participating modules:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring Data Commons 1.11 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-commons/1.11.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/commons/docs/1.11.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/commons/docs/1.11.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/commons/docs/1.11.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data JPA 1.9 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-jpa/1.9.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/jpa/docs/1.9.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/jpa/docs/1.9.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/jpa/docs/1.9.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data MongoDB 1.8 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-mongodb/1.8.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/mongodb/docs/1.8.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/mongodb/docs/1.8.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/mongodb/docs/1.8.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Neo4j 3.4 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-neo4j/3.4.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/neo4j/docs/3.4.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/neo4j/docs/3.4.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/neo4j/docs/3.4.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Solr 1.5 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-solr/1.5.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/solr/docs/1.5.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/solr/docs/1.5.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/solr/docs/1.5.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Couchbase 1.4 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-couchbase/1.4.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/couchbase/docs/1.4.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/couchbase/docs/1.4.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/couchbase/docs/1.4.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Cassandra 1.3 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-cassandra/1.3.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/cassandra/docs/1.3.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/cassandra/docs/1.3.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/cassandra/docs/1.3.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Elasticsearch 1.3 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-elasticsearch/1.3.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/elasticsearch/docs/1.3.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/elasticsearch/docs/1.3.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/elasticsearch/docs/1.3.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Gemfire 1.7 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-gemfire/1.7.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/gemfire/docs/1.7.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/gemfire/docs/1.7.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/gemfire/docs/1.7.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data Redis 1.6 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-redis/1.6.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/redis/docs/1.6.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/redis/docs/1.6.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/redis/docs/1.6.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data REST 2.4 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-rest-webmvc/2.4.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/rest/docs/2.4.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/rest/docs/2.4.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/rest/docs/2.4.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Data KeyValue 1.0 M1 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-keyvalue/1.0.0.M1"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/keyvalue/docs/1.0.0.M1/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/keyvalue/docs/1.0.0.M1/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/keyvalue/docs/1.0.0.M1/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Be sure to check out the &lt;a href="https://github.com/spring-projects/spring-data-examples"&gt;already updated examples&lt;/a&gt;. Get in touch via &lt;a href="https://twitter.com/springdata"&gt;Twitter&lt;/a&gt;, &lt;a href="http://stackoverflow.com/questions/tagged/spring-data"&gt;StackOverflow&lt;/a&gt; or &lt;a href="https://jira.spring.io/"&gt;JIRA&lt;/a&gt;. We&amp;rsquo;re looking forward to your feedback!&lt;/p&gt;
+&lt;hr/&gt;&lt;h2&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h2&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback. &lt;/p&gt;&lt;h2&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Statemachine 1.0.0.M2 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/02/spring-statemachine-1-0-0-m2-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Janne Valkealahti</name>
+    </author>
+    <id>tag:spring.io,2015-06-02:2145</id>
+    <updated>2015-06-02T08:28:00Z</updated>
+    <content type="html">&lt;p&gt;We’re pleased to announce a second milestone release of &lt;a href="http://projects.spring.io/spring-statemachine/"&gt;Spring Statemachine&lt;/a&gt; 1.0.0.M2.&lt;/p&gt;&lt;p&gt;With this milestone we focused on features in regions and pseudostates. Regions provide more sophisticated functionality for a parallel execution of a states machines and pseudostates will bring more functionality for working with initial, terminate, history, choice, fork and join states.&lt;/p&gt;&lt;p&gt;One might ask what is a region and how it works with a state machine. A state machine is a specialization of a region where orthogonal regions are composed of a multiple independent state machines. This is a difficult concept to understand so we did a sample to demonstrate this feature.&lt;/p&gt;&lt;p&gt;&lt;img src="http://docs.spring.io/spring-statemachine/docs/1.0.0.M2/reference/htmlsingle/images/statechart5.png" alt="Tasks Statechart" /&gt;&lt;/p&gt;&lt;p&gt;Above statechart is showing a usual concept of how a group of tasks are executed during a workflow. Executing a multiple tasks means that if one of these tasks will fail, executing of tasks again cannot continue unless a failure reason is fixed. These failures can be either fixed automatically or state machine is put into a manual state where user level intervention is required. Only after that a state machine can go back to its main state where all tasks can be executed again.&lt;/p&gt;&lt;p&gt;One useful concept in a state machine is a history state. This pseudostate is recording last active state of a statemachine and returning into that state will restore active state configuration. Concept of this is shown below(we know that washer is able to continue from its last state when power is restored) and more detailed description can be found from a reference documentation.&lt;/p&gt;&lt;p&gt;&lt;img src="http://docs.spring.io/spring-statemachine/docs/1.0.0.M2/reference/htmlsingle/images/statechart6.png" alt="Washer Statechart" /&gt;&lt;/p&gt;&lt;p&gt;Where do we go from here? With a next milestone we&amp;rsquo;re going to tackle features like:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Better stability and speed&lt;/li&gt;
+  &lt;li&gt;Relax requirement of using enums for states and events.&lt;/li&gt;
+  &lt;li&gt;Adding error handling for state machine execution.&lt;/li&gt;
+  &lt;li&gt;Better support for Spring SpEL for actions and guards.&lt;/li&gt;
+  &lt;li&gt;Better programmatic instantiation of a state machine.&lt;/li&gt;
+  &lt;li&gt;New concept of using a recipes for easy state machine usage. Tasks example above is a good example where we can provide recipes for usual state machine use cases.&lt;/li&gt;
+&lt;/ul&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback.&lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Webinar Replay:  Improving your (legacy) Application with Spring</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/28/webinar-replay-improving-your-legacy-application-with-spring" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2015-05-28:2143</id>
+    <updated>2015-05-28T15:26:00Z</updated>
+    <content type="html">&lt;p&gt;Speaker: Marten Deinum &lt;/p&gt;
+&lt;p&gt;Slides: &lt;a href="https://speakerdeck.com/mdeinum/improving-legacy-applications-with-spring"&gt;https://speakerdeck.com/mdeinum/improving-legacy-applications-with-spring&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Source Code:  &lt;a href="https://github.com/mdeinum/legacy-app"&gt;https://github.com/mdeinum/legacy-app&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; Spring has been around since the release of “J2EE Design and Development” in 2002. Spring and Java have evolved quite a bit since that time. In those years a lot of applications have been developed. All those &amp;quot;legacy&amp;quot; applications that are around have proven their value and that is why they lasted. In this session we will explore how we can improve our legacy applications by doing some refactoring or redesign (component based development) but also by introducing (newer) Spring IO technologies.&lt;/p&gt;
+&lt;p&gt;Learn about about Spring Framework at &lt;a href="http://projects.spring.io/spring-framework"&gt;http://projects.spring.io/spring-framework&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;iframe width="420" height="315" src="https://www.youtube.com/embed/l_OSNsPd8cg" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt; &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Integration 4.2 Milestone 1 is Available</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/28/spring-integration-4-2-milestone-1-is-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Gary Russell</name>
+    </author>
+    <id>tag:spring.io,2015-05-26:2137</id>
+    <updated>2015-05-28T15:09:00Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce that the first milestone of Spring Integration 4.2 is now available (4.2.0.M1).&lt;/p&gt;&lt;p&gt;This release includes:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A significant overhaul of the JMX support in the framework, providing performance and other improvements when JMX is enabled&lt;/li&gt;
+  &lt;li&gt;A preview of STOMP client-side channel adapters based on the support in Spring Framework 4.2&lt;/li&gt;
+  &lt;li&gt;A mongodb metadata store&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;@SecuredChannel&lt;/code&gt; annotation&lt;/li&gt;
+  &lt;li&gt;Conditional Pollers - the polling interval can be adjusted dynamically, based on the results of (or before executing) the current poll&lt;/li&gt;
+  &lt;li&gt;Cross Origin Resource Sharing (CORS) support in the http inbound gateway&lt;/li&gt;
+  &lt;li&gt;Many internal improvements&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;For complete contents of the release, see the &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=10121&amp;version=14855"&gt;JIRA release notes&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;As we move towards to the 4.2 GA release (close to SpringOne 2GX), keep an eye out for other announcements; we expect significant work on Kafka, Cassandra, Zookeeper support and more; some of these will remain as extensions while others may be brought into the core project.&lt;/p&gt;&lt;p&gt;Spring Integration 4.1.4 was released recently too &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=10121&amp;version=14990"&gt;including a few important bug fixes&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;For links to downloads and documentation, see &lt;a href="http://projects.spring.io/spring-integration/"&gt;the project home page&lt;/a&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback. &lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Webinar: JSTL to Thymeleaf: Transitioning Your Template</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/28/webinar-jstl-to-thymeleaf-transitioning-your-template" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2015-05-28:2142</id>
+    <updated>2015-05-28T07:41:00Z</updated>
+    <content type="html">&lt;p&gt;Speaker: Phil Dutson, ICON Heath and Fitness &lt;/p&gt;
+&lt;p&gt;Thymeleaf is a fantastic template engine that can help you create sites faster and get code shipped. There exists however a problem, using th e template engine requires a mind-shift in how to get &amp;quot;normal&amp;quot; tasks accomplished. This leaves many developers in the lurch and frustrated. In this talk I will cover the common pitfalls that developers can avoid and give examples on how to solve the common problems encountered when switching from the venerable JSTL to Thymeleaf.&lt;/p&gt;&lt;p&gt;Tuesday, June 30th, 2015 3:00PM GMT (London GMT +01:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_7AMJSTLtoThymeleafTransitioningYourTemplate_Register.html"&gt;Register&lt;/a&gt;&lt;br/&gt;&lt;p&gt;Tuesday, June 30th, 2015 10:00AM PDT (San Francisco GMT-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webiar_10AMJSTLtoThymeleafTransitioningYourTemplate_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Webinar: CI on the Cloud with Jenkins, Spring and Cloud Foundry</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/28/webinar-ci-on-the-cloud-with-jenkins-spring-and-cloud-foundry" />
+    <category term="news" label="News and Events" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2015-05-28:2141</id>
+    <updated>2015-05-28T07:37:00Z</updated>
+    <content type="html">&lt;p&gt;CI on the Cloud with Jenkins, Spring and Cloud Foundry&lt;/p&gt;
+&lt;p&gt;Speaker: Jamie O’Meara, Pivotal&lt;/p&gt;
+&lt;p&gt; This presentation will highlight an integrated development process that involves Spring code built with CloudBees Jenkins Enterprise and deployed to CloudFoundry. A software lifecycle of continuous delivery from source code control (Git) to Jenkins build (Maven and Gradle) to live deployment on a Cloud Foundry instance will be shown. We will demo using Jenkins to do a blue/green application deployment. With a Cloud Foundry blue/green Jenkins deployment, you can push a new version of the application and have a software router add that to an existing version of the application's route. The two versions are then load-balanced, allowing for testing of the new version and easy replacement or fall-back to the existing version. Developers can run builds on private and public clouds with deploy to either/both Jenkins running on a PaaS and integrated into the PaaS. We will run a hands-on demo and show the beauty and simplicity of an integrated build pipeline with Spring, Jenkins and Cloud Foundry.&lt;/p&gt;&lt;p&gt;Tuesday, June 23rd, 2015 3:00PM GMT (London GMT +01:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_7AMCIontheCloudwithJenkinsSpringandCloudFoundry_Register.html"&gt;Register&lt;/a&gt;&lt;br/&gt;&lt;p&gt;Tuesday, June 23rd, 2015 10:00AM PDT (San Francisco GMT-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_10AMCIontheCloudwithJenkinsSpringandCloudFoundry_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Cloud Consul 1.0.0.M1 Available Now</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/27/spring-cloud-consul-1-0-0-m1-available-now" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Spencer Gibb</name>
+    </author>
+    <id>tag:spring.io,2015-05-26:2138</id>
+    <updated>2015-05-27T15:42:00Z</updated>
+    <content type="html">&lt;p&gt;&lt;a href="https://consul.io/intro/index.html"&gt;Consul&lt;/a&gt; is a system for discovering and configuring services in your infrastructure. It was built by &lt;a href="https://hashicorp.com/"&gt;Hashicorp&lt;/a&gt;, the same smart folks that created &lt;a href="https://www.vagrantup.com"&gt;Vagrant&lt;/a&gt; and &lt;a href="https://www.packer.io"&gt;Packer&lt;/a&gt;. Consul provides services such as Service Discovery, Health Checking, Key/Value Store all while supporting multiple datacenters out of the box.&lt;/p&gt;&lt;p&gt;&lt;a href="http://projects.spring.io/spring-cloud/spring-cloud-consul"&gt;Spring Cloud Consul&lt;/a&gt; aims to bring all of those features to the &lt;a href="http://projects.spring.io/spring-cloud/"&gt;Spring Cloud&lt;/a&gt; ecosystem. The project has reached its first milestone and fresh jars are available in the &lt;a href="http://repo.spring.io/libs-milestone-local"&gt;repo.spring.io&lt;/a&gt; repository. Spring Cloud Consul provides the following features:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;p&gt;Spring Cloud Consul Discovery: An implementation of the Spring Cloud Commons &lt;a href="https://github.com/spring-cloud/spring-cloud-commons/blob/master/spring-cloud-commons/src/main/java/org/springframework/cloud/client/discovery/DiscoveryClient.java"&gt;&lt;code&gt;DiscoveryClient&lt;/code&gt;&lt;/a&gt;. Service registration and discovery are performed via the Consul &lt;a href="https://consul.io/docs/agent/http.html"&gt;HTTP API&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;Spring Cloud Consul Config: Distributed configuration via the Consul &lt;a href="https://consul.io/docs/agent/http/kv.html"&gt;Key/Value API&lt;/a&gt;. This behaves similarly to the &lt;a href="https://github.com/spring-cloud/spring-cloud-config#spring-cloud-config-client"&gt;Spring Cloud Config Client&lt;/a&gt;, but is backed by the distributed Consul KV Store.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;Spring Cloud Consul Bus: An event bus for linking services and service instances together with distributed messaging. Useful for propagating state changes across a cluster (e.g. config change events). This is implemented using the Consul &lt;a href="https://consul.io/docs/agent/http/event.html"&gt;Event API&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;Spring Cloud Consul UI: An embedded version of the &lt;a href="https://www.consul.io/intro/getting-started/ui.html"&gt;Consul Web UI&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;All of the above have the 1.0.0.M1 release tag, to get started include the following artifacts in your &lt;code&gt;pom.xml&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint xml"&gt;&amp;lt;dependency&amp;gt;&#xD;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+  &amp;lt;artifactId&amp;gt;spring-cloud-consul-config&amp;lt;/artifactId&amp;gt;&#xD;
+  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
+&amp;lt;/dependency&amp;gt;&#xD;
+&amp;lt;dependency&amp;gt;&#xD;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+  &amp;lt;artifactId&amp;gt;spring-cloud-consul-discovery&amp;lt;/artifactId&amp;gt;&#xD;
+  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
+&amp;lt;/dependency&amp;gt;&#xD;
+&amp;lt;dependency&amp;gt;&#xD;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+  &amp;lt;artifactId&amp;gt;spring-cloud-consul-bus&amp;lt;/artifactId&amp;gt;&#xD;
+  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
+&amp;lt;/dependency&amp;gt;&#xD;
+&amp;lt;dependency&amp;gt;&#xD;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+  &amp;lt;artifactId&amp;gt;spring-cloud-consul-ui&amp;lt;/artifactId&amp;gt;&#xD;
+  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Follow &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc#install-consul"&gt;the documentation&lt;/a&gt; to make sure Consul is installed and running.&lt;/p&gt;&lt;p&gt;A sample application that might look like the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@SpringBootApplication&#xD;
+@EnableDiscoveryClient&#xD;
+@EnableConsulUi&#xD;
+@RestController&#xD;
+public class SampleApp2 {&#xD;
+&#xD;
+  @RequestMapping(&amp;quot;/&amp;quot;)&#xD;
+  public String hello() {&#xD;
+    return &amp;quot;Hello World&amp;quot;;&#xD;
+  }&#xD;
+&#xD;
+  public static void main(String[] args) {&#xD;
+    SpringApplication.run(SampleApplication.class, args);&#xD;
+  }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After running your app, hit &lt;code&gt;http://localhost:8080/ui&lt;/code&gt; to see the consul ui.&lt;/p&gt;&lt;p&gt;The &lt;a href="https://github.com/spring-cloud/spring-cloud-consul"&gt;code&lt;/a&gt; is hosted on github, and community contributions are extremely welcome, so get on over there are check it out. There is a sample in &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/tree/master/spring-cloud-consul-sample"&gt;spring-cloud-consul-sample&lt;/a&gt;. Instructions to run the sample are included in the &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/blob/master/README.adoc"&gt;README&lt;/a&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback. I&amp;rsquo;ll be speaking about Spring Cloud Consul, watch &lt;a href="https://2015.event.springone2gx.com/presenters/spencer_gibb.html"&gt;here&lt;/a&gt; for future details. Check recent blog posts to see what I mean and there is more to come!&lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
+  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
+  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>This Week in Spring - May 26th, 2015</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/27/this-week-in-spring-may-26th-2015" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2015-05-27:2139</id>
+    <updated>2015-05-27T04:17:03Z</updated>
+    <content type="html">&lt;p&gt;Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! There is a lot to talk about, so let&amp;rsquo;s get to it!&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;First, the big news! Spring framework lead and OG Spring Guy Juergen Hoeller just announced that &lt;a href="http://spring.io/blog/2015/05/26/spring-framework-4-2-goes-rc1"&gt;Spring framework 4.2 RC1&lt;/a&gt; is now available! This new release includes lots of amazing new features so be sure to check it out! It includes anotation detection on Java 8 default methods, annotation-based application events, first-class annotation attibute aliases, nest path processing for direct field binding, data binding and conversion for JSR 354 (money and currency), Hibernate ORM 5.0 support (via JPA and natively), a STOMP client for use over TCP and WebSocket channels, &lt;code&gt;Listenable&lt;/code&gt;/&lt;code&gt;CompletableFuture&lt;/code&gt; as a message handler return value, CORS and declarative HTTP caching support, and much more. Get the bits, try it out, let&amp;rsquo;s make sure this is the best release yet!&lt;/li&gt;
+  &lt;li&gt;Spring Cloud Connectors lead Scott Frederick just announced that the &lt;a href="http://spring.io/blog/2015/05/22/spring-cloud-connectors-1-2-0-rc1-released"&gt;Spring Cloud Connectors 1.2.0 RC1&lt;/a&gt; has been released. The new release includes many, backwards compatible, changes and upgrades including support for HikariCP as a connection pool and a fix that removes the dreaded &lt;code&gt;ClassNotFoundException&lt;/code&gt; in certain rare circumstances! This upgrade is definitely worth an upgrade!&lt;/li&gt;
+  &lt;li&gt;Spring Data ninja and Spring for Apache Hadoop lead Thomas Risberg just announced &lt;a href="http://spring.io/blog/2015/05/21/spring-for-apache-hadoop-2-2-rc1-released"&gt;the last planned Spring for Apache Hadoop milestone release before 2.2.GA&lt;/a&gt; in approxmately 2 weeks. This release includes Cloudera CDH support, Hortonworks HDP 2.2 and 2.2.4.0 support, an updated Kite SDK, improvements to HDFS writer to support syncable writes and a new timeout option, and - usefully - this release requires Java 7 or greater.&lt;/li&gt;
+  &lt;li&gt;Check out Marius Bogoevici and Dr. Mark Pollack&amp;rsquo;s amazing webinar on &lt;a href="http://spring.io/blog/2015/05/20/webinar-replay-reactive-data-pipelines-with-spring-xd-and-kafka"&gt;reactive pipelines with Spring XD and Kafka&lt;/a&gt; from last week! Even if you saw it, you&amp;rsquo;ll want to check it out again. This one was filled with good stuff.&lt;/li&gt;
+  &lt;li&gt;Your humble author has been honored with the title of &lt;a href="https://blogs.oracle.com/java/entry/new_java_champion_josh_long"&gt;Java Champion&lt;/a&gt;. This title is bestowed on those who help advance the Java platform and nominations are made by other &lt;a href="https://java.net/website/java-champions/bios.html"&gt;Java champions&lt;/a&gt;. It is a rarified group and I don&amp;rsquo;t know that I&amp;rsquo;m worthy. I only mention it because it is the camaraderie I share with you - the most amazing community in the world - that makes it fun and exciting to keep doing it. Thank you my friends. &lt;em&gt;This Week in Spring&lt;/em&gt; is an almost 5 year chronicle of all the amazing things the community does to teach and inspire me and others. Thank you!&lt;/li&gt;
+  &lt;li&gt;ChargeAhead has an interesting two-part video of building a Spring Boot-based Spring MVC application. Here&amp;rsquo;s &lt;a href="https://www.youtube.com/watch?v=vgPkUVF862g"&gt;part 1&lt;/a&gt; and here&amp;rsquo;s &lt;a href="https://www.youtube.com/watch?v=BKF5eqPaIjU"&gt;part 2&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Driss Amri&lt;br/&gt; put together a nice post on &lt;a href="https://drissamri.be/blog/2015/05/21/spring-security-and-spring-session/"&gt;getting started with Spring Security, Spring Session and Redis &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://www.youtube.com/watch?v=2aF5MoSci0U"&gt;Jose Diaz put together a video on using Angular.js, Twitter Bootstrap, Spring MVC, Spring Data and Spring Security together&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Cloud product manager Matt Stine put together a wonderful look at Spring Cloud &lt;a href="http://www.infoworld.com/article/2925047/application-development/build-self-healing-distributed-systems-with-spring-cloud.html"&gt;in this InfoWorld post&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;The &lt;em&gt;Learning the code way&lt;/em&gt; blog has a post on how to &lt;a href="http://learningviacode.blogspot.com/2015/05/introducing-database-to-spring-batch.html"&gt;configure Spring Batch&amp;rsquo;s metadata database &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+</feed>
