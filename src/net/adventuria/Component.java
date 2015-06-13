@@ -5,9 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+
 import javax.swing.JFrame;
 
-import net.adventuria.character.Character;
+import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.gui.GUI;
@@ -15,6 +16,7 @@ import net.adventuria.keyboard.Listening;
 import net.adventuria.level.Level;
 import net.adventuria.level.Sky;
 import net.adventuria.level.Tile;
+import net.adventuria.location.Location;
 
 public class Component
   extends Applet
@@ -39,7 +41,7 @@ public class Component
   public static boolean isRightMouseButton = false;
   private Image screen;
   public static Level level;
-  public static Character character;
+  public static EntityPlayer character;
   public static Inventory inventory;
   public static Sky sky;
   public static GUI gui;
@@ -65,7 +67,7 @@ public class Component
 		e.printStackTrace();
 	}
     level = new Level();
-    character = new Character(Tile.tileSize, Tile.tileSize * 2);
+    character = new EntityPlayer(new Location(Component.pixel.width / 2 - 20 / 2, Component.pixel.height / 2 - 40 / 2));
     inventory = new Inventory();
     sky = new Sky();
     gui = new GUI();

@@ -2,9 +2,11 @@ package net.adventuria.entity.player;
 
 import java.awt.Graphics;
 import java.awt.Point;
+
 import net.adventuria.Component;
 import net.adventuria.block.BlockID;
 import net.adventuria.entity.EntityHuman;
+import net.adventuria.entity.EntityID;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.level.Tile;
 import net.adventuria.location.Location;
@@ -24,7 +26,7 @@ public class EntityPlayer extends EntityHuman
 	
 	  public EntityPlayer(Location loc)
 	  {
-		  super(loc);
+		  super(loc, EntityID.PLAYER);
 	  }
 	  
 	  @Override
@@ -110,12 +112,13 @@ public class EntityPlayer extends EntityHuman
 	    return false;
 	  }
 	  
+	  @Override
 	  public void Render(Graphics g)
 	  {
 	    if (Component.dir == this.movementSpeed) {
-	      g.drawImage(Tile.tileset_terrain, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, Tile.Character[0] * Tile.tileSize + Tile.tileSize * this.animation, Tile.Character[1] * Tile.tileSize, Tile.Character[0] * Tile.tileSize + Tile.tileSize * this.animation + (int)this.width, Tile.Character[1] * Tile.tileSize + (int)this.height, null);
+	      g.drawImage(Tile.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize + (int)this.height, null);
 	    } else {
-	      g.drawImage(Tile.tileset_terrain, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, Tile.Character[0] * Tile.tileSize + Tile.tileSize * this.animation + (int)this.width, Tile.Character[1] * Tile.tileSize, Tile.Character[0] * Tile.tileSize + Tile.tileSize * this.animation, Tile.Character[1] * Tile.tileSize + (int)this.height, null);
+	      g.drawImage(Tile.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize + (int)this.height, null);
 	    }
 	  }
 	}

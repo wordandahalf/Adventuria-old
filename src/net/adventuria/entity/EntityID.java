@@ -8,7 +8,7 @@ public enum EntityID
 	COW(11, new int[] {0, 0}, "Cow"),
 	SHEEP(12, new int[] {0, 0}, "Sheep"),
 	CHICKEN(13, new int[] {0, 0}, "Chicken"),
-	PLAYER(255, new int[] {0, 0}, "Player");
+	PLAYER(255, new int[] {0, 18}, "Player");
 	
 	
 	private int ID = 0;

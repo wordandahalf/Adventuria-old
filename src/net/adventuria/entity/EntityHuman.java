@@ -8,9 +8,9 @@ import net.adventuria.location.Location;
 
 public class EntityHuman extends EntityLiving 
 {
-	public EntityHuman(Location loc)
+	public EntityHuman(Location loc, EntityID ID)
 	{
-		super(loc, EntityID.PLAYER);
+		super(loc, ID);
 	}
 
 	@Override

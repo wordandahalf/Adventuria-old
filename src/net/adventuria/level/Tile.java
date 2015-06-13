@@ -9,7 +9,6 @@ import net.adventuria.errorHandler.MissingAssetsException;
 public class Tile
 {
   public static int tileSize = 20;
-  public static int[] Character = {0, 18};
   
   public static BufferedImage tileset_terrain;
   public static BufferedImage tile_cell;

@@ -2,12 +2,11 @@ package net.adventuria.gui;
 
 import java.awt.Graphics;
 import net.adventuria.Component;
-import net.adventuria.character.Character;
 import net.adventuria.particle.Particle;
 
 public class HealthBar
 {
-  public static int heartAmount = Character.health / 2;
+  public static int heartAmount = Component.character.getHealth() / 2;
   public static int heartSpace = 10;
   public static Particle[] hearts = new Particle[heartAmount];
   
