@@ -6,8 +6,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import net.adventuria.Component;
+import net.adventuria.assets.AssetManager;
 import net.adventuria.block.BlockID;
-import net.adventuria.level.Tile;
+import net.adventuria.block.Block;
 
 public class Inventory
 {
@@ -51,7 +52,7 @@ public class Inventory
     }
     if ((currentHeldItemID != BlockID.AIR) && (currentHeldItemCount != 0))
     {
-      g.drawImage(Tile.tileset_terrain, Component.mouse.x / Component.pixelSize, Component.mouse.y / Component.pixelSize, Tile.tileSize + Component.mouse.x / Component.pixelSize, Tile.tileSize + Component.mouse.y / Component.pixelSize, currentHeldItemID.getTextureID()[0] * Tile.tileSize, currentHeldItemID.getTextureID()[1] * Tile.tileSize, currentHeldItemID.getTextureID()[0] * Tile.tileSize + Tile.tileSize, currentHeldItemID.getTextureID()[1] * Tile.tileSize + Tile.tileSize, null);
+      g.drawImage(AssetManager.tileset_terrain, Component.mouse.x / Component.pixelSize, Component.mouse.y / Component.pixelSize, Block.tileSize + Component.mouse.x / Component.pixelSize, Block.tileSize + Component.mouse.y / Component.pixelSize, currentHeldItemID.getTextureID()[0] * Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize, currentHeldItemID.getTextureID()[0] * Block.tileSize + Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize + Block.tileSize, null);
       g.drawString("" + currentHeldItemCount, Component.mouse.x / Component.pixelSize + 3, Component.mouse.y / Component.pixelSize + 19);
     }
   }

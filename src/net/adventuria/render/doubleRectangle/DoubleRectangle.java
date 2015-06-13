@@ -1,6 +1,6 @@
 package net.adventuria.render.doubleRectangle;
 
-import net.adventuria.level.Tile;
+import net.adventuria.block.Block;
 import net.adventuria.location.Location;
 
 public class DoubleRectangle
@@ -21,11 +21,11 @@ public class DoubleRectangle
   {
 	if(type == 0)
 	{
-		setBounds(loc.getX(), loc.getY(), Tile.tileSize, Tile.tileSize * 2);
+		setBounds(loc.getX(), loc.getY(), Block.tileSize, Block.tileSize * 2);
 	}
 	else
 	{
-		setBounds(loc.getX(), loc.getY(), Tile.tileSize * 2, Tile.tileSize);
+		setBounds(loc.getX(), loc.getY(), Block.tileSize * 2, Block.tileSize);
 	}
   }
   
@@ -36,13 +36,13 @@ public class DoubleRectangle
 
     if(type == 0)
     {
-    	width = Tile.tileSize;
-    	height = Tile.tileSize * 2;
+    	width = Block.tileSize;
+    	height = Block.tileSize * 2;
     }
     else
     {
-    	width = Tile.tileSize * 2;
-    	height = Tile.tileSize;
+    	width = Block.tileSize * 2;
+    	height = Block.tileSize;
     }
   }
   

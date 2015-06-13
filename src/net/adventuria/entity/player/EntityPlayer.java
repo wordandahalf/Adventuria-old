@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import net.adventuria.Component;
+import net.adventuria.assets.AssetManager;
+import net.adventuria.block.Block;
 import net.adventuria.block.BlockID;
 import net.adventuria.entity.EntityHuman;
 import net.adventuria.entity.EntityID;
 import net.adventuria.gui.inventory.Inventory;
-import net.adventuria.level.Tile;
 import net.adventuria.location.Location;
 
 public class EntityPlayer extends EntityHuman
@@ -98,11 +99,11 @@ public class EntityPlayer extends EntityHuman
 	  
 	  public boolean isCollidingWithBlock(Point pt1, Point pt2)
 	  {
-	    for (int x = (int)(this.x / Tile.tileSize); x < (int)(this.x / Tile.tileSize) + 3; x++) {
-	      for (int y = (int)(this.y / Tile.tileSize); y < (int)(this.y / Tile.tileSize) + 3; y++) {
-	        if ((x >= 0) && (y >= 0) && (x < Component.level.Block.length) && (y < Component.level.Block[0].length)) {
-	          if ((Component.level.Block[x][y].getID() != BlockID.AIR) && (Component.level.Block[x][y].getID() != BlockID.WATERSOURCE)) {
-	            if ((Component.level.Block[x][y].contains(pt1)) || (Component.level.Block[x][y].contains(pt2))) {
+	    for (int x = (int)(this.x / Block.tileSize); x < (int)(this.x / Block.tileSize) + 3; x++) {
+	      for (int y = (int)(this.y / Block.tileSize); y < (int)(this.y / Block.tileSize) + 3; y++) {
+	        if ((x >= 0) && (y >= 0) && (x < Component.level.Blocks.length) && (y < Component.level.Blocks[0].length)) {
+	          if ((Component.level.Blocks[x][y].getID() != BlockID.AIR) && (Component.level.Blocks[x][y].getID() != BlockID.WATERSOURCE)) {
+	            if ((Component.level.Blocks[x][y].contains(pt1)) || (Component.level.Blocks[x][y].contains(pt2))) {
 	              return true;
 	            }
 	          }
@@ -116,9 +117,9 @@ public class EntityPlayer extends EntityHuman
 	  public void Render(Graphics g)
 	  {
 	    if (Component.dir == this.movementSpeed) {
-	      g.drawImage(Tile.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize + (int)this.height, null);
+	      g.drawImage(AssetManager.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
 	    } else {
-	      g.drawImage(Tile.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize, EntityID.PLAYER.getTextureID()[0] * Tile.tileSize + Tile.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Tile.tileSize + (int)this.height, null);
+	      g.drawImage(AssetManager.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
 	    }
 	  }
 	}

@@ -8,6 +8,8 @@ import java.awt.Point;
 
 import javax.swing.JFrame;
 
+import net.adventuria.assets.AssetManager;
+import net.adventuria.block.Block;
 import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.gui.inventory.Inventory;
@@ -15,12 +17,9 @@ import net.adventuria.gui.GUI;
 import net.adventuria.keyboard.Listening;
 import net.adventuria.level.Level;
 import net.adventuria.level.Sky;
-import net.adventuria.level.Tile;
 import net.adventuria.location.Location;
 
-public class Component
-  extends Applet
-  implements Runnable
+public class Component extends Applet implements Runnable
 {
   private static final long serialVersionUID = 1L;
   public static int pixelSize = 2;
@@ -60,7 +59,7 @@ public class Component
   {
     try
     {
-		new Tile();
+		new AssetManager();
 	}
     catch (MissingAssetsException e)
     {
@@ -105,7 +104,7 @@ public class Component
     if ((frame.getWidth() != realSize.width) || (frame.getHeight() != realSize.height)) {
       frame.pack();
     }
-    level.Tick((int)sX, (int)sY, pixel.width / Tile.tileSize + 2, pixel.height / Tile.tileSize + 2);
+    level.Tick((int)sX, (int)sY, pixel.width / Block.tileSize + 2, pixel.height / Block.tileSize + 2);
     character.Tick();
     sky.Tick();
   }
@@ -117,7 +116,7 @@ public class Component
     sky.Render(g);
     
     character.Render(g);
-    level.Render(g, (int)sX, (int)sY, pixel.width / Tile.tileSize + 2, pixel.height / Tile.tileSize + 2);
+    level.Render(g, (int)sX, (int)sY, pixel.width / Block.tileSize + 2, pixel.height / Block.tileSize + 2);
     inventory.Render(g);
     gui.Render(g);
     

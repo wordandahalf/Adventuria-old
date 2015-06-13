@@ -15,6 +15,7 @@ public abstract class EntityLiving extends DoubleRectangle implements EntityBase
 		
 		this.loc = loc;
 		this.ID = ID;
+		this.health = ID.getDefaultHealth();
 	}
 	
 	public Location getLocation()

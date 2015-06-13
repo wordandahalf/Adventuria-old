@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import net.adventuria.block.BlockID;
-import net.adventuria.level.Tile;
+import net.adventuria.assets.AssetManager;
+import net.adventuria.block.*;
 
 public class Cell
   extends Rectangle
@@ -28,14 +28,14 @@ public class Cell
   {
     g.setColor(Color.WHITE);
     
-    g.drawImage(Tile.tile_cell, this.x, this.y, this.width, this.height, null);
+    g.drawImage(AssetManager.tile_cell, this.x, this.y, this.width, this.height, null);
     if (this.ID != BlockID.AIR)
     {
-      g.drawImage(Tile.tileset_terrain, this.x + Inventory.invItemBorder, this.y + Inventory.invItemBorder, this.x - Inventory.invItemBorder + this.width, this.y - Inventory.invItemBorder + this.height, this.ID.getTextureID()[0] * Tile.tileSize, this.ID.getTextureID()[1] * Tile.tileSize, this.ID.getTextureID()[0] * Tile.tileSize + this.width - 5, this.ID.getTextureID()[1] * Tile.tileSize + this.height - 5, null);
+      g.drawImage(AssetManager.tileset_terrain, this.x + Inventory.invItemBorder, this.y + Inventory.invItemBorder, this.x - Inventory.invItemBorder + this.width, this.y - Inventory.invItemBorder + this.height, this.ID.getTextureID()[0] * Block.tileSize, this.ID.getTextureID()[1] * Block.tileSize, this.ID.getTextureID()[0] * Block.tileSize + this.width - 5, this.ID.getTextureID()[1] * Block.tileSize + this.height - 5, null);
       g.drawString("" + this.Count, this.x + 7, this.y + 20);
     }
     if (isSelected) {
-      g.drawImage(Tile.tile_select, this.x - 1, this.y - 1, this.width + 2, this.height + 2, null);
+      g.drawImage(AssetManager.tile_select, this.x - 1, this.y - 1, this.width + 2, this.height + 2, null);
     }
   }
 }
