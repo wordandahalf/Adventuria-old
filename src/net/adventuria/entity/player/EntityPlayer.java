@@ -2,7 +2,6 @@ package net.adventuria.entity.player;
 
 import java.awt.Graphics;
 import java.awt.Point;
-
 import net.adventuria.Component;
 import net.adventuria.block.BlockID;
 import net.adventuria.entity.EntityHuman;
@@ -28,6 +27,7 @@ public class EntityPlayer extends EntityHuman
 		  super(loc);
 	  }
 	  
+	  @Override
 	  public void Tick()
 	  {
 	    if ((!this.isJumping) && (!isCollidingWithBlock(new Point((int)this.x + 2, (int)(this.y + this.height)), new Point((int)(this.x + this.width - 2.0D), (int)(this.y + this.height)))))
