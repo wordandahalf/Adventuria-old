@@ -27,7 +27,7 @@ public class Tile
       tile_cell = ImageIO.read(new File("res/tile_cell.png"));
       tile_select = ImageIO.read(new File("res/tile_select.png"));
       tileset_entity = ImageIO.read(new File("res/tileset_entity.png"));
-      tileset_item = ImageIO.read(new File("res/tilset_item.png"));
+      tileset_item = ImageIO.read(new File("res/tileset_item.png"));
     }
     catch (IOException e)
     {
