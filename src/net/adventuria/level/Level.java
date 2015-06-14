@@ -31,67 +31,28 @@ public class Level
   
   public void Building(int camX, int camY, int renW, int renH)
   {
+	if(Mouse.isLeftButtonClicked())
+	{
+		if(!Inventory.isOpen)
+		{
+			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH)
+			{
+				if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()) != BlockID.AIR)
+				{
+					if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getHardness() < 128)
+					{
+						Component.inventory.addItemToInventory(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()));
+						this.setBlock(BlockID.AIR, Mouse.getBlockX(), Mouse.getBlockY());
+					}
+				}
+			}
+		}
+	}
 	
-    if ((Mouse.isLeftButton()) || (Mouse.isRightButton())) {
-      for (int x = camX / Block.tileSize; x < camX / Block.tileSize + renW; x++) {
-        for (int y = camY / Block.tileSize; y < camY / Block.tileSize + renH; y++) {
-          if ((x >= 0) && (y >= 0) && (x < worldW) && (y < worldH)) {
-            if ((this.Blocks[x][y].contains(new Point(Mouse.getX() / Component.pixelSize + (int)Component.sX, Mouse.getY() / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID().getHardness() < 128))
-            {
-              BlockID sid = Inventory.invHotBar[Inventory.selected].ID;
-              if ((Mouse.isLeftButton()) && (!Inventory.isOpen))
-              {
-                if (this.Blocks[x][y].getID() == BlockID.AIR)
-                {
-                  break;
-                }
-                if (Component.inventory.findOpenSlot(this.Blocks[x][y].getID()) == -1)
-                {
-                  break;
-                }
-                if ((this.Blocks[x][y].getID() != BlockID.AIR) && (this.Blocks[x][y].getID() != BlockID.WATERSOURCE))
-                {
-                  Component.inventory.addItemToInventory(this.Blocks[x][y].getID());
-                }
-                
-                this.Blocks[x][y].setID(BlockID.AIR);
-                
-                break;
-              }
-              if ((!Mouse.isRightButton()) || (Inventory.isOpen)) {
-                break;
-              }
-              if (((sid == BlockID.AIR) || (this.Blocks[x][y].getID() != BlockID.AIR)) || (this.Blocks[x][y].getID() != BlockID.WATERSOURCE)) {
-                break;
-              }
-              if (Inventory.invHotBar[Inventory.selected].Count == 1)
-              {
-                this.Blocks[x][y].setID(sid);
-                Inventory.invHotBar[Inventory.selected].Count = 0;
-                Inventory.invHotBar[Inventory.selected].ID = BlockID.AIR;
-              }
-              if (Inventory.invHotBar[Inventory.selected].Count <= 1) {
-                break;
-              }
-              this.Blocks[x][y].setID(sid);
-              Inventory.invHotBar[Inventory.selected].Count -= 1;
-              
-              break;
-            }
-          }
-        }
-      }
-    }
-	/*
-	if(Mouse.isLeftButton())
+	else if(Mouse.isRightButtonClicked())
 	{
 		
 	}
-	
-	else if(Mouse.isRightButton())
-	{
-		
-	}*/
   }
   
   public void updateWater()
@@ -109,6 +70,23 @@ public class Level
         }
       }
     }
+  }
+  
+  public BlockID getBlock(int x, int y)
+  {
+	  if(x > -1 && y > -1)
+	  {
+		  return this.Blocks[x][y].getID();
+	  }
+	  else
+	  {
+		  return BlockID.AIR;
+	  }
+  }
+  
+  public void setBlock(BlockID blk, int x, int y)
+  {
+	  this.Blocks[x][y].setID(blk);
   }
   
   public void Tick(int camX, int camY, int renW, int renH)
