@@ -3,10 +3,12 @@ package net.adventuria.level;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+
 import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.block.BlockID;
 import net.adventuria.gui.inventory.*;
+import net.adventuria.inputs.Mouse;
 import net.adventuria.level.chunk.Chunk;
 import net.adventuria.location.Location;
 
@@ -29,29 +31,34 @@ public class Level
   
   public void Building(int camX, int camY, int renW, int renH)
   {
-    if ((Component.isLeftMouseButton) || (Component.isRightMouseButton)) {
+	
+    if ((Mouse.isLeftButton()) || (Mouse.isRightButton())) {
       for (int x = camX / Block.tileSize; x < camX / Block.tileSize + renW; x++) {
         for (int y = camY / Block.tileSize; y < camY / Block.tileSize + renH; y++) {
           if ((x >= 0) && (y >= 0) && (x < worldW) && (y < worldH)) {
-            if ((this.Blocks[x][y].contains(new Point(Component.mouse.x / Component.pixelSize + (int)Component.sX, Component.mouse.y / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID().getHardness() < 128))
+            if ((this.Blocks[x][y].contains(new Point(Mouse.getX() / Component.pixelSize + (int)Component.sX, Mouse.getY() / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID().getHardness() < 128))
             {
               BlockID sid = Inventory.invHotBar[Inventory.selected].ID;
-              if ((Component.isLeftMouseButton) && (!Inventory.isOpen))
+              if ((Mouse.isLeftButton()) && (!Inventory.isOpen))
               {
-                if (this.Blocks[x][y].getID() == BlockID.AIR) {
+                if (this.Blocks[x][y].getID() == BlockID.AIR)
+                {
                   break;
                 }
-                if (!Component.inventory.isOpenSlot(this.Blocks[x][y].getID())) {
+                if (Component.inventory.findOpenSlot(this.Blocks[x][y].getID()) == -1)
+                {
                   break;
                 }
-                if ((this.Blocks[x][y].getID() != BlockID.AIR) && (this.Blocks[x][y].getID() != BlockID.WATERSOURCE)) {
+                if ((this.Blocks[x][y].getID() != BlockID.AIR) && (this.Blocks[x][y].getID() != BlockID.WATERSOURCE))
+                {
                   Component.inventory.addItemToInventory(this.Blocks[x][y].getID());
                 }
+                
                 this.Blocks[x][y].setID(BlockID.AIR);
                 
                 break;
               }
-              if ((!Component.isRightMouseButton) || (Inventory.isOpen)) {
+              if ((!Mouse.isRightButton()) || (Inventory.isOpen)) {
                 break;
               }
               if (((sid == BlockID.AIR) || (this.Blocks[x][y].getID() != BlockID.AIR)) || (this.Blocks[x][y].getID() != BlockID.WATERSOURCE)) {
@@ -75,6 +82,16 @@ public class Level
         }
       }
     }
+	/*
+	if(Mouse.isLeftButton())
+	{
+		
+	}
+	
+	else if(Mouse.isRightButton())
+	{
+		
+	}*/
   }
   
   public void updateWater()
@@ -108,7 +125,8 @@ public class Level
         if ((x >= 0) && (y >= 0) && (x < worldW) && (y < worldH))
         {
           this.Blocks[x][y].Render(g);
-          if ((this.Blocks[x][y].contains(new Point(Component.mouse.x / Component.pixelSize + (int)Component.sX, Component.mouse.y / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID() != BlockID.AIR) && (!Inventory.isOpen))
+          if ((this.Blocks[x][y].contains(new Point(Mouse.getX() / Component.pixelSize + (int)Component.sX, Mouse.getY() / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID() != BlockID.AIR) && (!Inventory.isOpen))
+        	  
           {
             g.setColor(new Color(255, 255, 255, 64));
             g.fillRect(this.Blocks[x][y].x - camX, this.Blocks[x][y].y - camY, this.Blocks[x][y].width, this.Blocks[x][y].height);

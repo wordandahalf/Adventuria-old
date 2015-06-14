@@ -4,19 +4,17 @@ import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
-
 import javax.swing.JFrame;
-
 import net.adventuria.assets.AssetManager;
 import net.adventuria.block.Block;
 import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.gui.GUI;
-import net.adventuria.keyboard.Listening;
 import net.adventuria.level.Level;
 import net.adventuria.level.Sky;
+import net.adventuria.listeners.AdventuriaKeyboardListener;
+import net.adventuria.listeners.AdventuriaMouseListener;
 import net.adventuria.location.Location;
 
 public class Component extends Applet implements Runnable
@@ -26,8 +24,7 @@ public class Component extends Applet implements Runnable
   public static int moveFromBorder = 0;
   public static double sX = moveFromBorder;
   public static double sY = moveFromBorder;
-  public static double dir = 0.0D;
-  public static Point mouse = new Point(0, 0);
+  public static double dir = 0.0D;;
   public static Dimension realSize;
   public static Dimension size = new Dimension(700, 560);
   public static Dimension pixel = new Dimension(size.width / pixelSize, size.height / pixelSize);
@@ -36,8 +33,6 @@ public class Component extends Applet implements Runnable
   public static boolean isRunning = false;
   public static boolean isMoving = false;
   public static boolean isJumping = false;
-  public static boolean isLeftMouseButton = false;
-  public static boolean isRightMouseButton = false;
   private Image screen;
   public static Level level;
   public static EntityPlayer character;
@@ -49,10 +44,10 @@ public class Component extends Applet implements Runnable
   public Component()
   {
     setPreferredSize(size);
-    addKeyListener(new Listening());
-    addMouseListener(new Listening());
-    addMouseMotionListener(new Listening());
-    addMouseWheelListener(new Listening());
+    addKeyListener(new AdventuriaKeyboardListener());
+    addMouseListener(new AdventuriaMouseListener());
+    addMouseMotionListener(new AdventuriaMouseListener());
+    addMouseWheelListener(new AdventuriaMouseListener());
   }
   
   public void start()

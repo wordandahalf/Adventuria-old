@@ -9,6 +9,7 @@ import net.adventuria.Component;
 import net.adventuria.assets.AssetManager;
 import net.adventuria.block.BlockID;
 import net.adventuria.block.Block;
+import net.adventuria.inputs.Mouse;
 
 public class Inventory
 {
@@ -52,8 +53,8 @@ public class Inventory
     }
     if ((currentHeldItemID != BlockID.AIR) && (currentHeldItemCount != 0))
     {
-      g.drawImage(AssetManager.tileset_terrain, Component.mouse.x / Component.pixelSize, Component.mouse.y / Component.pixelSize, Block.tileSize + Component.mouse.x / Component.pixelSize, Block.tileSize + Component.mouse.y / Component.pixelSize, currentHeldItemID.getTextureID()[0] * Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize, currentHeldItemID.getTextureID()[0] * Block.tileSize + Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize + Block.tileSize, null);
-      g.drawString("" + currentHeldItemCount, Component.mouse.x / Component.pixelSize + 3, Component.mouse.y / Component.pixelSize + 19);
+      g.drawImage(AssetManager.tileset_terrain, Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize, Block.tileSize + Mouse.getX() / Component.pixelSize, Block.tileSize + Mouse.getY() / Component.pixelSize, currentHeldItemID.getTextureID()[0] * Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize, currentHeldItemID.getTextureID()[0] * Block.tileSize + Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize + Block.tileSize, null);
+      g.drawString("" + currentHeldItemCount, Mouse.getX() / Component.pixelSize + 3, Mouse.getY() / Component.pixelSize + 19);
     }
   }
   
@@ -65,8 +66,8 @@ public class Inventory
       if ((i == selected) && (!isOpen)) {
         isSelected = true;
       }
-      if ((invHotBar[i].contains(new Point(Component.mouse.x / Component.pixelSize, Component.mouse.y / Component.pixelSize))) && (isOpen))
-      {
+      if ((invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) && (isOpen))
+      {;
         g.setColor(new Color(255, 255, 255, 6));
         g.fillRect(invHotBar[i].x, invHotBar[i].y, invHotBar[i].width, invHotBar[i].height);
       }
@@ -83,7 +84,7 @@ public class Inventory
     {
       invBag[i].Render(g, false);
       renderHotBar(g);
-      if (invBag[i].contains(new Point(Component.mouse.x / Component.pixelSize, Component.mouse.y / Component.pixelSize)))
+      if (invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
       {
         g.setColor(new Color(255, 255, 255, 64));
         g.fillRect(invBag[i].x, invBag[i].y, invBag[i].width, invBag[i].height);
@@ -91,74 +92,134 @@ public class Inventory
     }
   }
   
-  public void addItemToInventory(BlockID ID)
-  {
-    boolean hasAdded = false;
-    if (!isFull())
-    {
-      if ((invHotBar[selected].ID == BlockID.AIR) && (!hasAdded) && (invHotBar[selected].Count < 64))
-      {
-        invHotBar[selected].ID = ID;
-        invHotBar[selected].Count = 1;
-        hasAdded = true;
-        return;
-      }
-      if ((invHotBar[selected].ID != BlockID.AIR) && (invHotBar[selected].ID != ID) && (!hasAdded))
-      {
-        for (int i = 0; i < invHotBar.length; i++)
-        {
-          if ((invHotBar[i].ID == BlockID.AIR) && (i != selected) && (!hasAdded) && (invHotBar[i].Count < 64))
-          {
-            invHotBar[i].ID = ID;
-            invHotBar[i].Count = 1;
-            hasAdded = true;
-            return;
-          }
-          if ((invHotBar[i].ID == ID) && (i != selected) && (!hasAdded) && (invHotBar[i].Count < 64))
-          {
-            invHotBar[i].Count += 1;
-            hasAdded = true;
-            return;
-          }
-        }
-      }
-      else if ((invHotBar[selected].ID == ID) && (!hasAdded) && (invHotBar[selected].Count < 64))
-      {
-        invHotBar[selected].Count += 1;
-        hasAdded = true;
-        return;
-      }
-    }
+  public boolean addItemToInventory(BlockID ID)
+  {	  
+	  boolean didAdd = false;
+	  
+	  if(!this.isFull())
+	  {
+		  if(findOpenSlot(ID) > -1)
+		  {
+			  if(findOpenSlot(ID) - 8 >= 0)
+			  {
+				  if(invBag[findOpenSlot(ID) - 8].ID == BlockID.AIR)
+				  {
+					  invBag[findOpenSlot(ID) - 8].ID = ID;
+					  invBag[findOpenSlot(ID) - 8].Count = 1;
+					  didAdd = true;
+				  }				  
+				  else if(invBag[findOpenSlot(ID) - 8].Count <= 63 && invBag[findOpenSlot(ID) - 8].ID == ID)
+				  {
+					  invBag[findOpenSlot(ID) - 8].Count++;
+					  didAdd = true;
+				  }
+			  }
+			  else
+			  {
+				  if(invHotBar[findOpenSlot(ID)].ID == BlockID.AIR)
+				  {
+					  invHotBar[findOpenSlot(ID)].ID = ID;
+					  invHotBar[findOpenSlot(ID)].Count = 1;
+					  didAdd = true;
+				  }
+				  
+				  else if(invHotBar[findOpenSlot(ID)].Count <= 63 && invHotBar[findOpenSlot(ID)].ID == ID)
+				  {
+					  invHotBar[findOpenSlot(ID)].Count++;
+					  didAdd = true;
+				  }
+			  }
+		  }
+	  }
+	  
+	  return didAdd;
+  }
+  
+  public boolean addItemToInventory(BlockID ID, int Count)
+  {	  
+	  //TODO: Factor in the Count parameter
+	  
+	  boolean didAdd = false;
+	  
+	  if(!this.isFull())
+	  {
+		  if(findOpenSlot(ID) > -1)
+		  {
+			  if(findOpenSlot(ID) - 8 >= 0)
+			  {
+				  if(invBag[findOpenSlot(ID) - 8].ID == BlockID.AIR)
+				  {
+					  invBag[findOpenSlot(ID) - 8].ID = ID;
+					  invBag[findOpenSlot(ID) - 8].Count = 1;
+					  didAdd = true;
+				  }				  
+				  else if(invBag[findOpenSlot(ID) - 8].Count <= 63 && invBag[findOpenSlot(ID) - 8].ID == ID)
+				  {
+					  invBag[findOpenSlot(ID) - 8].Count++;
+					  didAdd = true;
+				  }
+			  }
+			  else
+			  {
+				  if(invHotBar[findOpenSlot(ID)].ID == BlockID.AIR)
+				  {
+					  invHotBar[findOpenSlot(ID)].ID = ID;
+					  invHotBar[findOpenSlot(ID)].Count = 1;
+					  didAdd = true;
+				  }
+				  
+				  else if(invHotBar[findOpenSlot(ID)].Count <= 63 && invHotBar[findOpenSlot(ID)].ID == ID)
+				  {
+					  invHotBar[findOpenSlot(ID)].Count++;
+					  didAdd = true;
+				  }
+			  }
+		  }
+	  }
+	  
+	  return didAdd;
   }
   
   public boolean isFull()
   {
     int hits = 0;
     
-    boolean isFull = false;
-    for (int a = 0; a < invLength; a++) {
-      if ((invHotBar[a].ID != BlockID.AIR) && (invHotBar[a].Count >= 64)) {
+    for (int a = 0; a < invLength; a++)
+    {
+      if ((invHotBar[a].ID != BlockID.AIR) && (invHotBar[a].Count >= 64))
+      {
         hits++;
       }
     }
-    if (hits == invLength) {
-      isFull = true;
-    }
-    return isFull;
+    
+    return hits == invLength;
   }
   
-  public boolean isOpenSlot(BlockID ID)
+  public int findOpenSlot(BlockID ID)
   {
-    boolean isOpenSlot = false;
-    if (((invHotBar[selected].ID == ID) && (invHotBar[selected].Count < 64)) || (invHotBar[selected].ID == BlockID.AIR)) {
-      isOpenSlot = true;
-    } else {
-      for (int i = 0; i < invLength; i++) {
-        if (((invHotBar[i].ID == ID) && (invHotBar[i].Count < 64)) || (invHotBar[i].ID == BlockID.AIR)) {
-          isOpenSlot = true;
-        }
-      }
-    }
-    return isOpenSlot;
+	  int slot = -1;
+	  
+	  for(int i = 0; i < invHotBar.length; i++)
+	  {
+		  if(invHotBar[i].ID == BlockID.AIR || (invHotBar[i].ID == ID && invHotBar[i].Count < 64))
+		  {
+			  slot = i;
+			  break;
+		  }
+	  }
+	  
+	  if(slot == -1)
+	  {
+		  for(int i = 0; i < invBag.length; i++)
+		  {
+			  if(invBag[i].ID == BlockID.AIR || (invBag[i].ID == ID && invBag[i].Count < 64))
+			  {
+				  slot = i + 8;
+				  break;
+			  }
+		  }
+	  }
+	  
+	  return slot;
   }
 }
