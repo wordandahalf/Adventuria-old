@@ -137,9 +137,7 @@ public class Inventory
   }
   
   public boolean addItemToInventory(BlockID ID, int Count)
-  {	  
-	  //TODO: Factor in the Count parameter
-	  
+  {
 	  boolean didAdd = false;
 	  
 	  if(!this.isFull())
@@ -151,12 +149,12 @@ public class Inventory
 				  if(invBag[findOpenSlot(ID) - 8].ID == BlockID.AIR)
 				  {
 					  invBag[findOpenSlot(ID) - 8].ID = ID;
-					  invBag[findOpenSlot(ID) - 8].Count = 1;
+					  invBag[findOpenSlot(ID) - 8].Count += Count;
 					  didAdd = true;
 				  }				  
-				  else if(invBag[findOpenSlot(ID) - 8].Count <= 63 && invBag[findOpenSlot(ID) - 8].ID == ID)
+				  else if(invBag[findOpenSlot(ID) - 8].Count + Count <= 63 && invBag[findOpenSlot(ID) - 8].ID == ID)
 				  {
-					  invBag[findOpenSlot(ID) - 8].Count++;
+					  invBag[findOpenSlot(ID) - 8].Count += Count;
 					  didAdd = true;
 				  }
 			  }
@@ -165,13 +163,13 @@ public class Inventory
 				  if(invHotBar[findOpenSlot(ID)].ID == BlockID.AIR)
 				  {
 					  invHotBar[findOpenSlot(ID)].ID = ID;
-					  invHotBar[findOpenSlot(ID)].Count = 1;
+					  invHotBar[findOpenSlot(ID)].Count += Count;
 					  didAdd = true;
 				  }
 				  
-				  else if(invHotBar[findOpenSlot(ID)].Count <= 63 && invHotBar[findOpenSlot(ID)].ID == ID)
+				  else if(invHotBar[findOpenSlot(ID)].Count + Count <= 63 && invHotBar[findOpenSlot(ID)].ID == ID)
 				  {
-					  invHotBar[findOpenSlot(ID)].Count++;
+					  invHotBar[findOpenSlot(ID)].Count += Count;
 					  didAdd = true;
 				  }
 			  }
@@ -179,6 +177,20 @@ public class Inventory
 	  }
 	  
 	  return didAdd;
+  }
+  
+  public void setItemInventory(BlockID ID, int Count, int index)
+  {
+	  if(index < 8)
+	  {
+		  invHotBar[index].ID = ID;
+		  invHotBar[index].Count = Count;
+	  }
+	  else
+	  {
+		  invBag[index - 8].ID = ID;
+		  invBag[index - 8].Count = Count;
+	  }
   }
   
   public boolean isFull()
@@ -222,5 +234,15 @@ public class Inventory
 	  }
 	  
 	  return slot;
+  }
+  
+  public BlockID getHeldItemID()
+  {
+	  return invHotBar[selected].ID;
+  }
+  
+  public int getHeldItemCount()
+  {
+	  return invHotBar[selected].Count;
   }
 }

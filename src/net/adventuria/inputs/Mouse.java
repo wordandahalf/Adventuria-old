@@ -2,6 +2,8 @@ package net.adventuria.inputs;
 
 import java.awt.Point;
 
+import net.adventuria.Component;
+
 public class Mouse
 {
 	private static Point loc = new Point(0, 0);
@@ -19,7 +21,7 @@ public class Mouse
 		loc = pt;
 	}
 
-	public static boolean isLeftButton() 
+	public static boolean isLeftButtonClicked() 
 	{
 		return leftButton;
 	}
@@ -29,7 +31,7 @@ public class Mouse
 		leftButton = left;
 	}
 
-	public static boolean isRightButton() {
+	public static boolean isRightButtonClicked() {
 		return rightButton;
 	}
 
@@ -46,5 +48,15 @@ public class Mouse
 	public static int getY()
 	{
 		return loc.y;
+	}
+	
+	public static int getBlockX()
+	{
+		return (int) Math.floor(((Mouse.getX() / Component.pixelSize) + Component.sX) / 20);
+	}
+	
+	public static int getBlockY()
+	{
+		return (int) Math.floor(((Mouse.getY() / Component.pixelSize) + Component.sY) / 20);
 	}
 }

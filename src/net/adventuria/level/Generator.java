@@ -32,9 +32,9 @@ public class Generator
   {
 	  for(int y = 0; y < Block.length; y++)
 	  {
-		  for(int x = offset; x < Block[0].length; x++)
+		  for(int x = 0; x < Block[0].length; x++)
 		  {
-			  if(x == 1 || x == Block[0].length - 1)
+			  if(x == 0 || x == Block[0].length - 1)
 			  {
 				Block[x][y].setID(BlockID.SOLIDAIR);
 			  }

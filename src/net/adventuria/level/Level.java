@@ -3,7 +3,6 @@ package net.adventuria.level;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-
 import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.block.BlockID;
@@ -51,7 +50,22 @@ public class Level
 	
 	else if(Mouse.isRightButtonClicked())
 	{
-		
+		if(!Inventory.isOpen)
+		{
+			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH)
+			{
+				if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()) == BlockID.AIR && Mouse.getBlockX() > -1 && Mouse.getBlockY() > -1 && Component.inventory.getHeldItemCount() >= 2)
+				{
+					Component.inventory.addItemToInventory(Component.inventory.getHeldItemID(), -1);
+					this.setBlock(Component.inventory.getHeldItemID(), Mouse.getBlockX(), Mouse.getBlockY());
+				}
+				else if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()) == BlockID.AIR && Mouse.getBlockX() > -1 && Mouse.getBlockY() > -1 && Component.inventory.getHeldItemCount() == 1)
+				{
+					this.setBlock(Component.inventory.getHeldItemID(), Mouse.getBlockX(), Mouse.getBlockY());
+					Component.inventory.setItemInventory(BlockID.AIR, 0, Inventory.selected);
+				}
+			}
+		}
 	}
   }
   
@@ -86,7 +100,10 @@ public class Level
   
   public void setBlock(BlockID blk, int x, int y)
   {
-	  this.Blocks[x][y].setID(blk);
+	  if(x > -1 && y > -1)
+	  {
+		  this.Blocks[x][y].setID(blk);
+	  }  
   }
   
   public void Tick(int camX, int camY, int renW, int renH)
