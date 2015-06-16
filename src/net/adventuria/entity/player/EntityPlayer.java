@@ -122,4 +122,20 @@ public class EntityPlayer extends EntityHuman
 	      g.drawImage(AssetManager.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
 	    }
 	  }
+	  
+	  @Override
+	  public Location getLocation()
+	  {
+		  return new Location((int) this.x, (int) this.y);
+	  }
+	  
+	  public int getBlockX()
+	  {
+		  return (int) Math.ceil(this.x / 20);
+	  }
+	  
+	  public int getBlockY()
+	  {
+		  return (int) Math.ceil(this.y / 20);
+	  }
 	}

@@ -5,7 +5,117 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2015-06-12T08:00:00Z</updated>
+  <updated>2015-06-15T12:39:22Z</updated>
+  <entry>
+    <title>Cache auto-configuration in Spring Boot 1.3</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/15/cache-auto-configuration-in-spring-boot-1-3" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Stéphane Nicoll</name>
+    </author>
+    <id>tag:spring.io,2015-06-15:2162</id>
+    <updated>2015-06-15T12:39:22Z</updated>
+    <content type="html">&lt;p&gt;Over the past year, we have significantly improved the cache abstraction, with support of &lt;a href="https://spring.io/blog/2014/04/14/cache-abstraction-jcache-jsr-107-annotations-support"&gt;JSR-107 (JCache) annotations&lt;/a&gt; and a &lt;a href="https://spring.io/blog/2014/06/16/further-cache-improvements-in-spring-4-1"&gt;better declarative model to share or externalize common settings&lt;/a&gt;. In Spring Boot 1.3, we now offer a comprehensive auto-configuration for it.&lt;/p&gt;&lt;p&gt;In a nutshell, the cache abstraction applies caching to methods, thus reducing the number of executions based on the information available in the cache. The caching logic is applied transparently: the method below will only be invoked if the specified &lt;code&gt;ISBN&lt;/code&gt; is not already present in the &lt;code&gt;books&lt;/code&gt; cache. Upon calling that method for a missing &lt;code&gt;Book&lt;/code&gt;, the caches will be updated transparently so that a further call does not invoke the method again.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Cacheable(&amp;quot;books&amp;quot;)&#xD;
+public Book findBook(ISBN isbn) {...}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To actually enable the processing of those annotations a basic setup requires &lt;code&gt;@EnableCaching&lt;/code&gt; to be set and a &lt;code&gt;CacheManager&lt;/code&gt; bean to be defined. &lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@SpringBootApplication&#xD;
+@EnableCaching&#xD;
+public class MyApp {&#xD;
+    @Bean&#xD;
+    public CacheManager cacheManager() { ...}&#xD;
+&#xD;
+    ...&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We wanted to try to reduce this last step so that all you&amp;rsquo;d have to do is add &lt;code&gt;@EnableCaching&lt;/code&gt; on your Spring Boot app and you&amp;rsquo;re done. This is now a reality as of Spring Boot 1.3.M1! Spring Boot offers auto-configuration for any JSR-107 compliant provider but also for EhCache, Hazelcast, Infinispan, Redis and Guava. We also provide a very basic support if none of these are available using &lt;code&gt;ConcurrentHashMap&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;Spring Boot is inspecting your project to deduce the right defaults; for instance, if you have a &lt;code&gt;ehcache.xml&lt;/code&gt; at the root of the classpath and EhCache 2.x is present, then we will automatically create a &lt;code&gt;EhCacheCacheManager&lt;/code&gt; using that configuration file (unless specified otherwise). We also provide a broad support of configuration options: just grab Spring Boot 1.3.M1 and type &lt;code&gt;spring.cache&lt;/code&gt; in your IDE to list the available options.&lt;/p&gt;&lt;p&gt;Spring Boot can create caches on startup if the underlying provider supports it. If you&amp;rsquo;re using JCache, it can also give you a callback of the &lt;code&gt;javax.cache.CacheManager&lt;/code&gt; in case you want to customize it on startup (i.e. to further tune the configuration).&lt;/p&gt;&lt;p&gt;If you&amp;rsquo;re using the actuator, cache metrics are also exposed by default if the underlying cache provider supports it. For now we expose for each cache the size, the cache ratio and the miss ratio. We&amp;rsquo;re looking forward to your feedback to improve that list.&lt;/p&gt;&lt;p&gt;Thanks a lot to the community for their help and in particular to &lt;a href="https://twitter.com/EdduMelendez"&gt;Eddú Meléndez Gonzales&lt;/a&gt; who contributed many PRs! The &lt;a href="http://docs.spring.io/spring-boot/docs/1.3.0.M1/reference/htmlsingle/#boot-features-caching"&gt;documentation&lt;/a&gt; has been updated as well so please give it a try and let us know what you think.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Introducing Spring Social Evernote</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/06/15/introducing-spring-social-evernote" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2015-06-15:2163</id>
+    <updated>2015-06-15T12:19:31Z</updated>
+    <content type="html">&lt;blockquote&gt;&lt;p&gt;This post is a guest post by community &lt;a href="http://twitter.com/ttddyy"&gt;member Tadaya Tsuyukubo (@ttddyy)&lt;/a&gt;, creator of the Spring Social Slideshare project. Thanks Tadaya! I’d like to see more of these guest posts, so - as usual - &lt;a href="http://spring.io/team/jlong"&gt;don’t hesitate to ping me&lt;/a&gt;! -Josh&lt;/p&gt;
+&lt;/blockquote&gt;&lt;p&gt;&lt;a href="https://github.com/ttddyy/spring-social-evernote"&gt;Spring Social Evernote&lt;/a&gt; is one of the community modules in the &lt;a href="http://projects.spring.io/spring-social/"&gt;Spring Social&lt;/a&gt; ecosystem. It is a service provider implementation for &lt;a href="http://evernote.com"&gt;Evernote&lt;/a&gt;. It allows developers to work with the &lt;a href="https://github.com/evernote/evernote-sdk-java"&gt;Evernote SDK for Java&lt;/a&gt; with idiomatic Spring idioms.&lt;/p&gt;&lt;p&gt;Evernote takes a unique approach for providing their APIs to developers. They have created &lt;a href="https://dev.evernote.com/doc/"&gt;language specific SDKs&lt;/a&gt; based on &lt;a href="https://Thrift.apache.org/"&gt;Thrift serialization format&lt;/a&gt;. Dave Engberg, CTO of Evernote, &lt;a href="https://blog.evernote.com/tech/2011/05/26/evernote-and-Thrift/"&gt;explained the motivations for choosing Thrift in this blog&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;The Java SDK includes Thrift-generated domain classes (e.g. &lt;code&gt;Notebook&lt;/code&gt;, &lt;code&gt;Note&lt;/code&gt;, &lt;code&gt;User&lt;/code&gt;, etc.) and endpoint access clients (e.g. &lt;code&gt;UserStoreClient&lt;/code&gt;, &lt;code&gt;NoteStoreClient&lt;/code&gt;, etc). Even though &lt;code&gt;~StoreClient&lt;/code&gt; classes nicely encapsulate authentication and Thrift protocol for endpoint communication, they still have a few limitations. &lt;/p&gt;&lt;p&gt;For example, all Thrift methods that do communication in the various &lt;code&gt;~StoreClient&lt;/code&gt; types throw &lt;strong&gt;checked&lt;/strong&gt; exceptions. Also, &lt;code&gt;~StoreClient&lt;/code&gt; classes don’t have interfaces corresponding to their operations, which frustrates (somewhat) unit testing.&lt;br/&gt;&lt;a href="https://github.com/ttddyy/spring-social-evernote"&gt;Spring Social Evernote&lt;/a&gt; fills these gaps while delivering a familiar Spring Social programming model.&lt;/p&gt;&lt;h2&gt;&lt;a href="#features" class="anchor" name="features"&gt;&lt;/a&gt;Features&lt;/h2&gt;&lt;p&gt;Spring Social Evernote delivers a familiar Spring and Java-based programmingmodel that uses interfaces, unchecked exceptions, and &lt;code&gt;null&lt;/code&gt;-safe &lt;code&gt;Collection&lt;/code&gt;s for Thrift-based domain objects. It also provides a service provider implementation for the Evernote OAuth API.&lt;/p&gt;&lt;p&gt;The &lt;code&gt;Evernote&lt;/code&gt; interface and it’s implementation, &lt;code&gt;EvernoteTemplate&lt;/code&gt;, are the central types for the API. The &lt;code&gt;Evernote&lt;/code&gt; interface returns &lt;code&gt;~StoreOperations&lt;/code&gt; (e.g. &lt;code&gt;NoteStoreOperations&lt;/code&gt;, or &lt;code&gt;UserStoreOperations&lt;/code&gt;) interfaces that correspond to the SDK&amp;rsquo;s &lt;code&gt;~StoreClient&lt;/code&gt; classes. Methods on these interfaces throw &lt;strong&gt;unchecked&lt;/strong&gt; &lt;code&gt;EvernoteException&lt;/code&gt; instead of checked &lt;code&gt;EDAM*Exception&lt;/code&gt;. These implementations also have smarter &lt;code&gt;null&lt;/code&gt;-value handling for collections in Thrift-generated domain types.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;Evernote evernote = new EvernoteTemplate(&#xD;
+    EvernoteService.SANDBOX, &amp;quot;your-custom-access-token&amp;quot;);&#xD;
+&#xD;
+// interface based programming&#xD;
+NoteStoreOperations noteStore = evernote.noteStoreOperations();&#xD;
+&#xD;
+// no checked exception is thrown&#xD;
+Notebook notebook = noteStore.getDefaultNotebook();&#xD;
+&#xD;
+// no NPE when there are no shared notebooks&#xD;
+for (SharedNotebook sharedNotebook : notebook.getSharedNotebooks()) {  &#xD;
+    ...&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a href="#interface-based-programming-for-store-clients" class="anchor" name="interface-based-programming-for-store-clients"&gt;&lt;/a&gt;Interface based programming for store clients&lt;/h3&gt;&lt;p&gt;&lt;code&gt;~StoreClientOperations&lt;/code&gt; interface classes correspond to &lt;code&gt;~StoreClient&lt;/code&gt; implementation classes (e.g. &lt;code&gt;NoteStoreClientOperations&lt;/code&gt; corresponds to &lt;code&gt;com.evernote.clients.NoteStoreClient&lt;/code&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;// NoteStoreOperations is interface encapsulating NoteStoreClient&#xD;
+NoteStoreOperations noteStore = evernote.noteStoreClientOperations();&#xD;
+Notebook notebook = noteStore.getNotebook(&amp;quot;...&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a href="#unchecked-exceptions-for-endpoint-operations" class="anchor" name="unchecked-exceptions-for-endpoint-operations"&gt;&lt;/a&gt;Unchecked exceptions for endpoint operations&lt;/h3&gt;&lt;p&gt;EDAM exceptions (e.g. &lt;code&gt;com.evernote.edam.error.EDAMUserException&lt;/code&gt;) and Thrift exceptions (e.g. &lt;code&gt;com.evernote.Thrift.TException&lt;/code&gt;) are trapped and rethrown as &lt;em&gt;runtime&lt;/em&gt; exceptions of type &lt;code&gt;EvernoteException&lt;/code&gt;. &lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;// with UserStoreOperations, no explicit exception handling is required&#xD;
+User user = evernote.userStoreOperations().getUser();&#xD;
+&#xD;
+// or explicitly you can get exception info&#xD;
+try {&#xD;
+  User user = userStoreClient.getUser();&#xD;
+} catch(EvernoteException e) {&#xD;
+  if (e.isEDAMUserException()) {&#xD;
+     EDAMErrorCode errorCode = e.getEDAMErrorCode();&#xD;
+     EDAMUserException originalException = e.getCause();&#xD;
+     ....&#xD;
+  }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a href="#null-safe-collection-handling-for-thrift-based-domain-objects" class="anchor" name="null-safe-collection-handling-for-thrift-based-domain-objects"&gt;&lt;/a&gt;Null-safe collection handling for Thrift-based domain objects&lt;/h3&gt;&lt;p&gt;In Thrift, a &lt;code&gt;null&lt;/code&gt; collection isn&amp;rsquo;t serialized, but the convention can cause some unexpected &lt;code&gt;NullPointerException&lt;/code&gt;s when using the API. The Spring Social Evernote implementation sanitizes these values with empty collections.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;Note note = evernote.noteStoreOperations().getNote(...)&#xD;
+// it is safe to loop without null check&#xD;
+for(Resource resource: note.getResources()) {&#xD;
+  ...&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;or (in Java 8):&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt; evernote.noteStoreOperations()&#xD;
+    .getNote()&#xD;
+    .getResources()&#xD;
+        .forEach ( r -&amp;gt; System.out.println( r.toString() ));
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Spring Social Evernote dirty checks the types and restores their &lt;code&gt;null&lt;/code&gt; values just before serialization if the collection is otherwise empty.&lt;/p&gt;&lt;p&gt;For more on this particular support, check out &lt;a href="https://github.com/ttddyy/nullsafe-Thrift"&gt;nullsafe-Thrift&lt;/a&gt; - a proof-of-concept project.&lt;/p&gt;&lt;h2&gt;&lt;a href="#service-provider-implementation-for-evernote-oauth" class="anchor" name="service-provider-implementation-for-evernote-oauth"&gt;&lt;/a&gt;Service provider implementation for Evernote OAuth&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Registering &lt;code&gt;ConnectionFactory&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;&lt;p&gt;To register Evernote environment (&lt;code&gt;sandbox&lt;/code&gt;, &lt;code&gt;prod&lt;/code&gt;, &lt;code&gt;yinxiang&lt;/code&gt;) into Spring Social Service Provider Connect Framework, you can use environment-specific &lt;code&gt;ConnectionFactory&lt;/code&gt; classes like &lt;code&gt;EvernoteSandboxConnectionFactory&lt;/code&gt;, &lt;code&gt;EvernoteProductionConnectionFactory&lt;/code&gt;, or &lt;code&gt;EvernoteYinXiangConnectionFactory&lt;/code&gt;. Alternatively, you can pass &lt;code&gt;EvernoteService&lt;/code&gt; enum to &lt;code&gt;EvernoteConnectionFactory&lt;/code&gt; in constructor.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();&#xD;
+&#xD;
+// sandbox connection&#xD;
+registry.addConnectionFactory(new EvernoteSandboxConnectionFactory(&amp;quot;consumerKey&amp;quot;, &amp;quot;consumerSecret&amp;quot;));&#xD;
+&#xD;
+// production connection&#xD;
+registry.addConnectionFactory(new EvernoteProductionConnectionFactory(&amp;quot;consumerKey&amp;quot;, &amp;quot;consumerSecret&amp;quot;));&#xD;
+&#xD;
+// or by EvernoteService enum&#xD;
+registry.addConnectionFactory(new EvernoteConnectionFactory(&amp;quot;consumerKey&amp;quot;, &amp;quot;consumerSecret&amp;quot;, EvernoteService.SANDBOX));
+&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&lt;a href="#using-evernote-rsquo-s-oauth-api" class="anchor" name="using-evernote-rsquo-s-oauth-api"&gt;&lt;/a&gt;Using Evernote&amp;rsquo;s OAuth API&lt;/h2&gt;&lt;p&gt;Performing &lt;a href="https://dev.evernote.com/doc/articles/authentication.php"&gt;Evernote-based OAuth authentication&lt;/a&gt; works as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;// obtain request token (temporal credential)&#xD;
+OAuth1Operations oauthOperations = evernoteConnectionFactory.getOAuthOperations();&#xD;
+OAuthToken requestToken = oauthOperations.fetchRequestToken(&#xD;
+    callbackUrl, null);&#xD;
+&#xD;
+// construct authorization url with callback url for client to redirect&#xD;
+OAuth1Parameters parameters = new OAuth1Parameters();&#xD;
+parameters.set(&amp;quot;preferRegistration&amp;quot;, &amp;quot;true&amp;quot;); // create account&#xD;
+parameters.set(&amp;quot;supportLinkedSandbox&amp;quot;, &amp;quot;true&amp;quot;);&#xD;
+&#xD;
+String authorizeUrl = oauthOperations.buildAuthorizeUrl(&#xD;
+        requestToken.getValue(), parameters);&#xD;
+&#xD;
+// obtain access token&#xD;
+OAuthToken requestToken = new OAuthToken(oauthToken, requestTokenSecret);&#xD;
+AuthorizedRequestToken authorizedRequestToken = new AuthorizedRequestToken(requestToken, oauthVerifier);&#xD;
+&#xD;
+OAuth1Operations oAuth1Operations = evernoteConnectionFactory.getOAuthOperations(); // EvernoteOAuth1Operations&#xD;
+EvernoteOAuthToken accessToken = (EvernoteOAuthToken)oAuth1Operations.exchangeForAccessToken(authorizedRequestToken, null);&#xD;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h1&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h1&gt;&lt;p&gt;For more project documentation, check out the &lt;a href="https://github.com/ttddyy/spring-social-evernote/wiki/About"&gt;project wiki page&lt;/a&gt;. Also, nullsafe collection in Thrift can be demonstrated in this &lt;a href="https://github.com/ttddyy/nullsafe-Thrift/blob/master/src/test/java/net/ttddyy/nullsafeThrift/ThriftWrapperTest.java"&gt;test class&lt;/a&gt; as well.&lt;/p&gt;&lt;p&gt;Since Evernote doesn’t have RESTful API, I have created a web application, &lt;a href="https://github.com/ttddyy/evernote-rest-webapp"&gt;Evernote Rest Webapp&lt;/a&gt;, which provides RESTful endpoints for Evernote services. It is built on top of &lt;a href="http://projects.spring.io/spring-boot/"&gt;Spring Boot&lt;/a&gt; and &lt;a href="https://github.com/ttddyy/spring-social-evernote"&gt;Spring Social Evernote&lt;/a&gt;. This implementation serves as a sort of bridge-API if you&amp;rsquo;re interested.&lt;/p&gt;&lt;h2&gt;&lt;a href="#summary" class="anchor" name="summary"&gt;&lt;/a&gt;Summary&lt;/h2&gt;&lt;p&gt;&lt;a href="https://github.com/ttddyy/spring-social-evernote"&gt;Spring Social Evernote&lt;/a&gt; provides modern programming model and easy integration with Evernote authentication to your application.&lt;/p&gt;&lt;p&gt;If you have any suggestion, question, or anything, please ping me &lt;a href="https://twitter.com/ttddyy"&gt;@ttddyy&lt;/a&gt;.&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Data GemFire supports Apache Geode</title>
     <link rel="alternate" href="https://spring.io/blog/2015/06/12/spring-data-gemfire-supports-apache-geode" />
@@ -101,7 +211,8 @@
 &lt;ul&gt;
   &lt;li&gt;We&amp;rsquo;ll definitely raise to Servlet 3.0+ (from our present Servlet 2.5 runtime compatibility) but no higher since we&amp;rsquo;d like Spring 5 applications to run on EE 6 baselined servers still. See &lt;a href="https://spring.io/blog/2015/06/04/happy-second-birthday-java-ee-7-how-is-it-going-in-production"&gt;my previous blog post&lt;/a&gt; for a discussion on why this is unavoidable, given the market situation with Java EE 7 and the multitude of servers which is still based on the Servlet 3.0 API.&lt;/li&gt;
   &lt;li&gt;We&amp;rsquo;ll keep our JMS 1.1+ compatibility since, aside from the EE 7 issue, we expect message brokers in the corporate world which are not necessarily upgraded to JMS 2.0 yet. Spring&amp;rsquo;s JMS support automatically adapts to JMS 2.0 anyway, so there shouldn&amp;rsquo;t be any lack in functionality. It&amp;rsquo;s just a shame that we have to keep supporting the 2002-era JMS 1.1 API&amp;hellip;&lt;/li&gt;
-  &lt;li&gt;We&amp;rsquo;d like to raise to JPA 2.1+ and Bean Validation 1.1+ but our hands seem to be tied: TomEE 1.7 and JBoss EAP 6.4 have hard JPA 2.0 and Bean Validation 1.0 APIs in them, and WebLogic 12.1.3 has JPA 2.1 but no Bean Validation 1.1 API (despite them being related).&lt;br/&gt;&lt;i&gt;This means we&amp;rsquo;ll have to keep detecting JPA 2.1 / BV 1.1, automatically adapting to them - or we&amp;rsquo;ll require local bundling of the JPA 2.1 / BV 1.1 API jars and corresponding providers.&lt;/i&gt;&lt;/li&gt;
+  &lt;li&gt;We&amp;rsquo;d like to raise to JPA 2.1+ and Bean Validation 1.1+ but our hands seem to be tied: TomEE 1.7 and JBoss EAP 6.4 have hard JPA 2.0 and Bean Validation 1.0 APIs in them, and WebLogic 12.1.3 has JPA 2.1 but no Bean Validation 1.1 API (despite them being related).&lt;/li&gt;
+  &lt;li&gt;&lt;i&gt;This means we&amp;rsquo;ll have to keep detecting JPA 2.1 / BV 1.1, automatically adapting to them - or we&amp;rsquo;ll require local bundling of the JPA 2.1 / BV 1.1 API jars and corresponding providers. A likely outcome is that we&amp;rsquo;ll streamline our setup towards JPA 2.1, just tolerating JPA 2.0 at runtime through fallback checks, similar to how we handle Servlet 3.0 vs 2.5 at present.&lt;/i&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;p&gt;Are the assumptions above feasible from your perspective? Do you have experience with individually upgrading EE 6 servers to JPA 2.1 / Bean Validation 1.1, e.g. through locally shipping the corresponding APIs and providers in the application? Any feedback welcome!&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please note:&lt;/b&gt;&lt;br/&gt;If you are stuck on JDK 6 or 7, no need to worry: We are also planning towards a Spring Framework 4.3 release early next year, within the general Spring 4 system requirements. However, this will then be the last feature release in that line, with Spring Framework 4.x entering a plain maintenance phase afterwards.&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -528,87 +639,5 @@ drwxrwxrwx   - spring-xd hdfs          0 2015-06-01 07:29 /xd/hdfstest&#xD;
     <content type="html">&lt;p&gt;CI on the Cloud with Jenkins, Spring and Cloud Foundry&lt;/p&gt;
 &lt;p&gt;Speaker: Jamie O’Meara, Pivotal&lt;/p&gt;
 &lt;p&gt; This presentation will highlight an integrated development process that involves Spring code built with CloudBees Jenkins Enterprise and deployed to CloudFoundry. A software lifecycle of continuous delivery from source code control (Git) to Jenkins build (Maven and Gradle) to live deployment on a Cloud Foundry instance will be shown. We will demo using Jenkins to do a blue/green application deployment. With a Cloud Foundry blue/green Jenkins deployment, you can push a new version of the application and have a software router add that to an existing version of the application's route. The two versions are then load-balanced, allowing for testing of the new version and easy replacement or fall-back to the existing version. Developers can run builds on private and public clouds with deploy to either/both Jenkins running on a PaaS and integrated into the PaaS. We will run a hands-on demo and show the beauty and simplicity of an integrated build pipeline with Spring, Jenkins and Cloud Foundry.&lt;/p&gt;&lt;p&gt;Tuesday, June 23rd, 2015 3:00PM GMT (London GMT +01:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_7AMCIontheCloudwithJenkinsSpringandCloudFoundry_Register.html"&gt;Register&lt;/a&gt;&lt;br/&gt;&lt;p&gt;Tuesday, June 23rd, 2015 10:00AM PDT (San Francisco GMT-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_10AMCIontheCloudwithJenkinsSpringandCloudFoundry_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Cloud Consul 1.0.0.M1 Available Now</title>
-    <link rel="alternate" href="https://spring.io/blog/2015/05/27/spring-cloud-consul-1-0-0-m1-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Spencer Gibb</name>
-    </author>
-    <id>tag:spring.io,2015-05-26:2138</id>
-    <updated>2015-05-27T15:42:00Z</updated>
-    <content type="html">&lt;p&gt;&lt;a href="https://consul.io/intro/index.html"&gt;Consul&lt;/a&gt; is a system for discovering and configuring services in your infrastructure. It was built by &lt;a href="https://hashicorp.com/"&gt;Hashicorp&lt;/a&gt;, the same smart folks that created &lt;a href="https://www.vagrantup.com"&gt;Vagrant&lt;/a&gt; and &lt;a href="https://www.packer.io"&gt;Packer&lt;/a&gt;. Consul provides services such as Service Discovery, Health Checking, Key/Value Store all while supporting multiple datacenters out of the box.&lt;/p&gt;&lt;p&gt;&lt;a href="http://projects.spring.io/spring-cloud/spring-cloud-consul"&gt;Spring Cloud Consul&lt;/a&gt; aims to bring all of those features to the &lt;a href="http://projects.spring.io/spring-cloud/"&gt;Spring Cloud&lt;/a&gt; ecosystem. The project has reached its first milestone and fresh jars are available in the &lt;a href="http://repo.spring.io/libs-milestone-local"&gt;repo.spring.io&lt;/a&gt; repository. Spring Cloud Consul provides the following features:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;p&gt;Spring Cloud Consul Discovery: An implementation of the Spring Cloud Commons &lt;a href="https://github.com/spring-cloud/spring-cloud-commons/blob/master/spring-cloud-commons/src/main/java/org/springframework/cloud/client/discovery/DiscoveryClient.java"&gt;&lt;code&gt;DiscoveryClient&lt;/code&gt;&lt;/a&gt;. Service registration and discovery are performed via the Consul &lt;a href="https://consul.io/docs/agent/http.html"&gt;HTTP API&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;p&gt;Spring Cloud Consul Config: Distributed configuration via the Consul &lt;a href="https://consul.io/docs/agent/http/kv.html"&gt;Key/Value API&lt;/a&gt;. This behaves similarly to the &lt;a href="https://github.com/spring-cloud/spring-cloud-config#spring-cloud-config-client"&gt;Spring Cloud Config Client&lt;/a&gt;, but is backed by the distributed Consul KV Store.&lt;/p&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;p&gt;Spring Cloud Consul Bus: An event bus for linking services and service instances together with distributed messaging. Useful for propagating state changes across a cluster (e.g. config change events). This is implemented using the Consul &lt;a href="https://consul.io/docs/agent/http/event.html"&gt;Event API&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;p&gt;Spring Cloud Consul UI: An embedded version of the &lt;a href="https://www.consul.io/intro/getting-started/ui.html"&gt;Consul Web UI&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;All of the above have the 1.0.0.M1 release tag, to get started include the following artifacts in your &lt;code&gt;pom.xml&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint xml"&gt;&amp;lt;dependency&amp;gt;&#xD;
-  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-  &amp;lt;artifactId&amp;gt;spring-cloud-consul-config&amp;lt;/artifactId&amp;gt;&#xD;
-  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
-&amp;lt;/dependency&amp;gt;&#xD;
-&amp;lt;dependency&amp;gt;&#xD;
-  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-  &amp;lt;artifactId&amp;gt;spring-cloud-consul-discovery&amp;lt;/artifactId&amp;gt;&#xD;
-  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
-&amp;lt;/dependency&amp;gt;&#xD;
-&amp;lt;dependency&amp;gt;&#xD;
-  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-  &amp;lt;artifactId&amp;gt;spring-cloud-consul-bus&amp;lt;/artifactId&amp;gt;&#xD;
-  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
-&amp;lt;/dependency&amp;gt;&#xD;
-&amp;lt;dependency&amp;gt;&#xD;
-  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-  &amp;lt;artifactId&amp;gt;spring-cloud-consul-ui&amp;lt;/artifactId&amp;gt;&#xD;
-  &amp;lt;version&amp;gt;1.0.0.M1&amp;lt;/version&amp;gt;&#xD;
-&amp;lt;/dependency&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Follow &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc#install-consul"&gt;the documentation&lt;/a&gt; to make sure Consul is installed and running.&lt;/p&gt;&lt;p&gt;A sample application that might look like the following:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint java"&gt;@SpringBootApplication&#xD;
-@EnableDiscoveryClient&#xD;
-@EnableConsulUi&#xD;
-@RestController&#xD;
-public class SampleApp2 {&#xD;
-&#xD;
-  @RequestMapping(&amp;quot;/&amp;quot;)&#xD;
-  public String hello() {&#xD;
-    return &amp;quot;Hello World&amp;quot;;&#xD;
-  }&#xD;
-&#xD;
-  public static void main(String[] args) {&#xD;
-    SpringApplication.run(SampleApplication.class, args);&#xD;
-  }&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After running your app, hit &lt;code&gt;http://localhost:8080/ui&lt;/code&gt; to see the consul ui.&lt;/p&gt;&lt;p&gt;The &lt;a href="https://github.com/spring-cloud/spring-cloud-consul"&gt;code&lt;/a&gt; is hosted on github, and community contributions are extremely welcome, so get on over there are check it out. There is a sample in &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/tree/master/spring-cloud-consul-sample"&gt;spring-cloud-consul-sample&lt;/a&gt;. Instructions to run the sample are included in the &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/blob/master/README.adoc"&gt;README&lt;/a&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#springone-2gx-2015-is-around-the-corner" class="anchor" name="springone-2gx-2015-is-around-the-corner"&gt;&lt;/a&gt;SpringOne 2GX 2015 is around the corner!&lt;/h1&gt;&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com"&gt;SpringOne2GX in Washington, DC soon&lt;/a&gt;. Super Early Bird Price expires June 12th! It&amp;rsquo;s simply the best opportunity to find out first hand all that&amp;rsquo;s going on and to provide direct feedback. I&amp;rsquo;ll be speaking about Spring Cloud Consul, watch &lt;a href="https://2015.event.springone2gx.com/presenters/spencer_gibb.html"&gt;here&lt;/a&gt; for future details. Check recent blog posts to see what I mean and there is more to come!&lt;/p&gt;&lt;h1&gt;&lt;a href="#discounts" class="anchor" name="discounts"&gt;&lt;/a&gt;Discounts&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;The Super Early Bird price tier ($300 discount) expires June 12th. The Early Bird price tier (June 13th - August 14th) is discounted $150.&lt;/li&gt;
-  &lt;li&gt;Register 4 and get the 5th pass free. Contact us with the names of your first 4 registrants for your complimentary pass code (conference admission only).&lt;/li&gt;
-  &lt;li&gt;Alumni, contact us for your discount code ($150 off any option).&lt;/li&gt;
-&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - May 26th, 2015</title>
-    <link rel="alternate" href="https://spring.io/blog/2015/05/27/this-week-in-spring-may-26th-2015" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2015-05-27:2139</id>
-    <updated>2015-05-27T04:17:03Z</updated>
-    <content type="html">&lt;p&gt;Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! There is a lot to talk about, so let&amp;rsquo;s get to it!&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;First, the big news! Spring framework lead and OG Spring Guy Juergen Hoeller just announced that &lt;a href="http://spring.io/blog/2015/05/26/spring-framework-4-2-goes-rc1"&gt;Spring framework 4.2 RC1&lt;/a&gt; is now available! This new release includes lots of amazing new features so be sure to check it out! It includes anotation detection on Java 8 default methods, annotation-based application events, first-class annotation attibute aliases, nest path processing for direct field binding, data binding and conversion for JSR 354 (money and currency), Hibernate ORM 5.0 support (via JPA and natively), a STOMP client for use over TCP and WebSocket channels, &lt;code&gt;Listenable&lt;/code&gt;/&lt;code&gt;CompletableFuture&lt;/code&gt; as a message handler return value, CORS and declarative HTTP caching support, and much more. Get the bits, try it out, let&amp;rsquo;s make sure this is the best release yet!&lt;/li&gt;
-  &lt;li&gt;Spring Cloud Connectors lead Scott Frederick just announced that the &lt;a href="http://spring.io/blog/2015/05/22/spring-cloud-connectors-1-2-0-rc1-released"&gt;Spring Cloud Connectors 1.2.0 RC1&lt;/a&gt; has been released. The new release includes many, backwards compatible, changes and upgrades including support for HikariCP as a connection pool and a fix that removes the dreaded &lt;code&gt;ClassNotFoundException&lt;/code&gt; in certain rare circumstances! This upgrade is definitely worth an upgrade!&lt;/li&gt;
-  &lt;li&gt;Spring Data ninja and Spring for Apache Hadoop lead Thomas Risberg just announced &lt;a href="http://spring.io/blog/2015/05/21/spring-for-apache-hadoop-2-2-rc1-released"&gt;the last planned Spring for Apache Hadoop milestone release before 2.2.GA&lt;/a&gt; in approxmately 2 weeks. This release includes Cloudera CDH support, Hortonworks HDP 2.2 and 2.2.4.0 support, an updated Kite SDK, improvements to HDFS writer to support syncable writes and a new timeout option, and - usefully - this release requires Java 7 or greater.&lt;/li&gt;
-  &lt;li&gt;Check out Marius Bogoevici and Dr. Mark Pollack&amp;rsquo;s amazing webinar on &lt;a href="http://spring.io/blog/2015/05/20/webinar-replay-reactive-data-pipelines-with-spring-xd-and-kafka"&gt;reactive pipelines with Spring XD and Kafka&lt;/a&gt; from last week! Even if you saw it, you&amp;rsquo;ll want to check it out again. This one was filled with good stuff.&lt;/li&gt;
-  &lt;li&gt;Your humble author has been honored with the title of &lt;a href="https://blogs.oracle.com/java/entry/new_java_champion_josh_long"&gt;Java Champion&lt;/a&gt;. This title is bestowed on those who help advance the Java platform and nominations are made by other &lt;a href="https://java.net/website/java-champions/bios.html"&gt;Java champions&lt;/a&gt;. It is a rarified group and I don&amp;rsquo;t know that I&amp;rsquo;m worthy. I only mention it because it is the camaraderie I share with you - the most amazing community in the world - that makes it fun and exciting to keep doing it. Thank you my friends. &lt;em&gt;This Week in Spring&lt;/em&gt; is an almost 5 year chronicle of all the amazing things the community does to teach and inspire me and others. Thank you!&lt;/li&gt;
-  &lt;li&gt;ChargeAhead has an interesting two-part video of building a Spring Boot-based Spring MVC application. Here&amp;rsquo;s &lt;a href="https://www.youtube.com/watch?v=vgPkUVF862g"&gt;part 1&lt;/a&gt; and here&amp;rsquo;s &lt;a href="https://www.youtube.com/watch?v=BKF5eqPaIjU"&gt;part 2&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Driss Amri&lt;br/&gt; put together a nice post on &lt;a href="https://drissamri.be/blog/2015/05/21/spring-security-and-spring-session/"&gt;getting started with Spring Security, Spring Session and Redis &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.youtube.com/watch?v=2aF5MoSci0U"&gt;Jose Diaz put together a video on using Angular.js, Twitter Bootstrap, Spring MVC, Spring Data and Spring Security together&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Spring Cloud product manager Matt Stine put together a wonderful look at Spring Cloud &lt;a href="http://www.infoworld.com/article/2925047/application-development/build-self-healing-distributed-systems-with-spring-cloud.html"&gt;in this InfoWorld post&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;The &lt;em&gt;Learning the code way&lt;/em&gt; blog has a post on how to &lt;a href="http://learningviacode.blogspot.com/2015/05/introducing-database-to-spring-batch.html"&gt;configure Spring Batch&amp;rsquo;s metadata database &lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
   </entry>
 </feed>

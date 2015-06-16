@@ -25,13 +25,15 @@ public enum BlockID
 	ORE_RUBY(19, new int[] {9, 0}, "Ruby Ore", 0),
 	ORE_EMERALD(20, new int[] {10, 0}, "Emerald Ore", 0),
 	SOLIDAIR(254, new int[] {-1, -1}, "Solid Air", 255),
-	WATERSOURCE(255, new int[] {7, 1}, "Water Source", 254),
-	WATERFLOW_1(256, new int[] {7, 2}, "Flowing Water (Stage 1)", 253),
-	WATERFLOW_2(257, new int[] {7, 3}, "Flowing Water (Stage 2)", 253);
+	WATERSOURCE(255, new int[] {7, 1}, "Water Source", 254, 0);
 	
 	private int ID = 0;
+	private int meta = 0;
+	
 	private int[] textureID = {-1, -1};
+	
 	private String name = "";
+	
 	private double hardness = 0;
 		
 	private BlockID(int ID, int[] textureID, String name, double hardness)
@@ -40,6 +42,15 @@ public enum BlockID
 		this.textureID = textureID;
 		this.name = name;
 		this.hardness = hardness;
+	}
+	
+	private BlockID(int ID, int[] textureID, String name, double hardness, int meta)
+	{
+		this.ID = ID;
+		this.textureID = textureID;
+		this.name = name;
+		this.hardness = hardness;
+		this.setMetadata(meta);
 	}
 	
 	public int getID()
@@ -60,5 +71,15 @@ public enum BlockID
 	public double getHardness()
 	{
 		return this.hardness;
+	}
+
+	public int getMetadata()
+	{
+		return meta;
+	}
+
+	public void setMetadata(int meta)
+	{
+		this.meta = meta;
 	}
 }

@@ -11,6 +11,7 @@ import net.adventuria.Component;
 import net.adventuria.block.BlockID;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.inputs.Mouse;
+import net.adventuria.location.Location;
 
 public class AdventuriaMouseListener implements MouseListener, MouseMotionListener, MouseWheelListener
 {
@@ -40,13 +41,13 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 	@Override
 	public void mouseDragged(MouseEvent e)
 	{
-		 Mouse.setLocation(new Point(e.getX(), e.getY()));
+		 Mouse.setLocation(new Location(e.getX(), e.getY()));
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e)
 	{
-		Mouse.setLocation(new Point(e.getX(), e.getY()));
+		Mouse.setLocation(new Location(e.getX(), e.getY()));
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		Mouse.setLocation(new Point(e.getX(), e.getY()));
+		Mouse.setLocation(new Location(e.getX(), e.getY()));
 	    if (e.getButton() == 1)
 	    {
 	      Mouse.setLeftButton(true);
@@ -145,7 +146,7 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		Mouse.setLocation(new Point(e.getX(), e.getY()));
+		Mouse.setLocation(new Location(e.getX(), e.getY()));
 	    if (e.getButton() == 1)
 	    {
 	      Mouse.setLeftButton(false);

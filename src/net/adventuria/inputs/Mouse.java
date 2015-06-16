@@ -1,24 +1,28 @@
 package net.adventuria.inputs;
 
-import java.awt.Point;
-
 import net.adventuria.Component;
+import net.adventuria.location.Location;
 
 public class Mouse
 {
-	private static Point loc = new Point(0, 0);
+	private static Location loc = new Location(0, 0);
 	
 	private static boolean leftButton = false;
 	private static boolean rightButton = false;
 	
-	public static Point getLocation()
+	public static Location getLocation()
 	{
 		return loc;
 	}
 	
-	public static void setLocation(Point pt)
+	public static Location getBlockLocation()
 	{
-		loc = pt;
+		return new Location(getBlockX(), getBlockY());
+	}
+	
+	public static void setLocation(Location l)
+	{
+		loc = l;
 	}
 
 	public static boolean isLeftButtonClicked() 
