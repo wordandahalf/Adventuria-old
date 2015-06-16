@@ -129,6 +129,11 @@ public class EntityPlayer extends EntityHuman
 		  return new Location((int) this.x, (int) this.y);
 	  }
 	  
+	  public Location getBlockLocation()
+	  {
+		  return new Location(this.getBlockX(), this.getBlockY());
+	  }
+	  
 	  public int getBlockX()
 	  {
 		  return (int) Math.ceil(this.x / 20);

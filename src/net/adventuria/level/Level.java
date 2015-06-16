@@ -54,7 +54,7 @@ public class Level
 		{
 			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH)
 			{
-				if((Mouse.getBlockLocation().getX() != Component.character.getBlockX() && Mouse.getBlockY() != Component.character.getBlockY()) && (Mouse.getBlockLocation().getX() != Component.character.getBlockX() && Mouse.getBlockY() != Component.character.getBlockY() + 1))
+				if(!(Mouse.getBlockLocation().equals(Component.character.getBlockLocation())) && !(Mouse.getBlockLocation().equals(new Location(Component.character.getBlockX(), Component.character.getBlockY() + 1))))
 				{
 					if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() == BlockID.AIR && Mouse.getBlockX() > -1 && Mouse.getBlockY() > -1 && Component.inventory.getHeldItemCount() >= 2)
 					{

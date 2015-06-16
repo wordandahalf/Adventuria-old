@@ -20,4 +20,14 @@ public class Location
 	{
 		return this.y;
 	}
+	
+	public boolean equals(Location loc)
+	{
+		if((loc.getX() == this.getX()) && (loc.getY() == this.getY()))
+		{
+			return true;
+		}
+		
+		return false;
+	}
 }
