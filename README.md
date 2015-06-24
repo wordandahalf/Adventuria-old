@@ -1,2 +1,2 @@
 # Adventuria
-This isn't my game, just a fork of TheMCPEGamer's that I'm having fun with. :D
+I little Java 2D platformer that I have been working on for a little bit
