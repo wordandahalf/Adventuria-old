@@ -117,9 +117,9 @@ public class EntityPlayer extends EntityHuman
 	  public void Render(Graphics g)
 	  {
 	    if (Component.dir == this.movementSpeed) {
-	      g.drawImage(AssetManager.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
+	      g.drawImage(AssetManager.tileset_entity, (int) (this.x - Component.sX), (int) (this.y - Component.sY), (int) ((this.width + this.x) - Component.sX), (int) ((this.height + this.y) - Component.sY), EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
 	    } else {
-	      g.drawImage(AssetManager.tileset_entity, (int)this.x - (int)Component.sX, (int)this.y - (int)Component.sY, (int)(this.width + this.x) - (int)Component.sX, (int)(this.height + this.y) - (int)Component.sY, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
+	      g.drawImage(AssetManager.tileset_entity, (int) (this.x - Component.sX), (int) (this.y - Component.sY), (int) ((this.width + this.x) - Component.sX), (int) ((this.height + this.y) - Component.sY), EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int)this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int)this.height, null);
 	    }
 	  }
 	  

@@ -24,7 +24,7 @@ public class Component extends Applet implements Runnable
   public static int moveFromBorder = 0;
   public static double sX = moveFromBorder;
   public static double sY = moveFromBorder;
-  public static double dir = 0.0D;;
+  public static double dir = 0.0D;
   public static Dimension realSize;
   public static Dimension size = new Dimension(700, 560);
   public static Dimension pixel = new Dimension(size.width / pixelSize, size.height / pixelSize);
