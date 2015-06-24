@@ -34,7 +34,7 @@ public class Level
 	{
 		if(!Inventory.isOpen)
 		{
-			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH)
+			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH && Mouse.isBlockInRange())
 			{
 				if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() != BlockID.AIR)
 				{
@@ -52,7 +52,7 @@ public class Level
 	{
 		if(!Inventory.isOpen)
 		{
-			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH)
+			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH && Mouse.isBlockInRange())
 			{
 				if(!(Mouse.getBlockLocation().equals(Component.character.getBlockLocation())) && !(Mouse.getBlockLocation().equals(new Location(Component.character.getBlockX(), Component.character.getBlockY() + 1))))
 				{

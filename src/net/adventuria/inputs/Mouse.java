@@ -1,6 +1,7 @@
 package net.adventuria.inputs;
 
 import net.adventuria.Component;
+import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.location.Location;
 
 public class Mouse
@@ -18,6 +19,10 @@ public class Mouse
 	public static Location getBlockLocation()
 	{
 		return new Location(getBlockX(), getBlockY());
+	}
+	
+	public static boolean isBlockInRange() {
+		return Math.sqrt(Math.pow(getBlockX() - Component.character.getBlockX(), 2) + Math.pow(getBlockY() - Component.character.getBlockY(), 2)) <= 3;
 	}
 	
 	public static void setLocation(Location l)
