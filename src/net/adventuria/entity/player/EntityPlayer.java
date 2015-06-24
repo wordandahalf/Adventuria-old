@@ -9,12 +9,12 @@ import net.adventuria.block.Block;
 import net.adventuria.block.BlockID;
 import net.adventuria.entity.EntityHuman;
 import net.adventuria.entity.EntityID;
+import net.adventuria.gui.GUI;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.location.Location;
 
 public class EntityPlayer extends EntityHuman
 {
-	  public static int health = 20;
 	  public double fallingSpeed = 1.0D;
 	  public double movementSpeed = 0.5D;
 	  public double jumpingSpeed = 1.0D;
@@ -37,10 +37,18 @@ public class EntityPlayer extends EntityHuman
 	    {
 	      this.y += this.fallingSpeed;
 	      Component.sY += this.fallingSpeed;
+	      fallingSpeed+=fallingSpeed >= 3.5 ? 0 : 0.006;
 	    }
 	    else if (Component.isJumping)
 	    {
-	      this.isJumping = true;
+	    	fallingSpeed = 1;
+	        this.isJumping = true;
+	    }else {
+	    	if(fallingSpeed > 1.4) {
+	    		health -= Math.pow(2.25, fallingSpeed);
+	    		GUI.healthBar.update();
+	    	}
+	    	fallingSpeed = 1;
 	    }
 	    if ((Component.isMoving) && (!Inventory.isOpen))
 	    {
