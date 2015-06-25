@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import net.adventuria.Component;
 import net.adventuria.assets.AssetManager;
 import net.adventuria.block.*;
 
@@ -36,6 +37,7 @@ public class Cell
     }
     if (isSelected) {
       g.drawImage(AssetManager.tile_select, this.x - 1, this.y - 1, this.width + 2, this.height + 2, null);
+      if(ID != BlockID.AIR) g.drawString(ID.getName(), (Component.pixel.width / 2) - ID.getName().length() * 4, 16);
     }
   }
 }

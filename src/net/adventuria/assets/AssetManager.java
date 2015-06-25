@@ -16,6 +16,8 @@ public class AssetManager
 	  public static BufferedImage tileset_particle;
 	  public static BufferedImage tileset_entity;
 	  public static BufferedImage tileset_item;
+	  public static BufferedImage night_sky;
+	  public static BufferedImage cloud_map;
 	  
 	  public AssetManager() throws MissingAssetsException
 	  {
@@ -27,6 +29,8 @@ public class AssetManager
 	      tile_select = ImageIO.read(new File("res/tile_select.png"));
 	      tileset_entity = ImageIO.read(new File("res/tileset_entity.png"));
 	      tileset_item = ImageIO.read(new File("res/tileset_item.png"));
+	      night_sky = ImageIO.read(new File("res/night_sky.png"));
+	      cloud_map = ImageIO.read(new File("res/cloud_map.png"));
 	    }
 	    catch (IOException e)
 	    {

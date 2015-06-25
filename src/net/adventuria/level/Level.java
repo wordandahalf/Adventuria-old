@@ -56,15 +56,12 @@ public class Level
 			{
 				if(!(Mouse.getBlockLocation().equals(Component.character.getBlockLocation())) && !(Mouse.getBlockLocation().equals(new Location(Component.character.getBlockX(), Component.character.getBlockY() + 1))))
 				{
-					if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() == BlockID.AIR && Mouse.getBlockX() > -1 && Mouse.getBlockY() > -1 && Component.inventory.getHeldItemCount() >= 2)
+					if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() == BlockID.AIR || this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() == BlockID.WATERSOURCE && Mouse.getBlockX() > -1 && Mouse.getBlockY() > -1)
 					{
-						Component.inventory.setItemInventory(Component.inventory.getHeldItemID(), Component.inventory.getHeldItemCount() - 1, Inventory.selected);
-						this.setBlock(Component.inventory.getHeldItemID(), Mouse.getBlockX(), Mouse.getBlockY());
-					}
-					else if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() == BlockID.AIR && Mouse.getBlockX() > -1 && Mouse.getBlockY() > -1 && Component.inventory.getHeldItemCount() == 1)
-					{
-						this.setBlock(Component.inventory.getHeldItemID(), Mouse.getBlockX(), Mouse.getBlockY());
-						Component.inventory.setItemInventory(BlockID.AIR, 0, Inventory.selected);
+						if(Component.inventory.getHeldItemID() != BlockID.AIR) {
+							this.setBlock(Component.inventory.getHeldItemID(), Mouse.getBlockX(), Mouse.getBlockY());
+							Component.inventory.setItemInventory(Component.inventory.getHeldItemID(), Component.inventory.getHeldItemCount() - 1, Inventory.selected);
+						}
 					}
 				}
 			}

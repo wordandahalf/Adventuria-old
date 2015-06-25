@@ -1,5 +1,6 @@
 package net.adventuria.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import net.adventuria.Component;
@@ -15,6 +16,9 @@ public class Debug
   {
     if (isDebugOpen)
     {
+    	g.setColor(new Color(128, 128, 128, 105));
+    	g.fillRect(0, 0, 140, 68);
+    	g.setColor(Color.white);
       g.drawString(Component.GAME_TITLE + " v" + Component.GAME_VERSION, 5, 15);
       g.drawString("X: " + Component.character.x / Block.tileSize, 5, 25);
       g.drawString("Y: " + Component.character.y / Block.tileSize, 5, 35);

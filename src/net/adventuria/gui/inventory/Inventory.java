@@ -75,7 +75,7 @@ public class Inventory
       }
       if ((invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) && (isOpen))
       {;
-        g.setColor(new Color(255, 255, 255, 115));
+        g.setColor(new Color(255, 255, 255, 6));
         g.fillRect(invHotBar[i].x, invHotBar[i].y, invHotBar[i].width, invHotBar[i].height);
       }
       invHotBar[i].Render(g, isSelected);
@@ -90,7 +90,6 @@ public class Inventory
     for (int i = 0; i < invBag.length; i++)
     {
       invBag[i].Render(g, false);
-
       if (invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
       {
         g.setColor(new Color(255, 255, 255, 64));
@@ -187,6 +186,10 @@ public class Inventory
   
   public void setItemInventory(BlockID ID, int Count, int index)
   {
+	  if(Count < 1 && ID != BlockID.AIR) {
+		  setItemInventory(BlockID.AIR, 0, index);
+		  return;
+	  }
 	  if(index < 8)
 	  {
 		  invHotBar[index].ID = ID;
