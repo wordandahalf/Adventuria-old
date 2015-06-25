@@ -1,7 +1,6 @@
 package net.adventuria.inputs;
 
 import net.adventuria.Component;
-import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.location.Location;
 
 public class Mouse
