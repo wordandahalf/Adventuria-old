@@ -7,7 +7,7 @@ public abstract class EntityLiving extends DoubleRectangle implements EntityBase
 {
 	private Location loc = new Location(0, 0);
 	private EntityID ID = EntityID.NULL;
-	private int health = 20;
+	protected int health = 20;
 	
 	public EntityLiving(Location loc, EntityID ID)
 	{

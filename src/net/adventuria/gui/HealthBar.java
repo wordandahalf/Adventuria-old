@@ -13,8 +13,17 @@ public class HealthBar
   public HealthBar()
   {
     for (int i = 0; i < hearts.length; i++) {
-      hearts[i] = new Particle(Particle.HEART_FULL);
-    }
+        hearts[i] = new Particle(Particle.HEART_FULL);
+      }
+  }
+  
+  public void update() {
+	heartAmount = Component.character.getHealth() / 2;
+	if(heartAmount < 0) heartAmount = 0;
+	hearts = new Particle[heartAmount];
+    for (int i = 0; i < hearts.length; i++) {
+        hearts[i] = new Particle(Particle.HEART_FULL);
+      }
   }
   
   public void Render(Graphics g)

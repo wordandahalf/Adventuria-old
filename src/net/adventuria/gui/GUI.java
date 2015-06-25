@@ -4,9 +4,9 @@ import java.awt.Graphics;
 
 public class GUI
 {
-  private static HealthBar healthBar;
-  private static HungerBar hungerBar;
-  private static ManaBar manaBar;
+  public static HealthBar healthBar;
+  public static HungerBar hungerBar;
+  public static ManaBar manaBar;
   
   public GUI()
   {
