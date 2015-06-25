@@ -36,12 +36,16 @@ public class Level
 		{
 			if(Mouse.getBlockX() < worldW && Mouse.getBlockY() < worldH && Mouse.isBlockInRange())
 			{
-				if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID() != BlockID.AIR)
+				Block b = this.getBlock(Mouse.getBlockX(), Mouse.getBlockY());
+				if(b.getID() != BlockID.AIR)
 				{
-					if(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID().getHardness() < 128)
+					if(b.getID().getHardness() < 128)
 					{
-						Component.inventory.addItemToInventory(this.getBlock(Mouse.getBlockX(), Mouse.getBlockY()).getID());
-						this.setBlock(BlockID.AIR, Mouse.getBlockX(), Mouse.getBlockY());
+						b.damage(0.01);
+						if(b.getHardness() <= 0) {
+							Component.inventory.addItemToInventory(b.getID());
+							this.setBlock(BlockID.AIR, Mouse.getBlockX(), Mouse.getBlockY());
+						}
 					}
 				}
 			}
@@ -130,7 +134,7 @@ public class Level
         if ((x >= 0) && (y >= 0) && (x < worldW) && (y < worldH))
         {
           this.Blocks[x][y].Render(g);
-          if ((this.Blocks[x][y].contains(new Point(Mouse.getX() / Component.pixelSize + (int)Component.sX, Mouse.getY() / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID() != BlockID.AIR) && (!Inventory.isOpen))
+          if ((this.Blocks[x][y].contains(new Point(Mouse.getX() / Component.pixelSize + (int)Component.sX, Mouse.getY() / Component.pixelSize + (int)Component.sY))) && (this.Blocks[x][y].getID() != BlockID.AIR) && (!Inventory.isOpen) && Mouse.isBlockInRange())
         	  
           {
             g.setColor(new Color(255, 255, 255, 64));

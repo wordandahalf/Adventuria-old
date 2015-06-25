@@ -41,9 +41,9 @@ public class EntityPlayer extends EntityHuman
 	    }
 	    else if (Component.isJumping)
 	    {
-	    	fallingSpeed = 1;
 	        this.isJumping = true;
-	    }else {
+	    }
+	    if(isCollidingWithBlock(new Point((int)this.x + 2, (int)(this.y + this.height)), new Point((int)(this.x + this.width - 2.0D), (int)(this.y + this.height)))) {
 	    	if(fallingSpeed > 1.4) {
 	    		health -= Math.pow(2.25, fallingSpeed);
 	    		GUI.healthBar.update();
@@ -110,7 +110,7 @@ public class EntityPlayer extends EntityHuman
 	    for (int x = (int)(this.x / Block.tileSize); x < (int)(this.x / Block.tileSize) + 3; x++) {
 	      for (int y = (int)(this.y / Block.tileSize); y < (int)(this.y / Block.tileSize) + 3; y++) {
 	        if ((x >= 0) && (y >= 0) && (x < Component.level.Blocks.length) && (y < Component.level.Blocks[0].length)) {
-	          if ((Component.level.Blocks[x][y].getID() != BlockID.AIR) && (Component.level.Blocks[x][y].getID() != BlockID.WATERSOURCE)) {
+	          if ((Component.level.Blocks[x][y].getID().isSolid())) {
 	            if ((Component.level.Blocks[x][y].contains(pt1)) || (Component.level.Blocks[x][y].contains(pt2))) {
 	              return true;
 	            }

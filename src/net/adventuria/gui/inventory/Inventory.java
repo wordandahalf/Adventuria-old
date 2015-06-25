@@ -50,18 +50,16 @@ public class Inventory
     if (isOpen)
     {
       renderInvBag(g);
-      renderHotBar(g);
     }
-    else
-    {
-        renderHotBar(g);    	
-    }
+    renderHotBar(g);
     
     if ((currentHeldItemID != BlockID.AIR) && (currentHeldItemCount != 0))
     {
-      g.setColor(new Color(255, 255, 255, 255));
-      g.drawImage(AssetManager.tileset_terrain, Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize, Block.tileSize + Mouse.getX() / Component.pixelSize, Block.tileSize + Mouse.getY() / Component.pixelSize, currentHeldItemID.getTextureID()[0] * Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize, currentHeldItemID.getTextureID()[0] * Block.tileSize + Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize + Block.tileSize, null);
-      g.drawString("" + currentHeldItemCount, Mouse.getX() / Component.pixelSize + 3, Mouse.getY() / Component.pixelSize + 19);
+    	if(isOpen) {
+    	      g.setColor(new Color(255, 255, 255, 255));
+    	      g.drawImage(AssetManager.tileset_terrain, Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize, Block.tileSize + Mouse.getX() / Component.pixelSize, Block.tileSize + Mouse.getY() / Component.pixelSize, currentHeldItemID.getTextureID()[0] * Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize, currentHeldItemID.getTextureID()[0] * Block.tileSize + Block.tileSize, currentHeldItemID.getTextureID()[1] * Block.tileSize + Block.tileSize, null);
+    	      g.drawString("" + currentHeldItemCount, Mouse.getX() / Component.pixelSize + 3, Mouse.getY() / Component.pixelSize + 19);
+    	}
     }
   }
   
@@ -74,7 +72,7 @@ public class Inventory
         isSelected = true;
       }
       if ((invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) && (isOpen))
-      {;
+      {
         g.setColor(new Color(255, 255, 255, 6));
         g.fillRect(invHotBar[i].x, invHotBar[i].y, invHotBar[i].width, invHotBar[i].height);
       }
