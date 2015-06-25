@@ -7,93 +7,85 @@ import net.adventuria.Component;
 import net.adventuria.gui.Debug;
 import net.adventuria.gui.inventory.Inventory;
 
-public class AdventuriaKeyboardListener implements KeyListener
-{
+public class AdventuriaKeyboardListener implements KeyListener {
 
 	@Override
-	public void keyTyped(KeyEvent e)
-	{
-		
+	public void keyTyped(KeyEvent e) {
+
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-	    switch (key)
-	    {
-	    case 68: 
-	      if (!Inventory.isOpen)
-	      {
-	        Component.isMoving = true;
-	        Component.dir = Component.character.movementSpeed;
-	      }
-	      break;
-	    case 65: 
-	      if (!Inventory.isOpen)
-	      {
-	        Component.isMoving = true;
-	        Component.dir = -Component.character.movementSpeed;
-	      }
-	      break;
-	    case 87: 
-	      if (!Inventory.isOpen) {
-	        Component.isJumping = true;
-	      }
-	      break;
-	    case 49: 
-	      Inventory.selected = 0;
-	      break;
-	    case 50: 
-	      Inventory.selected = 1;
-	      break;
-	    case 51: 
-	      Inventory.selected = 2;
-	      break;
-	    case 52: 
-	      Inventory.selected = 3;
-	      break;
-	    case 53: 
-	      Inventory.selected = 4;
-	      break;
-	    case 54: 
-	      Inventory.selected = 5;
-	      break;
-	    case 55: 
-	      Inventory.selected = 6;
-	      break;
-	    case 56: 
-	      Inventory.selected = 7;
-	      break;
-	    case 114: 
-	      Debug.isDebugOpen = !Debug.isDebugOpen;
-	      break;
-	    case 69: 
-	      Inventory.isOpen = !Inventory.isOpen;
-	      break;
-	    case 27: 
-	      Inventory.isOpen = false;
-	    }
+		switch (key) {
+		case 68:
+			if (!Inventory.isOpen) {
+				Component.isMoving = true;
+				Component.dir = Component.character.movementSpeed;
+			}
+			break;
+		case 65:
+			if (!Inventory.isOpen) {
+				Component.isMoving = true;
+				Component.dir = -Component.character.movementSpeed;
+			}
+			break;
+		case 87:
+			if (!Inventory.isOpen) {
+				Component.isJumping = true;
+			}
+			break;
+		case 49:
+			Inventory.selected = 0;
+			break;
+		case 50:
+			Inventory.selected = 1;
+			break;
+		case 51:
+			Inventory.selected = 2;
+			break;
+		case 52:
+			Inventory.selected = 3;
+			break;
+		case 53:
+			Inventory.selected = 4;
+			break;
+		case 54:
+			Inventory.selected = 5;
+			break;
+		case 55:
+			Inventory.selected = 6;
+			break;
+		case 56:
+			Inventory.selected = 7;
+			break;
+		case 114:
+			Debug.isDebugOpen = !Debug.isDebugOpen;
+			break;
+		case 69:
+			Inventory.isOpen = !Inventory.isOpen;
+			break;
+		case 27:
+			Inventory.isOpen = false;
+		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e)
-	{
+	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
-	    switch (key)
-	    {
-	    case 68: 
-	      if (Component.dir == Component.character.movementSpeed) {
-	        Component.isMoving = false;
-	      }
-	      break;
-	    case 65: 
-	      if (Component.dir == -Component.character.movementSpeed) {
-	        Component.isMoving = false;
-	      }
-	      break;
-	    case 87: 
-	      Component.isJumping = false;
-	    }	
+		switch (key) {
+		case 68:
+			if (Component.dir == Component.character.movementSpeed) {
+				Component.isMoving = false;
+			}
+			break;
+		case 65:
+			if (Component.dir == -Component.character.movementSpeed) {
+				Component.isMoving = false;
+			}
+			break;
+		case 87:
+			Component.isJumping = false;
+		}
 	}
 }

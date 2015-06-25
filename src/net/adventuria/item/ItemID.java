@@ -1,11 +1,9 @@
 package net.adventuria.item;
 
-public enum ItemID
-{
+public enum ItemID {
 	NULL();
-	
-	private ItemID()
-	{
-		
+
+	private ItemID() {
+
 	}
 }
