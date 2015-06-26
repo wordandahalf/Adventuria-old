@@ -2,11 +2,9 @@ package net.adventuria.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import net.adventuria.Component;
 import net.adventuria.inputs.Mouse;
 import net.adventuria.level.Sky;
-import net.adventuria.block.Block;
 
 public class Debug {
 	public static boolean isDebugOpen = false;

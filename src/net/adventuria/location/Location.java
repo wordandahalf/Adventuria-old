@@ -1,8 +1,8 @@
 package net.adventuria.location;
 
 public class Location {
-	public int y = 0;
-	public int x = 0;
+	private int y = 0;
+	private int x = 0;
 
 	public Location(int x, int y) {
 		this.y = y;

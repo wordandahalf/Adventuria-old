@@ -1,7 +1,5 @@
 package net.adventuria.entity;
 
-import java.awt.Point;
-
 import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.location.Location;
@@ -36,7 +34,7 @@ public abstract class EntityLiving extends DoubleRectangle implements EntityBase
 	}
 
 	public boolean isCollidingWithBlock(Location pt1, Location pt2) {
-		if ((Component.level.Blocks[pt1.x][pt1.y].getBounds().intersects(getBoundingRectangle()) && Component.level.Blocks[pt1.x][pt1.y].isSolid()) || (Component.level.Blocks[pt2.x][pt2.y].getBounds().intersects(getBoundingRectangle()) && Component.level.Blocks[pt2.x][pt2.y].isSolid())) {
+		if ((Component.level.Blocks[pt1.getX()][pt1.getY()].getBounds().intersects(getBoundingRectangle()) && Component.level.Blocks[pt1.getX()][pt1.getY()].isSolid()) || (Component.level.Blocks[pt2.getX()][pt2.getY()].getBounds().intersects(getBoundingRectangle()) && Component.level.Blocks[pt2.getX()][pt2.getY()].isSolid())) {
 
 			return true;
 		}

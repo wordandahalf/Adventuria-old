@@ -62,8 +62,8 @@ public class Component extends Applet implements Runnable {
 		int blockY = 0;
 		int fitBlocks = 0; // Checks to ensure head and feet will fit in an
 							// area.
-		for (int y = level.worldH - 1; y >= 0; y--) {
-			if (level.getBlock((level.worldW / 2), y).getID().equals(BlockID.AIR)) {
+		for (int y = Level.worldH - 1; y >= 0; y--) {
+			if (level.getBlock((Level.worldW / 2), y).getID().equals(BlockID.AIR)) {
 				fitBlocks++;
 				if (fitBlocks == 2) {
 					blockY = y;
