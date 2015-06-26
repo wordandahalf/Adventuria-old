@@ -11,7 +11,7 @@ public class Sky {
 	public static int time = DAWN;
 	public static int dayFrame = 0;
 	public static final int DAY_TIME = 18000, TRANSFER_TIME = 2500;
-	public Color currentColor = Color.white, nextColor = Color.white, dayColor = new Color(70, 120, 230), nightColor = new Color(15, 8, 40), dawnColor = new Color(92, 48, 181), duskColor = new Color(140, 113, 247);
+	public Color currentColor = Color.white, nextColor = Color.white, dayColor = new Color(70, 120, 230), nightColor = new Color(15, 8, 40), dawnColor = new Color(110, 89, 193), duskColor = new Color(64, 48, 127);
 	private int cloudX = 0, sunMoonX = -96, sunMoonY = 50, starFade = 255;
 	private double r = 0, g = 0, b = 0;
 

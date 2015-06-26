@@ -22,6 +22,12 @@ public class Debug {
 			g.drawString("Mouse X: " + Mouse.getX(), 5, 44);
 			g.drawString("Mouse Y: " + Mouse.getY(), 5, 54);
 			g.drawString("Time: " + Sky.dayFrame, 5, 64);
+			g.setColor(new Color(255, 255, 127, 200));
+			int x1 = (int) Math.round(Component.character.getBoundingRectangle().x - Component.sX);
+			int y1 = (int) Math.round(Component.character.getBoundingRectangle().y - Component.sY);
+			g.drawRect(x1, y1, Component.character.getBoundingRectangle().width, Component.character.getBoundingRectangle().height);
+			g.setColor(new Color(255, 127, 127, 200));
+			g.drawRect((Component.character.getBlockX() * 20) - (int) Component.sX, Component.character.getBlockY() * 20 - (int) Component.sY, 20, 40);
 		}
 	}
 }

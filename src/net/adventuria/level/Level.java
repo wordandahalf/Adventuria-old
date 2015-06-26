@@ -33,15 +33,11 @@ public class Level {
 					Block b = this.getBlock(Mouse.getBlockX(), Mouse.getBlockY());
 					if (b.getID() != BlockID.AIR) {
 						if (b.getID().getHardness() < 128) {
-							// b.damage(0.01);
-							Component.inventory.addItemToInventory(b.getID());
-							this.setBlock(BlockID.AIR, Mouse.getBlockX(), Mouse.getBlockY());
-							/*
-							 * if (b.getHardness() <= 0) {
-							 * Component.inventory.addItemToInventory(b
-							 * .getID()); this.setBlock(BlockID.AIR,
-							 * Mouse.getBlockX(), Mouse.getBlockY()); }
-							 */
+							 b.damage(0.01);
+							 if (b.getHardness() <= 0) {
+								 Component.inventory.addItemToInventory(b.getID()); this.setBlock(BlockID.AIR,Mouse.getBlockX(), Mouse.getBlockY()); 
+							 }
+							 
 						}
 					}
 				}

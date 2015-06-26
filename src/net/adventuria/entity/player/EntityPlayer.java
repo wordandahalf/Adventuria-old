@@ -27,7 +27,7 @@ public class EntityPlayer extends EntityHuman {
 
 	public EntityPlayer(Location loc) {
 		super(loc, EntityID.PLAYER);
-		setBoundingTranslations(4, 2, -6, -2);
+		setBoundingTranslations(2, 2, -5, -2);
 	}
 
 	@Override
@@ -66,8 +66,9 @@ public class EntityPlayer extends EntityHuman {
 			}
 			if (!canMove) {
 				this.x += Component.dir;
-				if (x >= (Component.pixel.width / 2) + 10 && x <= (Component.level.worldW * Block.tileSize) - ((Component.pixel.width / 2) + 30))
-					Component.sX += Component.dir;
+				if (x >= (Component.pixel.width / 2D) + 10 && x <= (Component.level.worldW * Block.tileSize) - ((Component.pixel.width / 2D) + 30)) {
+					Component.sX = x - ((Component.pixel.width / 2D) - 10);
+				}
 			}
 		} else {
 			this.animation = 0;
@@ -80,7 +81,7 @@ public class EntityPlayer extends EntityHuman {
 				} else {
 					this.y -= this.jumpingSpeed;
 					Component.sY -= this.jumpingSpeed;
-
+	
 					this.jumpingCount += 1;
 				}
 			} else {
@@ -99,16 +100,6 @@ public class EntityPlayer extends EntityHuman {
 		} else {
 			g.drawImage(AssetManager.tileset_entity, xCoord, yCoord, (int) this.width + xCoord, (int) this.height + yCoord, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int) this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int) this.height, null);
 		}
-		g.setColor(Color.yellow);
-		int x1 = (int) Math.round(getBoundingRectangle().x - Component.sX);
-		int y1 = (int) Math.round(getBoundingRectangle().y - Component.sY);
-		g.drawRect(x1, y1, getBoundingRectangle().width, getBoundingRectangle().height);
-		g.setColor(Color.green);
-		g.drawRect((getBlockX() * 20) - (int) Component.sX, getBlockY() * 20 - (int) Component.sY, 20, 20);
-		g.setColor(Color.blue);
-		g.drawRect((getBlockX() * 20) - (int) Component.sX, ((getBlockY() + 1) * 20) - (int) Component.sY, 20, 20);
-		g.setColor(Color.red);
-		g.drawRect((getBlockX() * 20) - (int) Component.sX, ((getBlockY() + 2) * 20) - (int) Component.sY, 20, 20);
 	}
 
 	@Override
