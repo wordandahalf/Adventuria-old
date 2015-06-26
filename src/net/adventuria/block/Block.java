@@ -23,8 +23,7 @@ public class Block extends Rectangle {
 		this.ID = ID;
 		this.bx = loc.getX();
 		this.by = loc.getY();
-		setBounds(loc.getX() * tileSize, loc.getY() * tileSize, tileSize,
-				tileSize);
+		setBounds(loc.getX() * tileSize, loc.getY() * tileSize, tileSize, tileSize);
 
 		this.ID = ID;
 	}
@@ -60,46 +59,18 @@ public class Block extends Rectangle {
 
 	public void Render(Graphics g) {
 		if (this.ID != BlockID.AIR) {
-			g.drawImage(AssetManager.tileset_terrain, this.x
-					- (int) Component.sX, this.y - (int) Component.sY,
-					this.width + this.x - (int) Component.sX, this.height
-							+ this.y - (int) Component.sY,
-					this.ID.getTextureID()[0] * Block.tileSize,
-					this.ID.getTextureID()[1] * Block.tileSize,
-					this.ID.getTextureID()[0] * Block.tileSize + this.width,
-					this.ID.getTextureID()[1] * Block.tileSize + this.height,
-					null);
+			g.drawImage(AssetManager.tileset_terrain, this.x - (int) Component.sX, this.y - (int) Component.sY, this.width + this.x - (int) Component.sX, this.height + this.y - (int) Component.sY, this.ID.getTextureID()[0] * Block.tileSize, this.ID.getTextureID()[1] * Block.tileSize, this.ID.getTextureID()[0] * Block.tileSize + this.width, this.ID.getTextureID()[1] * Block.tileSize + this.height, null);
 			// Block damage overlay
 			if (hardness <= ID.getHardness() / 6) {
-				g.drawImage(AssetManager.tileset_terrain, this.x
-						- (int) Component.sX, this.y - (int) Component.sY,
-						this.width + this.x - (int) Component.sX, this.height
-								+ this.y - (int) Component.sY, 100, 20, 119,
-						39, null);
+				g.drawImage(AssetManager.tileset_terrain, this.x - (int) Component.sX, this.y - (int) Component.sY, this.width + this.x - (int) Component.sX, this.height + this.y - (int) Component.sY, 100, 20, 119, 39, null);
 			} else if (hardness <= ID.getHardness() / 3) {
-				g.drawImage(AssetManager.tileset_terrain, this.x
-						- (int) Component.sX, this.y - (int) Component.sY,
-						this.width + this.x - (int) Component.sX, this.height
-								+ this.y - (int) Component.sY, 80, 20, 99, 39,
-						null);
+				g.drawImage(AssetManager.tileset_terrain, this.x - (int) Component.sX, this.y - (int) Component.sY, this.width + this.x - (int) Component.sX, this.height + this.y - (int) Component.sY, 80, 20, 99, 39, null);
 			} else if (hardness <= ID.getHardness() / 2) {
-				g.drawImage(AssetManager.tileset_terrain, this.x
-						- (int) Component.sX, this.y - (int) Component.sY,
-						this.width + this.x - (int) Component.sX, this.height
-								+ this.y - (int) Component.sY, 60, 20, 79, 39,
-						null);
+				g.drawImage(AssetManager.tileset_terrain, this.x - (int) Component.sX, this.y - (int) Component.sY, this.width + this.x - (int) Component.sX, this.height + this.y - (int) Component.sY, 60, 20, 79, 39, null);
 			} else if (hardness <= ID.getHardness() * 2 / 3) {
-				g.drawImage(AssetManager.tileset_terrain, this.x
-						- (int) Component.sX, this.y - (int) Component.sY,
-						this.width + this.x - (int) Component.sX, this.height
-								+ this.y - (int) Component.sY, 40, 20, 59, 39,
-						null);
+				g.drawImage(AssetManager.tileset_terrain, this.x - (int) Component.sX, this.y - (int) Component.sY, this.width + this.x - (int) Component.sX, this.height + this.y - (int) Component.sY, 40, 20, 59, 39, null);
 			} else if (hardness <= ID.getHardness() * 5 / 6) {
-				g.drawImage(AssetManager.tileset_terrain, this.x
-						- (int) Component.sX, this.y - (int) Component.sY,
-						this.width + this.x - (int) Component.sX, this.height
-								+ this.y - (int) Component.sY, 20, 20, 39, 39,
-						null);
+				g.drawImage(AssetManager.tileset_terrain, this.x - (int) Component.sX, this.y - (int) Component.sY, this.width + this.x - (int) Component.sX, this.height + this.y - (int) Component.sY, 20, 20, 39, 39, null);
 			}
 		}
 	}

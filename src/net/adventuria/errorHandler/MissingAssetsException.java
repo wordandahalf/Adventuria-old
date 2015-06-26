@@ -21,10 +21,8 @@ public class MissingAssetsException extends IOException {
 
 	@Override
 	public void printStackTrace() {
-		String reason = getType() == 0 ? "Assets could not be read at startup!"
-				: "Assets were removed after startup!";
+		String reason = getType() == 0 ? "Assets could not be read at startup!" : "Assets were removed after startup!";
 
-		System.err.println("net.adventura.MissingAssetsException: " + reason
-				+ " Please replace the missing or removed files!");
+		System.err.println("net.adventura.MissingAssetsException: " + reason + " Please replace the missing or removed files!");
 	}
 }

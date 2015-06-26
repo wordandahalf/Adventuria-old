@@ -23,8 +23,7 @@ public class AssetManager {
 	public AssetManager() throws MissingAssetsException {
 		try {
 			tileset_terrain = ImageIO.read(new File("res/tileset_terrain.png"));
-			tileset_particle = ImageIO
-					.read(new File("res/tileset_particle.png"));
+			tileset_particle = ImageIO.read(new File("res/tileset_particle.png"));
 			tile_cell = ImageIO.read(new File("res/tile_cell.png"));
 			tile_select = ImageIO.read(new File("res/tile_select.png"));
 			tileset_entity = ImageIO.read(new File("res/tileset_entity.png"));

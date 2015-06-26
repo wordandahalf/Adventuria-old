@@ -13,18 +13,12 @@ public class Generator {
 		genGrass(Block);
 		genStone(Block);
 		genBedrock(Block);
-		genOre(Block, BlockID.ORE_COAL, Level.worldH - (Level.worldH - 40),
-				Level.worldH - 10, 40);
-		genOre(Block, BlockID.ORE_IRON, Level.worldH - (Level.worldH - 60),
-				Level.worldH - 5, 35);
-		genOre(Block, BlockID.ORE_GOLD, Level.worldH - (Level.worldH - 80),
-				Level.worldH - 4, 30);
-		genOre(Block, BlockID.ORE_RUBY, Level.worldH - (Level.worldH - 80),
-				Level.worldH - 5, 25);
-		genOre(Block, BlockID.ORE_EMERALD, Level.worldH - (Level.worldH - 80),
-				Level.worldH - 5, 25);
-		genOre(Block, BlockID.ORE_DIAMOND, Level.worldH - (Level.worldH - 90),
-				Level.worldH - 5, 25);
+		genOre(Block, BlockID.ORE_COAL, Level.worldH - (Level.worldH - 40), Level.worldH - 10, 40);
+		genOre(Block, BlockID.ORE_IRON, Level.worldH - (Level.worldH - 60), Level.worldH - 5, 35);
+		genOre(Block, BlockID.ORE_GOLD, Level.worldH - (Level.worldH - 80), Level.worldH - 4, 30);
+		genOre(Block, BlockID.ORE_RUBY, Level.worldH - (Level.worldH - 80), Level.worldH - 5, 25);
+		genOre(Block, BlockID.ORE_EMERALD, Level.worldH - (Level.worldH - 80), Level.worldH - 5, 25);
+		genOre(Block, BlockID.ORE_DIAMOND, Level.worldH - (Level.worldH - 90), Level.worldH - 5, 25);
 		genTreeBase(Block);
 		genTree(Block);
 		genTreeLeaves(Block);
@@ -79,8 +73,7 @@ public class Generator {
 	public static void genGrass(Block[][] Block) {
 		for (int y = 0; y < Block.length; y++) {
 			for (int x = offset; x < Block[0].length - offset; x++) {
-				if ((Block[x][y].getID() == BlockID.EARTH)
-						&& (Block[x][(y - 1)].getID() == BlockID.AIR)) {
+				if ((Block[x][y].getID() == BlockID.EARTH) && (Block[x][(y - 1)].getID() == BlockID.AIR)) {
 					Block[x][y].setID(BlockID.GRASS);
 				}
 			}
@@ -111,30 +104,24 @@ public class Generator {
 				if (y >= Level.worldH - 1) {
 					Block[x][y].setID(BlockID.BEDROCK);
 				}
-				if ((new Random().nextInt(100) <= 65)
-						&& (y >= Level.worldH - 2)) {
+				if ((new Random().nextInt(100) <= 65) && (y >= Level.worldH - 2)) {
 					Block[x][y].setID(BlockID.BEDROCK);
 				}
-				if ((new Random().nextInt(100) <= 45)
-						&& (y == Level.worldH - 3)) {
+				if ((new Random().nextInt(100) <= 45) && (y == Level.worldH - 3)) {
 					Block[x][y].setID(BlockID.BEDROCK);
 				}
 			}
 		}
 	}
 
-	public static void genOre(Block[][] Block, BlockID ORE_TYPE, int minY,
-			int maxY, int rarity) throws IllegalArgumentException {
+	public static void genOre(Block[][] Block, BlockID ORE_TYPE, int minY, int maxY, int rarity) throws IllegalArgumentException {
 		if ((minY > Level.worldH) || (maxY > Level.worldH)) {
-			throw new IllegalArgumentException("[ERROR]: " + minY + " or "
-					+ maxY + " is greater than the world height ("
-					+ Level.worldH + ")");
+			throw new IllegalArgumentException("[ERROR]: " + minY + " or " + maxY + " is greater than the world height (" + Level.worldH + ")");
 		}
 		for (int y = 0 + offset; y < Block.length - offset; y++) {
 			for (int x = 0 + offset; x < Block[0].length - offset; x++) {
 				if ((y >= minY) && (y <= maxY)) {
-					if ((Block[x][y].getID() == BlockID.STONE)
-							&& (new Random().nextInt(1000) <= rarity)) {
+					if ((Block[x][y].getID() == BlockID.STONE) && (new Random().nextInt(1000) <= rarity)) {
 						Block[x][y].setID(ORE_TYPE);
 					}
 				}
@@ -178,8 +165,7 @@ public class Generator {
 		for (int y = 0 + offset; y < Block.length - offset; y++) {
 			for (int x = 0 + offset; x < Block[0].length - offset; x++) {
 				if ((x > 2) && (x < Block[0].length - 2)) {
-					if ((Block[x][y].getID() == BlockID.AIR)
-							&& (Block[x][(y + 1)].getID() == BlockID.WOOD_OAK)) {
+					if ((Block[x][y].getID() == BlockID.AIR) && (Block[x][(y + 1)].getID() == BlockID.WOOD_OAK)) {
 						Block[(x + 1)][(y + 2)].setID(BlockID.LEAF_OAK);
 						Block[(x + 1)][y].setID(BlockID.LEAF_OAK);
 
@@ -208,10 +194,7 @@ public class Generator {
 		for (int y = 0 + offset; y < Block.length - offset; y++) {
 			for (int x = 0 + offset; x < Block[0].length - offset; x++) {
 				if ((x > 2) && (x < Block[0].length - 2)) {
-					if ((Block[x][y].getID() == BlockID.AIR)
-							&& (Block[x][(y + 1)].getID() == BlockID.GRASS)
-							&& (Block[(x + 1)][y].getID() == BlockID.GRASS)
-							&& (Block[(x - 1)][y].getID() == BlockID.GRASS)) {
+					if ((Block[x][y].getID() == BlockID.AIR) && (Block[x][(y + 1)].getID() == BlockID.GRASS) && (Block[(x + 1)][y].getID() == BlockID.GRASS) && (Block[(x - 1)][y].getID() == BlockID.GRASS)) {
 						Block[x][(y - 1)].setID(BlockID.WATERSOURCE);
 					}
 				}

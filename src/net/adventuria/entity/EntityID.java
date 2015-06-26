@@ -1,11 +1,7 @@
 package net.adventuria.entity;
 
 public enum EntityID {
-	NULL(0, new int[] { -1, -1 }, ""), ITEM(1, new int[] { 0, 0 },
-			"Generic Item"), PIG(10, new int[] { 0, 0 }, 10, "Pig"), COW(11,
-			new int[] { 0, 0 }, 10, "Cow"), SHEEP(12, new int[] { 0, 0 }, 10,
-			"Sheep"), CHICKEN(13, new int[] { 0, 0 }, 5, "Chicken"), PLAYER(
-			255, new int[] { 0, 18 }, 20, "Player");
+	NULL(0, new int[] { -1, -1 }, ""), ITEM(1, new int[] { 0, 0 }, "Generic Item"), PIG(10, new int[] { 0, 0 }, 10, "Pig"), COW(11, new int[] { 0, 0 }, 10, "Cow"), SHEEP(12, new int[] { 0, 0 }, 10, "Sheep"), CHICKEN(13, new int[] { 0, 0 }, 5, "Chicken"), PLAYER(255, new int[] { 0, 18 }, 20, "Player");
 
 	private int ID = 0;
 	private int defaultHealth = 0;

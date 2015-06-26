@@ -11,10 +11,7 @@ public class Sky {
 	public static int time = DAWN;
 	public static int dayFrame = 0;
 	public static final int DAY_TIME = 18000, TRANSFER_TIME = 2500;
-	public Color currentColor = Color.white, nextColor = Color.white,
-			dayColor = new Color(70, 120, 230), nightColor = new Color(15, 8,
-					40), dawnColor = new Color(92, 48, 181),
-			duskColor = new Color(140, 113, 247);
+	public Color currentColor = Color.white, nextColor = Color.white, dayColor = new Color(70, 120, 230), nightColor = new Color(15, 8, 40), dawnColor = new Color(92, 48, 181), duskColor = new Color(140, 113, 247);
 	private int cloudX = 0, sunMoonX = -96, sunMoonY = 50, starFade = 255;
 	private double r = 0, g = 0, b = 0;
 
@@ -43,14 +40,11 @@ public class Sky {
 	}
 
 	public void Tick() {
-		if (dayFrame >= (time == DAY || time == NIGHT ? DAY_TIME
-				: TRANSFER_TIME)) {
+		if (dayFrame >= (time == DAY || time == NIGHT ? DAY_TIME : TRANSFER_TIME)) {
 			dayFrame = 0;
 			currentColor = nextColor;
-			time = (time == DAY ? DUSK : (time == NIGHT ? DAWN
-					: (time == DUSK ? NIGHT : DAY)));
-			nextColor = (time == DAY ? duskColor : (time == NIGHT ? dawnColor
-					: (time == DUSK ? nightColor : dayColor)));
+			time = (time == DAY ? DUSK : (time == NIGHT ? DAWN : (time == DUSK ? NIGHT : DAY)));
+			nextColor = (time == DAY ? duskColor : (time == NIGHT ? dawnColor : (time == DUSK ? nightColor : dayColor)));
 			r = currentColor.getRed();
 			g = currentColor.getGreen();
 			b = currentColor.getBlue();
@@ -101,10 +95,8 @@ public class Sky {
 				starFade = 0;
 			if (starFade > 255)
 				starFade = 255;
-			gr.drawImage(AssetManager.night_sky, 0, 0, Component.pixel.width,
-					Component.pixel.height, null);
-			gr.setColor(new Color(currentColor.getRed(), currentColor
-					.getGreen(), currentColor.getBlue(), starFade));
+			gr.drawImage(AssetManager.night_sky, 0, 0, Component.pixel.width, Component.pixel.height, null);
+			gr.setColor(new Color(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), starFade));
 			gr.fillRect(0, 0, Component.pixel.width, Component.pixel.height);
 		}
 		if (time == DAY) {
@@ -121,8 +113,6 @@ public class Sky {
 		cloudX++;
 		if ((cloudX / 15) - (Component.pixel.width * 6) > (Component.pixel.width * 6))
 			cloudX = 0;
-		gr.drawImage(AssetManager.cloud_map, (cloudX / 15)
-				- (Component.pixel.width * 6), 0, Component.pixel.width * 6,
-				64, null);
+		gr.drawImage(AssetManager.cloud_map, (cloudX / 15) - (Component.pixel.width * 6), 0, Component.pixel.width * 6, 64, null);
 	}
 }

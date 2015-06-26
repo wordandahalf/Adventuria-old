@@ -43,13 +43,7 @@ public class Particle extends Rectangle {
 
 	public void Render(Graphics g, int x, int y) {
 		if (this.ID != SPRITE_NULL) {
-			g.drawImage(AssetManager.tileset_particle, x - (int) Component.sX,
-					y - (int) Component.sY,
-					this.width + x - (int) Component.sX, this.height + y
-							- (int) Component.sY, this.ID[0] * particleSize,
-					this.ID[1] * particleSize, this.ID[0] * particleSize
-							+ this.width, this.ID[1] * particleSize
-							+ this.height, null);
+			g.drawImage(AssetManager.tileset_particle, x - (int) Component.sX, y - (int) Component.sY, this.width + x - (int) Component.sX, this.height + y - (int) Component.sY, this.ID[0] * particleSize, this.ID[1] * particleSize, this.ID[0] * particleSize + this.width, this.ID[1] * particleSize + this.height, null);
 		}
 	}
 }

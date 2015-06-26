@@ -16,8 +16,7 @@ public class Debug {
 			g.setColor(new Color(128, 128, 128, 105));
 			g.fillRect(0, 0, 120, 68);
 			g.setColor(Color.white);
-			g.drawString(Component.GAME_TITLE + " v" + Component.GAME_VERSION,
-					5, 15);
+			g.drawString(Component.GAME_TITLE + " v" + Component.GAME_VERSION, 5, 15);
 			g.drawString("X: " + Component.character.getBlockX(), 5, 25);
 			g.drawString("Y: " + Component.character.getBlockY(), 5, 35);
 			g.drawString("Mouse X: " + Mouse.getX(), 5, 44);

@@ -1,5 +1,7 @@
 package net.adventuria.render.doubleRectangle;
 
+import java.awt.Rectangle;
+
 import net.adventuria.block.Block;
 import net.adventuria.location.Location;
 
@@ -10,6 +12,8 @@ public class DoubleRectangle {
 	public double y;
 	public double width;
 	public double height;
+	public int dX, dY, dWidth, dHeight;
+	public Rectangle bounds = new Rectangle();
 
 	public DoubleRectangle(int type) {
 		setBounds(0.0D, 0.0D, 0.0D, 0.0D);
@@ -17,11 +21,9 @@ public class DoubleRectangle {
 
 	public DoubleRectangle(int type, Location loc) {
 		if (type == 0) {
-			setBounds(loc.getX(), loc.getY(), Block.tileSize,
-					Block.tileSize * 2);
+			setBounds(loc.getX(), loc.getY(), Block.tileSize, Block.tileSize * 2);
 		} else {
-			setBounds(loc.getX(), loc.getY(), Block.tileSize * 2,
-					Block.tileSize);
+			setBounds(loc.getX(), loc.getY(), Block.tileSize * 2, Block.tileSize);
 		}
 	}
 
@@ -50,5 +52,17 @@ public class DoubleRectangle {
 		this.y = y;
 		this.width = width;
 		this.height = height;
+	}
+
+	public void setBoundingTranslations(int dX, int dY, int dWidth, int dHeight) {
+		this.dX = dX;
+		this.dY = dY;
+		this.dWidth = dWidth;
+		this.dHeight = dHeight;
+	}
+
+	public Rectangle getBoundingRectangle() {
+		bounds.setBounds((int) Math.round(x + dX), (int) Math.round(y + dY), (int) Math.round(width + dWidth), (int) Math.round(height + dHeight));
+		return bounds;
 	}
 }

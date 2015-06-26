@@ -5,8 +5,7 @@ import net.adventuria.Component;
 import net.adventuria.particle.Particle;
 
 public class HealthBar {
-	public static int heartAmount = Component.character.getHealth() / 2,
-			heartRemainder = Component.character.getHealth() % 2;
+	public static int heartAmount = Component.character.getHealth() / 2, heartRemainder = Component.character.getHealth() % 2;
 	public static int heartSpace = 10;
 	public static Particle[] hearts = new Particle[heartAmount];
 
@@ -34,15 +33,10 @@ public class HealthBar {
 
 	public void Render(Graphics g) {
 		for (int i = 0; i < 10; i++) {
-			new Particle(Particle.HEART_CONTAINER).Render(g,
-					Component.pixel.width / 2 - i * heartSpace
-							+ (int) Component.sX - 22, (int) Component.sY
-							+ (Component.pixel.height - 56));
+			new Particle(Particle.HEART_CONTAINER).Render(g, Component.pixel.width / 2 - i * heartSpace + (int) Component.sX - 22, (int) Component.sY + (Component.pixel.height - 56));
 		}
 		for (int i = 0; i < hearts.length; i++) {
-			hearts[i].Render(g, Component.pixel.width / 2 - i * heartSpace
-					+ (int) Component.sX - 22, (int) Component.sY
-					+ (Component.pixel.height - 56));
+			hearts[i].Render(g, Component.pixel.width / 2 - i * heartSpace + (int) Component.sX - 22, (int) Component.sY + (Component.pixel.height - 56));
 		}
 	}
 }

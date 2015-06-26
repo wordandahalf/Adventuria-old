@@ -13,8 +13,7 @@ import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.inputs.Mouse;
 import net.adventuria.location.Location;
 
-public class AdventuriaMouseListener implements MouseListener,
-		MouseMotionListener, MouseWheelListener {
+public class AdventuriaMouseListener implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
@@ -66,12 +65,8 @@ public class AdventuriaMouseListener implements MouseListener,
 			if (e.getButton() == 1) {
 				if (Inventory.currentHeldItemID == BlockID.AIR) {
 					for (int i = 0; i < Inventory.invBag.length; i++) {
-						if (Inventory.invBag[i].contains(new Point(Mouse.getX()
-								/ Component.pixelSize, Mouse.getY()
-								/ Component.pixelSize))) {
-							if ((Inventory.invBag[i].ID != BlockID.AIR)
-									&& (Inventory.currentHeldItemID == BlockID.AIR)
-									&& (Inventory.currentHeldItemCount == 0)) {
+						if (Inventory.invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+							if ((Inventory.invBag[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
 								Inventory.currentHeldItemID = Inventory.invBag[i].ID;
 								Inventory.currentHeldItemCount = Inventory.invBag[i].Count;
 
@@ -81,12 +76,8 @@ public class AdventuriaMouseListener implements MouseListener,
 						}
 					}
 					for (int i = 0; i < Inventory.invHotBar.length; i++) {
-						if (Inventory.invHotBar[i].contains(new Point(Mouse
-								.getX() / Component.pixelSize, Mouse.getY()
-								/ Component.pixelSize))) {
-							if ((Inventory.invHotBar[i].ID != BlockID.AIR)
-									&& (Inventory.currentHeldItemID == BlockID.AIR)
-									&& (Inventory.currentHeldItemCount == 0)) {
+						if (Inventory.invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+							if ((Inventory.invHotBar[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
 								Inventory.currentHeldItemID = Inventory.invHotBar[i].ID;
 								Inventory.currentHeldItemCount = Inventory.invHotBar[i].Count;
 
@@ -95,15 +86,10 @@ public class AdventuriaMouseListener implements MouseListener,
 							}
 						}
 					}
-				} else if ((Inventory.isOpen)
-						&& (Inventory.currentHeldItemID != BlockID.AIR)) {
+				} else if ((Inventory.isOpen) && (Inventory.currentHeldItemID != BlockID.AIR)) {
 					for (int i = 0; i < Inventory.invBag.length; i++) {
-						if (Inventory.invBag[i].contains(new Point(Mouse.getX()
-								/ Component.pixelSize, Mouse.getY()
-								/ Component.pixelSize))) {
-							if ((Inventory.invBag[i].ID == BlockID.AIR)
-									&& (Inventory.currentHeldItemID != BlockID.AIR)
-									&& (Inventory.currentHeldItemCount != 0)) {
+						if (Inventory.invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+							if ((Inventory.invBag[i].ID == BlockID.AIR) && (Inventory.currentHeldItemID != BlockID.AIR) && (Inventory.currentHeldItemCount != 0)) {
 								Inventory.invBag[i].ID = Inventory.currentHeldItemID;
 								Inventory.invBag[i].Count = Inventory.currentHeldItemCount;
 
@@ -113,12 +99,8 @@ public class AdventuriaMouseListener implements MouseListener,
 						}
 					}
 					for (int i = 0; i < Inventory.invHotBar.length; i++) {
-						if (Inventory.invHotBar[i].contains(new Point(Mouse
-								.getX() / Component.pixelSize, Mouse.getY()
-								/ Component.pixelSize))) {
-							if ((Inventory.invHotBar[i].ID == BlockID.AIR)
-									&& (Inventory.currentHeldItemID != BlockID.AIR)
-									&& (Inventory.currentHeldItemCount != 0)) {
+						if (Inventory.invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+							if ((Inventory.invHotBar[i].ID == BlockID.AIR) && (Inventory.currentHeldItemID != BlockID.AIR) && (Inventory.currentHeldItemCount != 0)) {
 								Inventory.invHotBar[i].ID = Inventory.currentHeldItemID;
 								Inventory.invHotBar[i].Count = Inventory.currentHeldItemCount;
 

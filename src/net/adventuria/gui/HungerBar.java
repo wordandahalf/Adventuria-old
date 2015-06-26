@@ -17,9 +17,7 @@ public class HungerBar {
 
 	public void Render(Graphics g) {
 		for (int i = 0; i < hungers.length; i++) {
-			hungers[i].Render(g, Component.pixel.width / 2 - i * hungerSpace
-					+ (int) Component.sX - 20, (int) Component.sY
-					+ (Component.pixel.height - 45));
+			hungers[i].Render(g, Component.pixel.width / 2 - i * hungerSpace + (int) Component.sX - 20, (int) Component.sY + (Component.pixel.height - 45));
 		}
 	}
 }

@@ -27,8 +27,7 @@ public class Component extends Applet implements Runnable {
 	public static double dir = 0.0D;
 	public static Dimension realSize;
 	public static Dimension size = new Dimension(700, 560);
-	public static Dimension pixel = new Dimension(size.width / pixelSize,
-			size.height / pixelSize);
+	public static Dimension pixel = new Dimension(size.width / pixelSize, size.height / pixelSize);
 	public static double sX = moveFromBorder;
 	public static double sY = moveFromBorder;
 	public static String GAME_TITLE = "Adventuria";
@@ -64,8 +63,7 @@ public class Component extends Applet implements Runnable {
 		int fitBlocks = 0; // Checks to ensure head and feet will fit in an
 							// area.
 		for (int y = level.worldH - 1; y >= 0; y--) {
-			if (level.getBlock((level.worldW / 2), y).getID()
-					.equals(BlockID.AIR)) {
+			if (level.getBlock((level.worldW / 2), y).getID().equals(BlockID.AIR)) {
 				fitBlocks++;
 				if (fitBlocks == 2) {
 					blockY = y;
@@ -77,8 +75,7 @@ public class Component extends Applet implements Runnable {
 		}
 		sX = (int) (Math.floor(50) * 20 - (Component.pixel.width / 2D) + 10);
 		sY = (int) (Math.floor(blockY) * 20 - (Component.pixel.height / 2D) + 10);
-		character = new EntityPlayer(new Location((int) (Math.floor(50) * 20),
-				(int) (Math.floor(blockY) * 20)));
+		character = new EntityPlayer(new Location((int) (Math.floor(50) * 20), (int) (Math.floor(blockY) * 20)));
 		inventory = new Inventory();
 		sky = new Sky();
 		gui = new GUI();
@@ -110,12 +107,10 @@ public class Component extends Applet implements Runnable {
 	}
 
 	public void Tick() {
-		if ((frame.getWidth() != realSize.width)
-				|| (frame.getHeight() != realSize.height)) {
+		if ((frame.getWidth() != realSize.width) || (frame.getHeight() != realSize.height)) {
 			frame.pack();
 		}
-		level.Tick((int) sX, (int) sY, pixel.width / Block.tileSize + 2,
-				pixel.height / Block.tileSize + 2);
+		level.Tick((int) sX, (int) sY, pixel.width / Block.tileSize + 2, pixel.height / Block.tileSize + 2);
 		character.Tick();
 		sky.Tick();
 	}
@@ -125,15 +120,13 @@ public class Component extends Applet implements Runnable {
 
 		sky.Render(g);
 		character.Render(g);
-		level.Render(g, (int) sX, (int) sY, pixel.width / Block.tileSize + 2,
-				pixel.height / Block.tileSize + 2);
-		inventory.Render(g);
+		level.Render(g, (int) sX, (int) sY, pixel.width / Block.tileSize + 2, pixel.height / Block.tileSize + 2);
 		gui.Render(g);
+		inventory.Render(g);
 
 		g = getGraphics();
 
-		g.drawImage(this.screen, 0, 0, size.width, size.height, 0, 0,
-				pixel.width, pixel.height, null);
+		g.drawImage(this.screen, 0, 0, size.width, size.height, 0, 0, pixel.width, pixel.height, null);
 		g.dispose();
 
 		requestFocus();
