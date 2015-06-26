@@ -38,16 +38,17 @@ public abstract class EntityLiving extends DoubleRectangle implements EntityBase
 	public boolean isCollidingWithBlock(Location pt1, Location pt2) {
 		if ((Component.level.Blocks[pt1.x][pt1.y].getBounds().intersects(getBoundingRectangle()) && Component.level.Blocks[pt1.x][pt1.y].isSolid()) || (Component.level.Blocks[pt2.x][pt2.y].getBounds().intersects(getBoundingRectangle()) && Component.level.Blocks[pt2.x][pt2.y].isSolid())) {
 
+			System.out.println(Component.level.Blocks[pt1.x][pt1.y].getID() + ", " + Component.level.Blocks[pt2.x][pt2.y].getID());
 			return true;
 		}
 		return false;
 	}
 
 	public int getBlockX() {
-		return (int) (x / Block.tileSize);
+		return (int) Math.round(x / Block.tileSize);
 	}
 
 	public int getBlockY() {
-		return (int) (y / Block.tileSize);
+		return (int) Math.round(y / Block.tileSize);
 	}
 }

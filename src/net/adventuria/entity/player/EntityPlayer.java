@@ -23,7 +23,7 @@ public class EntityPlayer extends EntityHuman {
 	public int animation = 0;
 	public int animationFrame = 0;
 	public int animationTime = 30;
-	public boolean isJumping = false;
+	public boolean isJumping = false, isFalling = false;
 
 	public EntityPlayer(Location loc) {
 		super(loc, EntityID.PLAYER);
@@ -32,14 +32,15 @@ public class EntityPlayer extends EntityHuman {
 
 	@Override
 	public void Tick() {
-		if ((!this.isJumping) && (!isCollidingWithBlock(new Location(getBlockX(), getBlockY() + 2), new Location(getBlockX() + 1, getBlockY() + 2)))) {
+		isFalling = (!isCollidingWithBlock(new Location(getBlockX(), getBlockY() + 2), new Location(getBlockX(), getBlockY() + 2))) && (!isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY() + 2), new Location(getBlockX() - 1, getBlockY() + 2)) || isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY()), new Location(getBlockX() - 1, getBlockY() + 1))) && (!isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY() + 2), new Location(getBlockX() + 1, getBlockY() + 2)) || isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY()), new Location(getBlockX() + 1, getBlockY() + 1)));
+		if ((!this.isJumping) && isFalling) {
 			this.y += this.fallingSpeed;
 			Component.sY += this.fallingSpeed;
 			fallingSpeed += fallingSpeed >= 3.5 ? 0 : 0.006;
 		} else if (Component.isJumping) {
 			this.isJumping = true;
 		}
-		if (isCollidingWithBlock(new Location(getBlockX(), getBlockY() + 2), new Location(getBlockX() + 1, getBlockY() + 2))) {
+		if (!isFalling) {
 			if (fallingSpeed > 1.4) {
 				setHealth((int) (getHealth() - Math.pow(2.25, fallingSpeed)));
 				GUI.healthBar.update();
@@ -49,9 +50,9 @@ public class EntityPlayer extends EntityHuman {
 		if ((Component.isMoving) && (!Inventory.isOpen)) {
 			boolean canMove = false;
 			if (Component.dir == this.movementSpeed) {
-				canMove = isCollidingWithBlock(new Location(getBlockX(), getBlockY()), new Location(getBlockX() + 1, getBlockY() + 1));
+				canMove = isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY()), new Location(getBlockX() + 1, getBlockY() + 1));
 			} else if (Component.dir == -this.movementSpeed) {
-				canMove = isCollidingWithBlock(new Location(getBlockX(), getBlockY()), new Location(getBlockX() - 1, getBlockY() + 1));
+				canMove = isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY()), new Location(getBlockX() - 1, getBlockY() + 1));
 			}
 			if (this.animationFrame >= this.animationTime) {
 				if (this.animation > 1) {
@@ -102,6 +103,12 @@ public class EntityPlayer extends EntityHuman {
 		int x1 = (int) Math.round(getBoundingRectangle().x - Component.sX);
 		int y1 = (int) Math.round(getBoundingRectangle().y - Component.sY);
 		g.drawRect(x1, y1, getBoundingRectangle().width, getBoundingRectangle().height);
+		g.setColor(Color.green);
+		g.drawRect((getBlockX() * 20) - (int) Component.sX, getBlockY() * 20 - (int) Component.sY, 20, 20);
+		g.setColor(Color.blue);
+		g.drawRect((getBlockX() * 20) - (int) Component.sX, ((getBlockY() + 1) * 20) - (int) Component.sY, 20, 20);
+		g.setColor(Color.red);
+		g.drawRect((getBlockX() * 20) - (int) Component.sX, ((getBlockY() + 2) * 20) - (int) Component.sY, 20, 20);
 	}
 
 	@Override
