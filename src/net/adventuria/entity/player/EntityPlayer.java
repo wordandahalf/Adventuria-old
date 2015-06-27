@@ -1,8 +1,6 @@
 package net.adventuria.entity.player;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
 import net.adventuria.Component;
 import net.adventuria.assets.AssetManager;
@@ -12,6 +10,7 @@ import net.adventuria.entity.EntityHuman;
 import net.adventuria.entity.EntityID;
 import net.adventuria.gui.GUI;
 import net.adventuria.gui.inventory.Inventory;
+import net.adventuria.level.chunk.Chunk;
 import net.adventuria.location.Location;
 
 public class EntityPlayer extends EntityHuman {
@@ -66,8 +65,50 @@ public class EntityPlayer extends EntityHuman {
 			}
 			if (!canMove) {
 				this.x += Component.dir;
-				if (x >= (Component.pixel.width / 2D) + 10 && x <= (Component.level.worldW * Block.tileSize) - ((Component.pixel.width / 2D) + 30)) {
+				if (x >= (Component.pixel.width / 2D) + 10 && x <= (Chunk.WIDTH * Block.tileSize) - ((Component.pixel.width / 2D) + 30)) {
 					Component.sX = x - ((Component.pixel.width / 2D) - 10);
+				}else if(x <= 10) {
+					Chunk newRight = Component.level.getCurrentChunk();
+					Component.level.setCurrentChunk(Component.level.getCurrentChunk().getLeftChunk());
+					Component.level.getCurrentChunk().setRightChunk(newRight);
+					int blockY = 0;
+					int fitBlocks = 0;
+					for (int y = Chunk.HEIGHT - 1; y >= 0; y--) {
+						if (Component.level.getBlock(Chunk.WIDTH - 2, y).getID().equals(BlockID.AIR)) {
+							fitBlocks++;
+							if (fitBlocks == 2) {
+								blockY = y;
+								break;
+							}
+						} else {
+							fitBlocks = 0;
+						}
+					}
+					y = blockY * 20;
+					x = (Chunk.WIDTH * 20) - 40;
+					Component.sY = (int) (Math.floor(blockY) * 20 - (Component.pixel.height / 2D) + 10);
+					Component.sX = (Chunk.WIDTH * Block.tileSize) - Component.pixel.width - 20;
+				}else if(x >= Chunk.WIDTH * Block.tileSize - 30) {
+					Chunk newLeft = Component.level.getCurrentChunk();
+					Component.level.setCurrentChunk(Component.level.getCurrentChunk().getRightChunk());
+					Component.level.getCurrentChunk().setLeftChunk(newLeft);
+					int blockY = 0;
+					int fitBlocks = 0;
+					for (int y = Chunk.HEIGHT - 1; y >= 0; y--) {
+						if (Component.level.getBlock(1, y).getID().equals(BlockID.AIR)) {
+							fitBlocks++;
+							if (fitBlocks == 2) {
+								blockY = y;
+								break;
+							}
+						} else {
+							fitBlocks = 0;
+						}
+					}
+					y = blockY * 20;
+					x = 20;
+					Component.sY = (int) (Math.floor(blockY) * 20 - (Component.pixel.height / 2D) + 10);
+					Component.sX = 20;
 				}
 			}
 		} else {

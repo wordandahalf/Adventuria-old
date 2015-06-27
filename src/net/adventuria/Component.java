@@ -16,6 +16,7 @@ import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.gui.GUI;
 import net.adventuria.level.Level;
 import net.adventuria.level.Sky;
+import net.adventuria.level.chunk.Chunk;
 import net.adventuria.listeners.AdventuriaKeyboardListener;
 import net.adventuria.listeners.AdventuriaMouseListener;
 import net.adventuria.location.Location;
@@ -62,8 +63,8 @@ public class Component extends Applet implements Runnable {
 		int blockY = 0;
 		int fitBlocks = 0; // Checks to ensure head and feet will fit in an
 							// area.
-		for (int y = level.worldH - 1; y >= 0; y--) {
-			if (level.getBlock((level.worldW / 2), y).getID().equals(BlockID.AIR)) {
+		for (int y = Chunk.HEIGHT - 1; y >= 0; y--) {
+			if (level.getBlock((Chunk.WIDTH / 2), y).getID().equals(BlockID.AIR)) {
 				fitBlocks++;
 				if (fitBlocks == 2) {
 					blockY = y;
