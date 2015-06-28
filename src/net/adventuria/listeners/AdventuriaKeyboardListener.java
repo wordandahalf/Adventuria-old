@@ -2,10 +2,11 @@ package net.adventuria.listeners;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import net.adventuria.Component;
+import net.adventuria.errorHandler.WorldSaveException;
 import net.adventuria.gui.Debug;
 import net.adventuria.gui.inventory.Inventory;
+import net.adventuria.level.io.LevelSaver;
 
 public class AdventuriaKeyboardListener implements KeyListener {
 
@@ -65,6 +66,15 @@ public class AdventuriaKeyboardListener implements KeyListener {
 		case 69:
 			Inventory.isOpen = !Inventory.isOpen;
 			break;
+		case 70:
+			try
+			{
+				LevelSaver.Save(Component.level);
+			}
+			catch (WorldSaveException wse)
+			{
+				wse.printStackTrace();
+			}
 		case 27:
 			Inventory.isOpen = false;
 		}

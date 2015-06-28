@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
-
+import java.util.List;
 import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.block.BlockID;
@@ -15,11 +15,15 @@ import net.adventuria.location.Location;
 
 public class Level {
 	
+	private List<Chunk> chunks = new ArrayList<>();
+	
 	private Chunk current;
 	
 	public Level() {
 		current = new Chunk();
 		current.generate();
+		
+		chunks.add(current);
 	}
 	
 	public Chunk getCurrentChunk() {
@@ -29,6 +33,8 @@ public class Level {
 	public void setCurrentChunk(Chunk c) {
 		current = c;
 		c.generate();
+		
+		chunks.add(current);
 	}
 
 	public void Building(int camX, int camY, int renW, int renH) {
@@ -95,6 +101,11 @@ public class Level {
 		}
 	}
 
+	public List<Chunk> getChunks()
+	{
+		return this.chunks;
+	}
+	
 	public void Tick(int camX, int camY, int renW, int renH) {
 		Building(camX, camY, renW, renH);
 

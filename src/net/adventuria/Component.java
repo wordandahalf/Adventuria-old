@@ -32,7 +32,7 @@ public class Component extends Applet implements Runnable {
 	public static double sX = moveFromBorder;
 	public static double sY = moveFromBorder;
 	public static String GAME_TITLE = "Adventuria";
-	public static String GAME_VERSION = "0.2 Beta";
+	public static String GAME_VERSION = "0.5 Beta";
 	public static boolean isRunning = false;
 	public static boolean isMoving = false;
 	public static boolean isJumping = false;
