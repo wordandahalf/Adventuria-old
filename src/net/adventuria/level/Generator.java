@@ -20,6 +20,8 @@ public class Generator {
 		genOre(Block, BlockID.ORE_RUBY, 80, Chunk.HEIGHT - 5, 25);
 		genOre(Block, BlockID.ORE_EMERALD, 80, Chunk.HEIGHT - 5, 25);
 		genOre(Block, BlockID.ORE_DIAMOND, 90, Chunk.HEIGHT - 5, 25);
+		genOre(Block, BlockID.ORE_COPPER, 70, Chunk.HEIGHT - 5, 37);
+		genOre(Block, BlockID.ORE_TIN, 70, Chunk.HEIGHT - 5, 37);
 		genTreeBase(Block);
 		genTree(Block);
 		genTreeLeaves(Block);
