@@ -710,7 +710,7 @@ footer .owner .avatar {
   transition: transform 0.5s, box-shadow 0.5s;
 }
 
-footer .owner .avatar : hover {
+footer .owner .avatar:hover {
   transform: scale(1.25) rotate(5deg);
   box-shadow: 0px 1px 8px #91CCE0;
 }
