@@ -688,9 +688,10 @@ footer {
 footer .owner {
   background: #222;
   border: 5px solid #444;
-  /*padding: 5px 15px;*/
-  margin: -37px -15px 35px;
+  padding: 5px 15px;
+  margin: -35px -15px 35px;
   color: #d6d6d6;
+  height: 145px;
 }
 
 footer .creds small {
@@ -703,9 +704,15 @@ footer .creds small {
 footer .owner .avatar {
   background-color: #666;
   display: block;
-  margin: -19px 10px 0 0;
+  margin: -15px 5px 0 10px;
   width: 60px;
   float: left;
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+footer .owner .avatar : hover {
+  transform: scale(1.25) rotate(5deg);
+  box-shadow: 0px 1px 8px #91CCE0;
 }
 
 footer .owner img {
