@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.errorHandler.WorldSaveException;
@@ -14,11 +13,13 @@ import net.adventuria.level.Level;
 
 public class LevelSaver
 {
+	public static char DATA_SEPARATOR = '~';
+			
 	public static void Save(Level l) throws WorldSaveException
 	{
 		List<Object> saveData = new ArrayList<>();
 		
-		saveData.add("chrpos: {" + Integer.toHexString(Component.character.getBlockX()) + ", " + Integer.toHexString(Component.character.getBlockY()) + "}");
+		saveData.add("chrpos: {" + Integer.toHexString(Component.character.getBlockX()) + ", " + Integer.toHexString(Component.character.getBlockY()) + "}" + DATA_SEPARATOR);
 		saveData.add("crntchnk: {");
 		
 		for(Block[] bArray : l.getCurrentChunk().Block)
@@ -29,7 +30,7 @@ public class LevelSaver
 			}
 		}
 		
-		saveData.add("}");
+		saveData.add("}" + DATA_SEPARATOR);
 		
 		File f = new File("level.advlevel");
 		
@@ -66,6 +67,7 @@ public class LevelSaver
 			pw.print(i);
 		}
 		
+		pw.flush();
 		pw.close();
 	}
 }
