@@ -14,19 +14,19 @@ public class Generator {
 		genGrass(Block);
 		genStone(Block);
 		genBedrock(Block);
-		genOre(Block, BlockID.ORE_COAL, 40, Chunk.HEIGHT - 10, 40);
-		genOre(Block, BlockID.ORE_IRON, 60, Chunk.HEIGHT - 5, 35);
-		genOre(Block, BlockID.ORE_GOLD, 80, Chunk.HEIGHT - 4, 30);
-		genOre(Block, BlockID.ORE_RUBY, 80, Chunk.HEIGHT - 5, 25);
-		genOre(Block, BlockID.ORE_EMERALD, 80, Chunk.HEIGHT - 5, 25);
-		genOre(Block, BlockID.ORE_DIAMOND, 90, Chunk.HEIGHT - 5, 25);
-		genOre(Block, BlockID.ORE_COPPER, 70, Chunk.HEIGHT - 5, 37);
-		genOre(Block, BlockID.ORE_TIN, 70, Chunk.HEIGHT - 5, 37);
+		genOre(Block, BlockID.ORE_COAL, 40, Chunk.HEIGHT - 10, 20);
+		genOre(Block, BlockID.ORE_IRON, 60, Chunk.HEIGHT - 5, 19);
+		genOre(Block, BlockID.ORE_GOLD, 80, Chunk.HEIGHT - 4, 7);
+		genOre(Block, BlockID.ORE_RUBY, 80, Chunk.HEIGHT - 5,  5);
+		genOre(Block, BlockID.ORE_EMERALD, 80, Chunk.HEIGHT - 5, 5);
+		genOre(Block, BlockID.ORE_DIAMOND, 90, Chunk.HEIGHT - 5, 2);
+		genOre(Block, BlockID.ORE_COPPER, 70, Chunk.HEIGHT - 5, 15);
+		genOre(Block, BlockID.ORE_TIN, 70, Chunk.HEIGHT - 5, 15);
+		genOre(Block, BlockID.ORE_SAPPHIRE, 80, Chunk.HEIGHT - 5, 5);
 		genTreeBase(Block);
 		genTree(Block);
 		genTreeLeaves(Block);
 		genLake(Block);
-		//genBarrier(Block);
 	}
 
 	public static void genBarrier(Block[][] Block) {

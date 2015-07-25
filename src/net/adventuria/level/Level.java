@@ -41,16 +41,16 @@ public class Level {
 		if (Mouse.isLeftButtonClicked()) {
 			if (!Inventory.isOpen) {
 				if (Mouse.getBlockX() < Chunk.WIDTH && Mouse.getBlockY() < Chunk.HEIGHT && Mouse.isBlockInRange()) {
+					
 					Block b = this.getBlock(Mouse.getBlockX(), Mouse.getBlockY());
+					
 					if (b.getID() != BlockID.AIR) {
 						if (b.getID().getHardness() < 128) {
-							 /*b.damage(0.01);
+							 b.damage(0.1);
 							 if (b.getHardness() <= 0) {
 								 Component.inventory.addItemToInventory(b.getID());
 								 this.setBlock(BlockID.AIR,Mouse.getBlockX(), Mouse.getBlockY()); 
-							 }*/
-							 Component.inventory.addItemToInventory(b.getID());
-							 this.setBlock(BlockID.AIR,Mouse.getBlockX(), Mouse.getBlockY()); 
+							 }
 						}
 					}
 				}

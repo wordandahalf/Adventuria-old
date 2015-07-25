@@ -22,7 +22,7 @@ public abstract class EntityLiving extends DoubleRectangle implements EntityBase
 	public Location getLocation() {
 		return this.loc;
 	}
-	
+
 	public EntityID getID() {
 		return this.ID;
 	}

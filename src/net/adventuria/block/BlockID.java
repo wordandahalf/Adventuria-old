@@ -22,6 +22,7 @@ public enum BlockID {
 	ORE_DIAMOND(18, new int[] { 8, 0 }, "Diamond Ore", 30, true),
 	ORE_RUBY(19, new int[] { 9, 0 }, "Ruby Ore", 28, true),
 	ORE_EMERALD(20, new int[] { 10, 0 }, "Emerald Ore", 28, true),
+	ORE_SAPPHIRE(23, new int[] { 13, 0 }, "Sapphire Ore", 28, true),
 	SOLIDAIR(254, new int[] { -1, -1 }, "Solid Air", 255, true),
 	WATERSOURCE(255, new int[] { 7, 1 }, "Water Source", 254, 0, false);
 
