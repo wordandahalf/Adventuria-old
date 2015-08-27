@@ -1,4 +1,0 @@
-test:
-  override:
-    - php ./app/run-server.php --daemon
-    - php ./test-suite/run.php --unit-tests
