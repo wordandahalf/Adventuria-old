@@ -23,8 +23,10 @@ public class AssetManager {
 	public static BufferedImage moon;
 	public static BufferedImage sun;
 
-	public AssetManager() throws MissingAssetsException {
-		try {
+	public AssetManager() throws MissingAssetsException 
+	{
+		try
+		{
 			tileset_terrain = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_terrain.png"));
 			tileset_particle = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_particle.png"));
 			tile_cell = ImageIO.read(new URL(Component.codeBase, "file:res/tile_cell.png"));
@@ -35,22 +37,10 @@ public class AssetManager {
 			cloud_map = ImageIO.read(new URL(Component.codeBase, "file:res/cloud_map.png"));
 			moon = ImageIO.read(new URL(Component.codeBase, "file:res/moon.png"));
 			sun = ImageIO.read(new URL(Component.codeBase, "file:res/sun.png"));
-			
-			/*			tileset_terrain = ImageIO.read(new File("res/tileset_terrain.png"));
-			tileset_particle = ImageIO.read(new File("res/tileset_particle.png"));
-			tile_cell = ImageIO.read(new File("res/tile_cell.png"));
-			tile_select = ImageIO.read(new File("res/tile_select.png"));
-			tileset_entity = ImageIO.read(new File("res/tileset_entity.png"));
-			tileset_item = ImageIO.read(new File("res/tileset_item.png"));
-			night_sky = ImageIO.read(new File("res/night_sky.png"));
-			cloud_map = ImageIO.read(new File("res/cloud_map.png"));
-			moon = ImageIO.read(new File("res/moon.png"));
-			sun = ImageIO.read(new File("res/sun.png"));
-			 */
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-			//throw new MissingAssetsException(0);
+		}
+		catch (IOException e)
+		{
+			throw new MissingAssetsException(0);
 		}
 	}
 }
