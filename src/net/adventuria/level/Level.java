@@ -46,7 +46,7 @@ public class Level {
 					
 					if (b.getID() != BlockID.AIR) {
 						if (b.getID().getHardness() < 128) {
-							 b.damage(0.1);
+							 b.damage(0.03);
 							 if (b.getHardness() <= 0) {
 								 Component.inventory.addItemToInventory(b.getID());
 								 this.setBlock(BlockID.AIR,Mouse.getBlockX(), Mouse.getBlockY()); 

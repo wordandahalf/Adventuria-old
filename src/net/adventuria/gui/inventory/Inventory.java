@@ -22,24 +22,38 @@ public class Inventory {
 	public static int invHeight = 3;
 	public static Cell[] invHotBar = new Cell[invLength];
 	public static Cell[] invBag = new Cell[invLength * invHeight];
+	public static Cell[] craftingGrid = new Cell[4];
+	public static Cell craftingOutput;
 	public static boolean isOpen = false;
 	public static int selected = 0;
 
 	public Inventory() {
-		for (int i = 0; i < invHotBar.length; i++) {
+		
+		for (int i = 0; i < invHotBar.length; i++)
+		{
 			invHotBar[i] = new Cell(new Rectangle(Component.pixel.width / 2 - invLength * (invCellSize + invCellSpace) / 2 + i * (invCellSize + invCellSpace), Component.pixel.height - (invCellSize + invBorderSpace), invCellSize, invCellSize), BlockID.AIR, 0);
 		}
-		int x = 0;
-		int y = 0;
-		for (int i = 0; i < invBag.length; i++) {
+		
+		int x = 0, y = 0;
+		
+		for(int i = 0; i < invBag.length; i++)
+		{
 			invBag[i] = new Cell(new Rectangle(Component.pixel.width / 2 - invLength * (invCellSize + invCellSpace) / 2 + x * (invCellSize + invCellSpace), Component.pixel.height - (invCellSize + invBorderSpace) - invHeight * (invCellSize + invCellSpace) + y * (invCellSize + invCellSpace) - (invCellSize + invCellSpace), invCellSize, invCellSize), BlockID.AIR, 0);
 
 			x++;
-			if (x == invLength) {
+			if (x == invLength)
+			{
 				x = 0;
 				y++;
 			}
 		}
+		
+		for(int i = 0; i < craftingGrid.length; i++)
+		{
+			craftingGrid[i] = new Cell(new Rectangle((Component.pixel.width / 2 - invLength * (invCellSize + invCellSpace) / 2 + (i == 0 ? 4 : i == 1 ? 5 : i == 2 ? 4 : i == 3 ? 5 : 4) * (invCellSize + invCellSpace)), (Component.pixel.height - (invCellSize + invBorderSpace) - invHeight * (invCellSize + invCellSpace) + (i < 2 ? 0 : 1) * (invCellSize + invCellSpace) - (invCellSize + invCellSpace)) - 74, invCellSize, invCellSize), BlockID.AIR, 0);
+		}
+		
+		craftingOutput = new Cell(new Rectangle((Component.pixel.width / 2 - invLength * (invCellSize + invCellSpace) / 2 + 7 * (invCellSize + invCellSpace)), (Component.pixel.height - (invCellSize + invBorderSpace) - invHeight * (invCellSize + invCellSpace) + 2 * (invCellSize + invCellSpace) - (invCellSize + invCellSpace)) - 116, invCellSize, invCellSize), BlockID.AIR, 0);
 	}
 
 	public void Render(Graphics g) {
@@ -81,6 +95,23 @@ public class Inventory {
 				g.setColor(new Color(255, 255, 255, 64));
 				g.fillRect(invBag[i].x, invBag[i].y, invBag[i].width, invBag[i].height);
 			}
+		}
+		
+		for(int i = 0; i < craftingGrid.length; i++)
+		{
+			craftingGrid[i].Render(g, false);
+			if (craftingGrid[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+				g.setColor(new Color(255, 255, 255, 64));
+				g.fillRect(craftingGrid[i].x, craftingGrid[i].y, craftingGrid[i].width, craftingGrid[i].height);
+			}
+		}
+		
+		craftingOutput.Render(g, false);
+		
+		if(craftingOutput.contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
+		{
+			g.setColor(new Color(255, 255, 255, 64));
+			g.fillRect(craftingOutput.x, craftingOutput.y, craftingOutput.width, craftingOutput.height);
 		}
 	}
 

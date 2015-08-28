@@ -86,6 +86,29 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 							}
 						}
 					}
+					for(int i = 0; i < Inventory.craftingGrid.length; i++)
+					{
+						if (Inventory.craftingGrid[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+							if ((Inventory.craftingGrid[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+								Inventory.currentHeldItemID = Inventory.craftingGrid[i].ID;
+								Inventory.currentHeldItemCount = Inventory.craftingGrid[i].Count;
+
+								Inventory.craftingGrid[i].ID = BlockID.AIR;
+								Inventory.craftingGrid[i].Count = 0;
+							}
+						}
+					}
+					
+					if(Inventory.craftingOutput.contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
+					{
+						if ((Inventory.craftingOutput.ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+							Inventory.currentHeldItemID = Inventory.craftingOutput.ID;
+							Inventory.currentHeldItemCount = Inventory.craftingOutput.Count;
+
+							Inventory.craftingOutput.ID = BlockID.AIR;
+							Inventory.craftingOutput.Count = 0;
+						}
+					}
 				} else if ((Inventory.isOpen) && (Inventory.currentHeldItemID != BlockID.AIR)) {
 					for (int i = 0; i < Inventory.invBag.length; i++) {
 						if (Inventory.invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
@@ -109,11 +132,35 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 							}
 						}
 					}
+					for(int i = 0; i < Inventory.craftingGrid.length; i++)
+					{
+						if (Inventory.craftingGrid[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
+							if ((Inventory.craftingGrid[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+								Inventory.currentHeldItemID = Inventory.craftingGrid[i].ID;
+								Inventory.currentHeldItemCount = Inventory.craftingGrid[i].Count;
+
+								Inventory.craftingGrid[i].ID = BlockID.AIR;
+								Inventory.craftingGrid[i].Count = 0;
+							}
+						}
+					}
+					
+					if(Inventory.craftingOutput.contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
+					{
+						if ((Inventory.craftingOutput.ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+							Inventory.currentHeldItemID = Inventory.craftingOutput.ID;
+							Inventory.currentHeldItemCount = Inventory.craftingOutput.Count;
+
+							Inventory.craftingOutput.ID = BlockID.AIR;
+							Inventory.craftingOutput.Count = 0;
+						}
+					}
 				}
 			} else if (e.getButton() == 3) {
 				if (Inventory.currentHeldItemID != BlockID.AIR) {
-					if (Inventory.currentHeldItemCount > 1) {
-
+					if (Inventory.currentHeldItemCount > 1)
+					{
+						//TODO
 					}
 				}
 			}
