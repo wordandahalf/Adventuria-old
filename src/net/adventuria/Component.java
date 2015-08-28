@@ -4,6 +4,9 @@ import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 import javax.swing.JFrame;
 
@@ -42,6 +45,8 @@ public class Component extends Applet implements Runnable {
 	public static Inventory inventory;
 	public static Sky sky;
 	public static GUI gui;
+	public static URL codeBase;
+	
 	private static JFrame frame;
 
 	public Component() {
@@ -132,8 +137,28 @@ public class Component extends Applet implements Runnable {
 
 		requestFocus();
 	}
-
-	public void run() {
+	
+	public void run()
+	{
+		try
+		{
+			codeBase = null != System.getSecurityManager() ?  getCodeBase() : Paths.get("").toAbsolutePath().toUri().toURL();
+		}
+		catch (MalformedURLException e)
+		{
+			System.err.println(e.getMessage());
+		}
+		
+		Component component = new Component();
+		
+		frame = new JFrame();
+		frame.add(component);
+		frame.pack();
+		
+		setSize(size);
+		
+		realSize = new Dimension(frame.getWidth(), frame.getHeight());
+		
 		this.screen = createVolatileImage(pixel.width, pixel.height);
 		while (isRunning) {
 			Tick();

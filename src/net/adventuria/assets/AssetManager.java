@@ -1,9 +1,12 @@
 package net.adventuria.assets;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.imageio.ImageIO;
+
+import net.adventuria.Component;
 import net.adventuria.errorHandler.MissingAssetsException;
 
 public class AssetManager {
@@ -22,7 +25,18 @@ public class AssetManager {
 
 	public AssetManager() throws MissingAssetsException {
 		try {
-			tileset_terrain = ImageIO.read(new File("res/tileset_terrain.png"));
+			tileset_terrain = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_terrain.png"));
+			tileset_particle = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_particle.png"));
+			tile_cell = ImageIO.read(new URL(Component.codeBase, "file:res/tile_cell.png"));
+			tile_select = ImageIO.read(new URL(Component.codeBase, "file:res/tile_select.png"));
+			tileset_entity = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_entity.png"));
+			tileset_item = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_item.png"));
+			night_sky = ImageIO.read(new URL(Component.codeBase, "file:res/night_sky.png"));
+			cloud_map = ImageIO.read(new URL(Component.codeBase, "file:res/cloud_map.png"));
+			moon = ImageIO.read(new URL(Component.codeBase, "file:res/moon.png"));
+			sun = ImageIO.read(new URL(Component.codeBase, "file:res/sun.png"));
+			
+			/*			tileset_terrain = ImageIO.read(new File("res/tileset_terrain.png"));
 			tileset_particle = ImageIO.read(new File("res/tileset_particle.png"));
 			tile_cell = ImageIO.read(new File("res/tile_cell.png"));
 			tile_select = ImageIO.read(new File("res/tile_select.png"));
@@ -32,8 +46,11 @@ public class AssetManager {
 			cloud_map = ImageIO.read(new File("res/cloud_map.png"));
 			moon = ImageIO.read(new File("res/moon.png"));
 			sun = ImageIO.read(new File("res/sun.png"));
+			 */
 		} catch (IOException e) {
-			throw new MissingAssetsException(0);
+			
+			e.printStackTrace();
+			//throw new MissingAssetsException(0);
 		}
 	}
 }
