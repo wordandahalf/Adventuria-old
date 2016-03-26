@@ -12,14 +12,16 @@ import javax.swing.JFrame;
 
 import net.adventuria.assets.AssetManager;
 import net.adventuria.block.Block;
-import net.adventuria.block.BlockID;
+import net.adventuria.block.BlockType;
 import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.gui.GUI;
 import net.adventuria.level.Level;
 import net.adventuria.level.Sky;
+import net.adventuria.level.World;
 import net.adventuria.level.chunk.Chunk;
+import net.adventuria.level.generator.DefaultGenerator;
 import net.adventuria.listeners.AdventuriaKeyboardListener;
 import net.adventuria.listeners.AdventuriaMouseListener;
 import net.adventuria.location.Location;
@@ -40,8 +42,9 @@ public class Component extends Applet implements Runnable {
 	public static boolean isMoving = false;
 	public static boolean isJumping = false;
 	private Image screen;
-	public static Level level;
-	public static EntityPlayer character;
+	public static World world;
+	/*public static Level level;
+	public static EntityPlayer character;*/
 	public static Inventory inventory;
 	public static Sky sky;
 	public static GUI gui;
@@ -63,25 +66,8 @@ public class Component extends Applet implements Runnable {
 		} catch (MissingAssetsException e) {
 			e.printStackTrace();
 		}
-		level = new Level();
-		// Begin searching for highest block at map center.
-		int blockY = 0;
-		int fitBlocks = 0; // Checks to ensure head and feet will fit in an
-							// area.
-		for (int y = Chunk.HEIGHT - 1; y >= 0; y--) {
-			if (level.getBlock((Chunk.WIDTH / 2), y).getID().equals(BlockID.AIR)) {
-				fitBlocks++;
-				if (fitBlocks == 2) {
-					blockY = y;
-					break;
-				}
-			} else {
-				fitBlocks = 0;
-			}
-		}
-		sX = (int) (Math.floor(50) * 20 - (Component.pixel.width / 2D) + 10);
-		sY = (int) (Math.floor(blockY) * 20 - (Component.pixel.height / 2D) + 10);
-		character = new EntityPlayer(new Location((int) (Math.floor(50) * 20), (int) (Math.floor(blockY) * 20)));
+		world = new World(new DefaultGenerator());
+		
 		inventory = new Inventory();
 		sky = new Sky();
 		gui = new GUI();
@@ -112,12 +98,13 @@ public class Component extends Applet implements Runnable {
 		component.start();
 	}
 
-	public void Tick() {
+	public void Tick() {		
 		if ((frame.getWidth() != realSize.width) || (frame.getHeight() != realSize.height)) {
 			frame.pack();
 		}
-		level.Tick((int) sX, (int) sY, pixel.width / Block.tileSize + 2, pixel.height / Block.tileSize + 2);
-		character.Tick();
+		
+		world.update();
+		
 		sky.Tick();
 	}
 
@@ -125,8 +112,8 @@ public class Component extends Applet implements Runnable {
 		Graphics g = this.screen.getGraphics();
 
 		sky.Render(g);
-		character.Render(g);
-		level.Render(g, (int) sX, (int) sY, pixel.width / Block.tileSize + 2, pixel.height / Block.tileSize + 2);
+		
+		world.draw(g);
 		gui.Render(g);
 		inventory.Render(g);
 

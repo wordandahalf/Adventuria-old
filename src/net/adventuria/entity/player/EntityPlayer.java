@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import net.adventuria.Component;
 import net.adventuria.assets.AssetManager;
 import net.adventuria.block.Block;
-import net.adventuria.block.BlockID;
+import net.adventuria.block.BlockType;
 import net.adventuria.entity.EntityHuman;
 import net.adventuria.entity.EntityID;
 import net.adventuria.gui.GUI;
@@ -14,7 +14,7 @@ import net.adventuria.level.chunk.Chunk;
 import net.adventuria.location.Location;
 
 public class EntityPlayer extends EntityHuman {
-	public double fallingSpeed = 1.0D;
+	public double fallingSpeed = 0.5D;
 	public double movementSpeed = 0.5D;
 	public double jumpingSpeed = 1.0D;
 	public int jumpingHeight = 50;
@@ -31,7 +31,9 @@ public class EntityPlayer extends EntityHuman {
 
 	@Override
 	public void Tick() {
-		isFalling = (!isCollidingWithBlock(new Location(getBlockX(), getBlockY() + 2), new Location(getBlockX(), getBlockY() + 2))) && (!isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY() + 2), new Location(getBlockX() - 1, getBlockY() + 2)) || isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY()), new Location(getBlockX() - 1, getBlockY() + 1))) && (!isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY() + 2), new Location(getBlockX() + 1, getBlockY() + 2)) || isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY()), new Location(getBlockX() + 1, getBlockY() + 1)));
+		isFalling = !isCollidingWithBlock(new Location(this.getBlockX(), this.getBlockX() + 2),  new Location(getBlockX(), getBlockY() + 2));
+		
+		//isFalling = (!isCollidingWithBlock(new Location(getBlockX(), getBlockY() + 2), new Location(getBlockX(), getBlockY() + 2))) && (!isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY() + 2), new Location(getBlockX() - 1, getBlockY() + 2)) || isCollidingWithBlock(new Location(getBlockX() - 1, getBlockY()), new Location(getBlockX() - 1, getBlockY() + 1))) && (!isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY() + 2), new Location(getBlockX() + 1, getBlockY() + 2)) || isCollidingWithBlock(new Location(getBlockX() + 1, getBlockY()), new Location(getBlockX() + 1, getBlockY() + 1)));
 		if ((!this.isJumping) && isFalling) {
 			this.y += this.fallingSpeed;
 			Component.sY += this.fallingSpeed;
@@ -40,11 +42,7 @@ public class EntityPlayer extends EntityHuman {
 			this.isJumping = true;
 		}
 		if (!isFalling) {
-			if (fallingSpeed > 1.4) {
-				setHealth((int) (getHealth() - Math.pow(2.25, fallingSpeed)));
-				GUI.healthBar.update();
-			}
-			fallingSpeed = 1;
+
 		}
 		if ((Component.isMoving) && (!Inventory.isOpen)) {
 			boolean canMove = false;
@@ -65,50 +63,10 @@ public class EntityPlayer extends EntityHuman {
 			}
 			if (!canMove) {
 				this.x += Component.dir;
-				if (x >= (Component.pixel.width / 2D) + 10 && x <= (Chunk.WIDTH * Block.tileSize) - ((Component.pixel.width / 2D) + 30)) {
+				if (x >= (Component.pixel.width / 2D) + 10 && x <= (Chunk.CHUNK_WIDTH * Block.TILE_SIZE) - ((Component.pixel.width / 2D) + 30)) {
 					Component.sX = x - ((Component.pixel.width / 2D) - 10);
 				}else if(x <= 10) {
-					Chunk newRight = Component.level.getCurrentChunk();
-					Component.level.setCurrentChunk(Component.level.getCurrentChunk().getLeftChunk());
-					Component.level.getCurrentChunk().setRightChunk(newRight);
-					int blockY = 0;
-					int fitBlocks = 0;
-					for (int y = Chunk.HEIGHT - 1; y >= 0; y--) {
-						if (Component.level.getBlock(Chunk.WIDTH - 2, y).getID().equals(BlockID.AIR)) {
-							fitBlocks++;
-							if (fitBlocks == 2) {
-								blockY = y;
-								break;
-							}
-						} else {
-							fitBlocks = 0;
-						}
-					}
-					y = blockY * 20;
-					x = (Chunk.WIDTH * 20) - 40;
-					Component.sY = (int) (Math.floor(blockY) * 20 - (Component.pixel.height / 2D) + 10);
-					Component.sX = (Chunk.WIDTH * Block.tileSize) - Component.pixel.width - 20;
-				}else if(x >= Chunk.WIDTH * Block.tileSize - 30) {
-					Chunk newLeft = Component.level.getCurrentChunk();
-					Component.level.setCurrentChunk(Component.level.getCurrentChunk().getRightChunk());
-					Component.level.getCurrentChunk().setLeftChunk(newLeft);
-					int blockY = 0;
-					int fitBlocks = 0;
-					for (int y = Chunk.HEIGHT - 1; y >= 0; y--) {
-						if (Component.level.getBlock(1, y).getID().equals(BlockID.AIR)) {
-							fitBlocks++;
-							if (fitBlocks == 2) {
-								blockY = y;
-								break;
-							}
-						} else {
-							fitBlocks = 0;
-						}
-					}
-					y = blockY * 20;
-					x = 20;
-					Component.sY = (int) (Math.floor(blockY) * 20 - (Component.pixel.height / 2D) + 10);
-					Component.sX = 20;
+
 				}
 			}
 		} else {
@@ -137,9 +95,9 @@ public class EntityPlayer extends EntityHuman {
 		int xCoord = (int) Math.round(x - Component.sX);
 		int yCoord = (int) Math.round(y - Component.sY);
 		if (Component.dir == this.movementSpeed) {
-			g.drawImage(AssetManager.tileset_entity, xCoord, yCoord, (int) this.width + xCoord, (int) this.height + yCoord, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int) this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int) this.height, null);
+			g.drawImage(AssetManager.tileset_entity, xCoord, yCoord, (int) this.width + xCoord, (int) this.height + yCoord, EntityID.PLAYER.getTextureID()[0] * Block.TILE_SIZE + Block.TILE_SIZE * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.TILE_SIZE, EntityID.PLAYER.getTextureID()[0] * Block.TILE_SIZE + Block.TILE_SIZE * this.animation + (int) this.width, EntityID.PLAYER.getTextureID()[1] * Block.TILE_SIZE + (int) this.height, null);
 		} else {
-			g.drawImage(AssetManager.tileset_entity, xCoord, yCoord, (int) this.width + xCoord, (int) this.height + yCoord, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation + (int) this.width, EntityID.PLAYER.getTextureID()[1] * Block.tileSize, EntityID.PLAYER.getTextureID()[0] * Block.tileSize + Block.tileSize * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.tileSize + (int) this.height, null);
+			g.drawImage(AssetManager.tileset_entity, xCoord, yCoord, (int) this.width + xCoord, (int) this.height + yCoord, EntityID.PLAYER.getTextureID()[0] * Block.TILE_SIZE + Block.TILE_SIZE * this.animation + (int) this.width, EntityID.PLAYER.getTextureID()[1] * Block.TILE_SIZE, EntityID.PLAYER.getTextureID()[0] * Block.TILE_SIZE + Block.TILE_SIZE * this.animation, EntityID.PLAYER.getTextureID()[1] * Block.TILE_SIZE + (int) this.height, null);
 		}
 	}
 

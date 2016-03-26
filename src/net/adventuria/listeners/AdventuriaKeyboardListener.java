@@ -26,13 +26,13 @@ public class AdventuriaKeyboardListener implements KeyListener {
 		case 68:
 			if (!Inventory.isOpen) {
 				Component.isMoving = true;
-				Component.dir = Component.character.movementSpeed;
+				Component.dir = Component.world.getPlayer().movementSpeed;
 			}
 			break;
 		case 65:
 			if (!Inventory.isOpen) {
 				Component.isMoving = true;
-				Component.dir = -Component.character.movementSpeed;
+				Component.dir = -Component.world.getPlayer().movementSpeed;
 			}
 			break;
 		case 87:
@@ -73,7 +73,7 @@ public class AdventuriaKeyboardListener implements KeyListener {
 		case 70:
 			try
 			{
-				LevelSaver.Save(Component.level);
+				LevelSaver.Save(Component.world);
 			}
 			catch (WorldSaveException wse)
 			{
@@ -101,12 +101,12 @@ public class AdventuriaKeyboardListener implements KeyListener {
 		int key = e.getKeyCode();
 		switch (key) {
 		case 68:
-			if (Component.dir == Component.character.movementSpeed) {
+			if (Component.dir == Component.world.getPlayer().movementSpeed) {
 				Component.isMoving = false;
 			}
 			break;
 		case 65:
-			if (Component.dir == -Component.character.movementSpeed) {
+			if (Component.dir == -Component.world.getPlayer().movementSpeed) {
 				Component.isMoving = false;
 			}
 			break;

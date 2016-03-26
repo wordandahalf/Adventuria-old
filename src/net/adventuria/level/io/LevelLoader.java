@@ -11,17 +11,17 @@ import java.util.List;
 import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.level.chunk.Chunk;
-import net.adventuria.location.Location;
 
 public class LevelLoader
 {
+	@SuppressWarnings("unused")
 	public static void Load(File f) throws IOException
 	{	
 		BufferedReader reader = null;
 		
 		List<String> file = new ArrayList<>();
 		
-		Block[][] loadedLevel = new Block[Chunk.WIDTH][Chunk.HEIGHT];
+		Block[][] loadedLevel = new Block[Chunk.CHUNK_WIDTH][Chunk.CHUNK_HEIGHT];
 		
 		List<Integer> chunkData = new ArrayList<>();
 		
@@ -51,9 +51,9 @@ public class LevelLoader
 		
 		charData = getPlayerPosition(file);
 		
-		Component.character.x = charData[0] * 20;
+		Component.world.getPlayer().x = charData[0] * 20;
 		
-		Component.character.y = charData[1] * 20;
+		Component.world.getPlayer().y = charData[1] * 20;
 		
 		Component.sX = charData[0] * 20 - (Component.pixel.width / 2D) + 10;
 		
@@ -109,6 +109,7 @@ public class LevelLoader
 		return pos;
 	}
 	
+	@SuppressWarnings("unused")
 	private static List<Integer> getChunkData(File f)
 	{
 		return null;

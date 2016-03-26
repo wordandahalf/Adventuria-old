@@ -1,42 +1,50 @@
 package net.adventuria.gui;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.adventuria.Component;
 import net.adventuria.particle.Particle;
+import net.adventuria.particle.ParticleType;
 
 public class HealthBar {
-	public static int heartAmount = Component.character.getHealth() / 2, heartRemainder = Component.character.getHealth() % 2;
+	public static int heartAmount = Component.world.getPlayer().getHealth() / 2, heartRemainder = Component.world.getPlayer().getHealth() % 2;
 	public static int heartSpace = 10;
-	public static Particle[] hearts = new Particle[heartAmount];
-
+	
+	private static List<Particle> hearts = new ArrayList<Particle>();
+	private static List<Particle> heart_outlines = new ArrayList<Particle>();
+	
 	public HealthBar() {
-		for (int i = 0; i < hearts.length; i++) {
-			hearts[i] = new Particle(Particle.HEART_FULL);
+		for (int i = 0; i < 10; i++) {
+			hearts.add(new Particle(ParticleType.HEART_FULL, 65 + (heartSpace * i), 225));
+			
+			heart_outlines.add(new Particle(ParticleType.HEART_CONTAINER, 65 + (heartSpace * i), 225));
 		}
 	}
 
 	public void update() {
-		heartAmount = Component.character.getHealth() / 2;
-		heartRemainder = Component.character.getHealth() % 2;
-		if (Component.character.getHealth() > 0) {
-			hearts = new Particle[heartAmount + heartRemainder];
-		} else {
-			hearts = new Particle[0];
+		int fullHearts = Component.world.getPlayer().getHealth() / 2;
+		int halfHearts = Component.world.getPlayer().getHealth() % 2;
+		
+		hearts.clear();
+		
+		for(int i = 0; i < fullHearts; i++) {
+			hearts.add(new Particle(ParticleType.HEART_FULL, 65 + (heartSpace * i), 225));
 		}
-		for (int i = 0; i < heartAmount; i++) {
-			hearts[i] = new Particle(Particle.HEART_FULL);
-		}
-		for (int j = heartAmount; j < heartAmount + heartRemainder; j++) {
-			hearts[j] = new Particle(Particle.HEART_HALF);
+		
+		for(int j = fullHearts; j < (fullHearts + halfHearts); j++) {
+			hearts.add(new Particle(ParticleType.HEART_HALF, 65 + (heartSpace * j), 225));
 		}
 	}
 
-	public void Render(Graphics g) {
-		for (int i = 0; i < 10; i++) {
-			new Particle(Particle.HEART_CONTAINER).Render(g, Component.pixel.width / 2 - i * heartSpace + (int) Component.sX - 22, (int) Component.sY + (Component.pixel.height - 56));
+	public void Render(Graphics g) {		
+		for(Particle p : heart_outlines) {
+			p.draw(g);
 		}
-		for (int i = 0; i < hearts.length; i++) {
-			hearts[i].Render(g, Component.pixel.width / 2 - i * heartSpace + (int) Component.sX - 22, (int) Component.sY + (Component.pixel.height - 56));
+		
+		for (Particle p : hearts) {
+			p.draw(g);
 		}
 	}
 }

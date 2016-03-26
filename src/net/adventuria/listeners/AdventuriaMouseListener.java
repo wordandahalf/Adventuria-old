@@ -8,7 +8,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import net.adventuria.Component;
-import net.adventuria.block.BlockID;
+import net.adventuria.block.BlockType;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.inputs.Mouse;
 import net.adventuria.location.Location;
@@ -63,25 +63,25 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 
 		if (Inventory.isOpen) {
 			if (e.getButton() == 1) {
-				if (Inventory.currentHeldItemID == BlockID.AIR) {
+				if (Inventory.currentHeldItemID == BlockType.AIR) {
 					for (int i = 0; i < Inventory.invBag.length; i++) {
 						if (Inventory.invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
-							if ((Inventory.invBag[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+							if ((Inventory.invBag[i].ID != BlockType.AIR) && (Inventory.currentHeldItemID == BlockType.AIR) && (Inventory.currentHeldItemCount == 0)) {
 								Inventory.currentHeldItemID = Inventory.invBag[i].ID;
 								Inventory.currentHeldItemCount = Inventory.invBag[i].Count;
 
-								Inventory.invBag[i].ID = BlockID.AIR;
+								Inventory.invBag[i].ID = BlockType.AIR;
 								Inventory.invBag[i].Count = 0;
 							}
 						}
 					}
 					for (int i = 0; i < Inventory.invHotBar.length; i++) {
 						if (Inventory.invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
-							if ((Inventory.invHotBar[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+							if ((Inventory.invHotBar[i].ID != BlockType.AIR) && (Inventory.currentHeldItemID == BlockType.AIR) && (Inventory.currentHeldItemCount == 0)) {
 								Inventory.currentHeldItemID = Inventory.invHotBar[i].ID;
 								Inventory.currentHeldItemCount = Inventory.invHotBar[i].Count;
 
-								Inventory.invHotBar[i].ID = BlockID.AIR;
+								Inventory.invHotBar[i].ID = BlockType.AIR;
 								Inventory.invHotBar[i].Count = 0;
 							}
 						}
@@ -89,11 +89,11 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 					for(int i = 0; i < Inventory.craftingGrid.length; i++)
 					{
 						if (Inventory.craftingGrid[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
-							if ((Inventory.craftingGrid[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+							if ((Inventory.craftingGrid[i].ID != BlockType.AIR) && (Inventory.currentHeldItemID == BlockType.AIR) && (Inventory.currentHeldItemCount == 0)) {
 								Inventory.currentHeldItemID = Inventory.craftingGrid[i].ID;
 								Inventory.currentHeldItemCount = Inventory.craftingGrid[i].Count;
 
-								Inventory.craftingGrid[i].ID = BlockID.AIR;
+								Inventory.craftingGrid[i].ID = BlockType.AIR;
 								Inventory.craftingGrid[i].Count = 0;
 							}
 						}
@@ -101,33 +101,33 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 					
 					if(Inventory.craftingOutput.contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
 					{
-						if ((Inventory.craftingOutput.ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+						if ((Inventory.craftingOutput.ID != BlockType.AIR) && (Inventory.currentHeldItemID == BlockType.AIR) && (Inventory.currentHeldItemCount == 0)) {
 							Inventory.currentHeldItemID = Inventory.craftingOutput.ID;
 							Inventory.currentHeldItemCount = Inventory.craftingOutput.Count;
 
-							Inventory.craftingOutput.ID = BlockID.AIR;
+							Inventory.craftingOutput.ID = BlockType.AIR;
 							Inventory.craftingOutput.Count = 0;
 						}
 					}
-				} else if ((Inventory.isOpen) && (Inventory.currentHeldItemID != BlockID.AIR)) {
+				} else if ((Inventory.isOpen) && (Inventory.currentHeldItemID != BlockType.AIR)) {
 					for (int i = 0; i < Inventory.invBag.length; i++) {
 						if (Inventory.invBag[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
-							if ((Inventory.invBag[i].ID == BlockID.AIR) && (Inventory.currentHeldItemID != BlockID.AIR) && (Inventory.currentHeldItemCount != 0)) {
+							if ((Inventory.invBag[i].ID == BlockType.AIR) && (Inventory.currentHeldItemID != BlockType.AIR) && (Inventory.currentHeldItemCount != 0)) {
 								Inventory.invBag[i].ID = Inventory.currentHeldItemID;
 								Inventory.invBag[i].Count = Inventory.currentHeldItemCount;
 
-								Inventory.currentHeldItemID = BlockID.AIR;
+								Inventory.currentHeldItemID = BlockType.AIR;
 								Inventory.currentHeldItemCount = 0;
 							}
 						}
 					}
 					for (int i = 0; i < Inventory.invHotBar.length; i++) {
 						if (Inventory.invHotBar[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
-							if ((Inventory.invHotBar[i].ID == BlockID.AIR) && (Inventory.currentHeldItemID != BlockID.AIR) && (Inventory.currentHeldItemCount != 0)) {
+							if ((Inventory.invHotBar[i].ID == BlockType.AIR) && (Inventory.currentHeldItemID != BlockType.AIR) && (Inventory.currentHeldItemCount != 0)) {
 								Inventory.invHotBar[i].ID = Inventory.currentHeldItemID;
 								Inventory.invHotBar[i].Count = Inventory.currentHeldItemCount;
 
-								Inventory.currentHeldItemID = BlockID.AIR;
+								Inventory.currentHeldItemID = BlockType.AIR;
 								Inventory.currentHeldItemCount = 0;
 							}
 						}
@@ -135,11 +135,11 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 					for(int i = 0; i < Inventory.craftingGrid.length; i++)
 					{
 						if (Inventory.craftingGrid[i].contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize))) {
-							if ((Inventory.craftingGrid[i].ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+							if ((Inventory.craftingGrid[i].ID != BlockType.AIR) && (Inventory.currentHeldItemID == BlockType.AIR) && (Inventory.currentHeldItemCount == 0)) {
 								Inventory.currentHeldItemID = Inventory.craftingGrid[i].ID;
 								Inventory.currentHeldItemCount = Inventory.craftingGrid[i].Count;
 
-								Inventory.craftingGrid[i].ID = BlockID.AIR;
+								Inventory.craftingGrid[i].ID = BlockType.AIR;
 								Inventory.craftingGrid[i].Count = 0;
 							}
 						}
@@ -147,17 +147,17 @@ public class AdventuriaMouseListener implements MouseListener, MouseMotionListen
 					
 					if(Inventory.craftingOutput.contains(new Point(Mouse.getX() / Component.pixelSize, Mouse.getY() / Component.pixelSize)))
 					{
-						if ((Inventory.craftingOutput.ID != BlockID.AIR) && (Inventory.currentHeldItemID == BlockID.AIR) && (Inventory.currentHeldItemCount == 0)) {
+						if ((Inventory.craftingOutput.ID != BlockType.AIR) && (Inventory.currentHeldItemID == BlockType.AIR) && (Inventory.currentHeldItemCount == 0)) {
 							Inventory.currentHeldItemID = Inventory.craftingOutput.ID;
 							Inventory.currentHeldItemCount = Inventory.craftingOutput.Count;
 
-							Inventory.craftingOutput.ID = BlockID.AIR;
+							Inventory.craftingOutput.ID = BlockType.AIR;
 							Inventory.craftingOutput.Count = 0;
 						}
 					}
 				}
 			} else if (e.getButton() == 3) {
-				if (Inventory.currentHeldItemID != BlockID.AIR) {
+				if (Inventory.currentHeldItemID != BlockType.AIR) {
 					if (Inventory.currentHeldItemCount > 1)
 					{
 						//TODO

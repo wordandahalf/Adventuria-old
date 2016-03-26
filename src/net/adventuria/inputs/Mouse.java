@@ -18,7 +18,7 @@ public class Mouse {
 	}
 
 	public static boolean isBlockInRange() {
-		return Math.sqrt(Math.pow(getBlockX() - Component.character.getBlockX(), 2) + Math.pow(getBlockY() - Component.character.getBlockY(), 2)) <= 3;
+		return Math.sqrt(Math.pow(getBlockX() - Component.world.getPlayer().getBlockX(), 2) + Math.pow(getBlockY() - Component.world.getPlayer().getBlockY(), 2)) <= 3;
 	}
 
 	public static void setLocation(Location l) {

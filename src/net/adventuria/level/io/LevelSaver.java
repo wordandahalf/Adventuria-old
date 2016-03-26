@@ -10,23 +10,24 @@ import net.adventuria.Component;
 import net.adventuria.block.Block;
 import net.adventuria.errorHandler.WorldSaveException;
 import net.adventuria.level.Level;
+import net.adventuria.level.World;
 
 public class LevelSaver
 {
 	public static char DATA_SEPARATOR = '~';
 			
-	public static void Save(Level l) throws WorldSaveException
+	public static void Save(World w) throws WorldSaveException
 	{
 		List<Object> saveData = new ArrayList<>();
 		
-		saveData.add("chrpos: {" + Integer.toHexString(Component.character.getBlockX()) + ", " + Integer.toHexString(Component.character.getBlockY()) + "}" + DATA_SEPARATOR);
+		saveData.add("chrpos: {" + Integer.toHexString(Component.world.getPlayer().getBlockX()) + ", " + Integer.toHexString(Component.world.getPlayer().getBlockY()) + "}" + DATA_SEPARATOR);
 		saveData.add("crntchnk: {");
 		
-		for(Block[] bArray : l.getCurrentChunk().Block)
+		for(Block[] bArray : w.getCurrentChunk().getBlocks())
 		{
 			for(Block b : bArray)
 			{
-				saveData.add(Integer.toHexString(b.getBlockX()) + "," + Integer.toHexString(b.getBlockY()) + "," + Integer.toHexString(b.getID().getID()));
+				saveData.add(Integer.toHexString(b.getBlockX()) + "," + Integer.toHexString(b.getBlockY()) + "," + Integer.toHexString(b.getBlockType().getID()));
 			}
 		}
 		

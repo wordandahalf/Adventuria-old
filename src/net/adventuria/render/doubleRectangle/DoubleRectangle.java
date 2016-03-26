@@ -21,9 +21,9 @@ public class DoubleRectangle {
 
 	public DoubleRectangle(int type, Location loc) {
 		if (type == 0) {
-			setBounds(loc.getX(), loc.getY(), Block.tileSize, Block.tileSize * 2);
+			setBounds(loc.getX(), loc.getY(), Block.TILE_SIZE, Block.TILE_SIZE * 2);
 		} else {
-			setBounds(loc.getX(), loc.getY(), Block.tileSize * 2, Block.tileSize);
+			setBounds(loc.getX(), loc.getY(), Block.TILE_SIZE * 2, Block.TILE_SIZE);
 		}
 	}
 
@@ -32,11 +32,11 @@ public class DoubleRectangle {
 		this.y = loc.getY();
 
 		if (type == 0) {
-			width = Block.tileSize;
-			height = Block.tileSize * 2;
+			width = Block.TILE_SIZE;
+			height = Block.TILE_SIZE * 2;
 		} else {
-			width = Block.tileSize * 2;
-			height = Block.tileSize;
+			width = Block.TILE_SIZE * 2;
+			height = Block.TILE_SIZE;
 		}
 	}
 

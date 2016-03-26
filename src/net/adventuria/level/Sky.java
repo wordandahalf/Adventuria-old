@@ -95,14 +95,14 @@ public class Sky {
 				starFade = 0;
 			if (starFade > 255)
 				starFade = 255;
-			gr.drawImage(AssetManager.night_sky, 0, 0, Component.pixel.width, Component.pixel.height, null);
+			gr.drawImage(AssetManager.getTexture("sky_night"), 0, 0, Component.pixel.width, Component.pixel.height, null);
 			gr.setColor(new Color(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), starFade));
 			gr.fillRect(0, 0, Component.pixel.width, Component.pixel.height);
 		}
 		if (time == DAY) {
-			gr.drawImage(AssetManager.sun, sunMoonX, sunMoonY, 50, 50, null);
+			gr.drawImage(AssetManager.getTexture("sky_sun"), sunMoonX, sunMoonY, 50, 50, null);
 		} else if (time == NIGHT) {
-			gr.drawImage(AssetManager.moon, sunMoonX, sunMoonY, 48, 48, null);
+			gr.drawImage(AssetManager.getTexture("sky_moon"), sunMoonX, sunMoonY, 48, 48, null);
 		}
 		if (dayFrame / 9000 < 1) {
 			sunMoonY = 50 - (dayFrame / 180);
@@ -113,6 +113,6 @@ public class Sky {
 		cloudX++;
 		if ((cloudX / 15) - (Component.pixel.width * 6) > (Component.pixel.width * 6))
 			cloudX = 0;
-		gr.drawImage(AssetManager.cloud_map, (cloudX / 15) - (Component.pixel.width * 6), 0, Component.pixel.width * 6, 64, null);
+		gr.drawImage(AssetManager.getTexture("sky_cloudmap"), (cloudX / 15) - (Component.pixel.width * 6), 0, Component.pixel.width * 6, 64, null);
 	}
 }
