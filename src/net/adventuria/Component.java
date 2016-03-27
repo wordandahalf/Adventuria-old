@@ -11,20 +11,14 @@ import java.nio.file.Paths;
 import javax.swing.JFrame;
 
 import net.adventuria.assets.AssetManager;
-import net.adventuria.block.Block;
-import net.adventuria.block.BlockType;
-import net.adventuria.entity.player.EntityPlayer;
 import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.gui.inventory.Inventory;
 import net.adventuria.gui.GUI;
-import net.adventuria.level.Level;
 import net.adventuria.level.Sky;
 import net.adventuria.level.World;
-import net.adventuria.level.chunk.Chunk;
 import net.adventuria.level.generator.DefaultGenerator;
 import net.adventuria.listeners.AdventuriaKeyboardListener;
 import net.adventuria.listeners.AdventuriaMouseListener;
-import net.adventuria.location.Location;
 
 public class Component extends Applet implements Runnable {
 	private static final long serialVersionUID = 1L;
