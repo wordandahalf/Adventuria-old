@@ -117,17 +117,75 @@ public class World {
 	public void update() {
 		this.getPlayer().Tick();
 		
+		if(Mouse.isLeftButtonClicked()) {
+			Block selectedBlock = this.getCurrentChunk().getBlock(Mouse.getBlockX(), Mouse.getBlockY());
+			
+			if(selectedBlock instanceof Block && !Inventory.isOpen) {
+				if(selectedBlock.isSolid() && Mouse.isBlockInRange()) {
+					double blockHardness = selectedBlock.getHardness();
+					
+					if((blockHardness - 0.03) <= 0) {
+						this.getCurrentChunk().setBlock(selectedBlock.getBlockX(), selectedBlock.getBlockY(), BlockType.AIR);
+						Component.inventory.addItemToInventory(selectedBlock.getBlockType());
+					} else {
+						selectedBlock.damage(0.03);
+					}
+				}
+			}
+		}
+		
+		if(Mouse.isRightButtonClicked()) {
+			if(!Inventory.isOpen) {				
+				if(Mouse.getBlockY() > -1 && Mouse.getBlockY() < Chunk.CHUNK_HEIGHT) {
+					if(!Mouse.getBlockLocation().equals(this.getPlayer().getBlockLocation())) {
+						Block selectedBlock = this.getCurrentChunk().getBlock(Mouse.getBlockX(), Mouse.getBlockY());
+						
+						if(Component.inventory.getHeldItemID() != BlockType.AIR) {
+							if(!selectedBlock.isSolid()) {
+								this.getCurrentChunk().setBlock(Mouse.getBlockX(), Mouse.getBlockY(), Component.inventory.getHeldItemID());
+								Component.inventory.setItemInventory(Component.inventory.getHeldItemID(), Component.inventory.getHeldItemCount() - 1, Inventory.selected);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
-	//TODO: Fix this (it should only need one parameter, the Graphics object)
+	/**
+	 * Renders the world!
+	 * @param g - The java.awt.Graphics object (for drawing images to the display)
+	 */
 	public void draw(Graphics g) {
 		for(Block[] blockArray : this.getCurrentChunk().getBlocks()) {
 			for(Block b : blockArray) {
-				if(b.getBlockY() - this.getPlayer().getBlockY() <= 8) {
-					if((b.getBlockX() - this.getPlayer().getBlockX() <= 9)) {
-						if((b.getBlockX() - this.getPlayer().getBlockX() >= -9)) {
-							b.Render(g);
+				
+				//Frustum culling (only rendering blocks that are visible)
+				int frustumWidth = ((Component.size.width / Component.pixelSize) / Block.TILE_SIZE);
+				int frustumHeight = ((Component.size.height / Component.pixelSize) / Block.TILE_SIZE);
+				
+				//Check to ensure that the block is within half of the frustum's height (plus one for a buffer)
+				if(b.getBlockY() - this.getPlayer().getBlockY() <= ((frustumHeight / 2) + 1)) {
+					if(b.getBlockY() - this.getPlayer().getBlockY() >= -((frustumHeight / 2) + 1)) {
+					//Make sure that the block is within half of the frustum's width (plus one for a buffer)
+						if((b.getBlockX() - this.getPlayer().getBlockX() <= (frustumWidth / 2) + 1)) {
+							if((b.getBlockX() - this.getPlayer().getBlockX() >= -((frustumWidth / 2) + 1))) {
+								b.Render(g);
+							}
 						}
+					}
+				}
+				
+				//Draw the selection box (for destroying and placing blocks)
+				int selectedX = (int) ((Mouse.getX() / 2) + Component.sX);
+				int selectedY = (int) ((Mouse.getY() / 2) + Component.sY);
+				
+				//Make sure that the point is within a block and is within the destroyable range
+				if(b.contains(new Point(selectedX, selectedY)) && Mouse.isBlockInRange() && !Inventory.isOpen) {
+					if(b.getBlockType().isSolid()) {
+						g.setColor(new Color(0, 0, 0, 64));
+						
+						g.fillRect(b.getLocation().x - (int) Component.sX, b.getLocation().y - (int) Component.sY, Block.TILE_SIZE, Block.TILE_SIZE);
 					}
 				}
 			}
