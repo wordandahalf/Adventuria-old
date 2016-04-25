@@ -1,6 +1,7 @@
 package net.adventuria;
 
 import java.applet.Applet;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -108,6 +109,12 @@ public class Component extends Applet implements Runnable {
 		sky.Render(g);
 		
 		world.draw(g);
+		
+		if(Sky.time == Sky.NIGHT || Sky.time == Sky.DUSK) {
+			//g.setColor(new Color(0, 0, 0, Sky.time == Sky.NIGHT ? (false ? 125 : (125 - ((Sky.dayFrame * 125) / Sky.DAY_TIME))) : ((Sky.dayFrame * 125) / Sky.TRANSFER_TIME)));
+			//g.fillRect(0, 0, 800, 600);
+		}
+		
 		gui.Render(g);
 		inventory.Render(g);
 
