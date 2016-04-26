@@ -8,12 +8,12 @@ import net.adventuria.assets.AssetManager;
 
 public class Sky {
 	public static final int DAY = 0, NIGHT = 1, DUSK = 2, DAWN = 3, OVERCAST = 4;
-	public static int time = DAY;
+	public static int time = DAWN;
 	public static int dayFrame = 0;
 	public static final int DAY_TIME = 18000, TRANSFER_TIME = 2500;
-	public Color currentColor = Color.white, nextColor = Color.white, overcastColor = new Color(150, 150, 150), dayColor = new Color(70, 120, 230), nightColor = new Color(15, 8, 40), dawnColor = new Color(110, 89, 193), duskColor = new Color(64, 48, 127);
-	private int cloudX = 0, sunMoonX = -96, sunMoonY = 50, starFade = 255;
-	private double r = 0, g = 0, b = 0;
+	public Color currentColor = Color.white, nextColor = Color.white, overcastColor = new Color(150, 150, 150), dayColor = new Color(79, 150, 238), nightColor = new Color(15, 8, 40), dawnColor = new Color(95, 89, 165), duskColor = new Color(64, 48, 127);
+	private int cloudX = 0, sunMoonX = -96, sunMoonY = 50;
+	private double r = 0, g = 0, b = 0, starFade = 0;
 
 	public Sky() {
 		switch (time) {
@@ -86,21 +86,22 @@ public class Sky {
 	public void Render(Graphics gr) {
 		gr.setColor(currentColor);
 		gr.fillRect(0, 0, Component.pixel.width, Component.pixel.height);
-		if (time == NIGHT) {
-			if (dayFrame < 500)
-				starFade -= 0.5;
-			if (dayFrame > 16500)
-				starFade++;
+		if (time != DAY) {
+			if(time == DUSK || time == DAWN) {
+				double intervals = 500 / ((TRANSFER_TIME * 0.9) - (TRANSFER_TIME * 0.2));
+				if (dayFrame > TRANSFER_TIME * 0.2)
+					starFade += (time == DUSK ? -intervals : intervals);
+			}
 			if (starFade < 0)
 				starFade = 0;
 			if (starFade > 255)
 				starFade = 255;
 			gr.drawImage(AssetManager.getTexture("sky_night"), 0, 0, Component.pixel.width, Component.pixel.height, null);
-			gr.setColor(new Color(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), starFade));
+			gr.setColor(new Color(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), (int) starFade));
 			gr.fillRect(0, 0, Component.pixel.width, Component.pixel.height);
 		}
 		if (time == DAY) {
-			gr.drawImage(AssetManager.getTexture("sky_sun"), sunMoonX, sunMoonY, 50, 50, null);
+			gr.drawImage(AssetManager.getTexture("sky_sun"), sunMoonX, sunMoonY, 80, 80, null);
 		} else if (time == NIGHT) {
 			gr.drawImage(AssetManager.getTexture("sky_moon"), sunMoonX, sunMoonY, 40, 40, null);
 		}
