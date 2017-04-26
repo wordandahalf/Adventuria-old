@@ -42,11 +42,11 @@ public class Mouse {
 	}
 
 	public static int getX() {
-		return loc.x;
+		return (int) Math.round(loc.x);
 	}
 
 	public static int getY() {
-		return loc.y;
+		return (int) Math.round(loc.y);
 	}
 
 	public static int getBlockX() {

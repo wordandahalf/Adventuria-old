@@ -41,10 +41,14 @@ public class Chunk {
 	}
 	
 	public Block getBlock(int x, int y) {
-		return this.blocks[x][y];
+		if(x >= 0 && y >= 0 && x <= CHUNK_WIDTH && y <= CHUNK_HEIGHT) {
+			return this.blocks[x][y];
+		}
+		return null;
 	}
 	
 	public void setBlock(int x, int y, BlockType type) {
-		this.blocks[x][y] = new Block(new Location(x, y), type);
+		if(x >= 0 && x < CHUNK_WIDTH && y >= 0 && y < CHUNK_HEIGHT)
+			this.blocks[x][y] = new Block(new Location(x, y), type);
 	}
 }

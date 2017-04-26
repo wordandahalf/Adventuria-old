@@ -13,7 +13,7 @@ import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.particle.Particle;
 
 public class AssetManager {
-	public static int tileSize = 20;
+	public static final int DEFAULT_TILE_SIZE = 20;
 
 	private static HashMap<String, BufferedImage> textures = new HashMap<String, BufferedImage>();
 	
@@ -46,9 +46,11 @@ public class AssetManager {
 			textures.put("ore_sapphire", tileset_terrain.getSubimage(260, 0, Block.TILE_SIZE, Block.TILE_SIZE));
 			
 			textures.put("wood_oak", tileset_terrain.getSubimage(0, 20, Block.TILE_SIZE, Block.TILE_SIZE));
+			textures.put("grass_snow", tileset_terrain.getSubimage(120, 20, Block.TILE_SIZE, Block.TILE_SIZE));
 			textures.put("water_source", tileset_terrain.getSubimage(140, 20, Block.TILE_SIZE, Block.TILE_SIZE));
 			
 			textures.put("leaves_oak", tileset_terrain.getSubimage(0, 40, Block.TILE_SIZE, Block.TILE_SIZE));
+			textures.put("ice", tileset_terrain.getSubimage(20, 40, Block.TILE_SIZE, Block.TILE_SIZE));
 			
 			//Technically not blocks, but still are stored in tileset_terrain.png
 			
@@ -96,17 +98,12 @@ public class AssetManager {
 			//	| GUI |
 			//	-------
 			
-			BufferedImage tile_cell = ImageIO.read(new URL(Component.codeBase, "file:res/tile_cell.png"));
+			BufferedImage tileset_gui = ImageIO.read(new URL(Component.codeBase, "file:res/tileset_gui.png"));
 			
-			textures.put("gui_inventory_cell", tile_cell);
+			textures.put("gui_inventory_select", tileset_gui.getSubimage(0, 0, DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE));
+			textures.put("gui_inventory_cell", tileset_gui.getSubimage(20, 0, DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE));
 			
-			tile_cell.flush();
-			
-			BufferedImage tile_select = ImageIO.read(new URL(Component.codeBase, "file:res/tile_select.png"));
-			
-			textures.put("gui_inventory_select", tile_select);
-			
-			tile_select.flush();
+			tileset_gui.flush();
 			
 			//	---------------
 			//	| ENVIRONMENT |

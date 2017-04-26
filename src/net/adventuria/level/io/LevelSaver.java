@@ -19,7 +19,7 @@ public class LevelSaver
 	{
 		List<Object> saveData = new ArrayList<>();
 		
-		saveData.add("chrpos: {" + Integer.toHexString(Component.world.getPlayer().getBlockX()) + ", " + Integer.toHexString(Component.world.getPlayer().getBlockY()) + "}" + DATA_SEPARATOR);
+		saveData.add("chrpos: {" + Double.toHexString(Component.world.getPlayer().getBlockX()) + ", " + Double.toHexString(Component.world.getPlayer().getBlockY()) + "}" + DATA_SEPARATOR);
 		saveData.add("crntchnk: {");
 		
 		for(Block[] bArray : w.getCurrentChunk().getBlocks())

@@ -14,12 +14,14 @@ import javax.swing.JFrame;
 import net.adventuria.assets.AssetManager;
 import net.adventuria.errorHandler.MissingAssetsException;
 import net.adventuria.gui.inventory.Inventory;
-import net.adventuria.gui.GUI;
+import net.adventuria.gui.PlayerHUD;
+import net.adventuria.gui.StartMenu;
 import net.adventuria.level.Sky;
 import net.adventuria.level.World;
 import net.adventuria.level.generator.DefaultGenerator;
 import net.adventuria.listeners.AdventuriaKeyboardListener;
 import net.adventuria.listeners.AdventuriaMouseListener;
+import net.adventuria.renderer.Renderer;
 
 public class Component extends Applet implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -37,12 +39,13 @@ public class Component extends Applet implements Runnable {
 	public static boolean isMoving = false;
 	public static boolean isJumping = false;
 	private Image screen;
+	private Renderer renderer;
 	public static World world;
 	/*public static Level level;
 	public static EntityPlayer character;*/
 	public static Inventory inventory;
 	public static Sky sky;
-	public static GUI gui;
+	public static PlayerHUD gui;
 	public static URL codeBase;
 	
 	private static JFrame frame;
@@ -61,11 +64,12 @@ public class Component extends Applet implements Runnable {
 		} catch (MissingAssetsException e) {
 			e.printStackTrace();
 		}
-		world = new World(new DefaultGenerator());
 		
+		world = new World(new DefaultGenerator());
 		inventory = new Inventory();
 		sky = new Sky();
-		gui = new GUI();
+		gui = new PlayerHUD();
+		
 
 		isRunning = true;
 		new Thread(this).start();
@@ -126,6 +130,8 @@ public class Component extends Applet implements Runnable {
 		requestFocus();
 	}
 	
+	
+	
 	public void run()
 	{
 		try
@@ -148,7 +154,14 @@ public class Component extends Applet implements Runnable {
 		realSize = new Dimension(frame.getWidth(), frame.getHeight());
 		
 		this.screen = createVolatileImage(pixel.width, pixel.height);
+		
+		renderer = new Renderer();
+		Graphics g = getGraphics();
+		StartMenu s = new StartMenu();
+		renderer.add(s);
+		
 		while (isRunning) {
+			//renderer.render(g);
 			Tick();
 			Render();
 			try {

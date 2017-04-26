@@ -85,7 +85,7 @@ public class World {
 	}
 	
 	public Chunk generateNewChunk(Location loc) {
-		Chunk c = new Chunk(loc, 1/2 * (loc.x + loc.y) * (loc.x + loc.y + 1) + loc.y, Biome.getRandomBiome());
+		Chunk c = new Chunk(loc, 0, Biome.getRandomBiome());
 		
 		this.getGenerator().generate(c);
 		
@@ -124,11 +124,11 @@ public class World {
 				if(selectedBlock.isSolid() && Mouse.isBlockInRange()) {
 					double blockHardness = selectedBlock.getHardness();
 					
-					if((blockHardness - 0.03) <= 0) {
+					if((blockHardness - 0.05) <= 0) {
 						this.getCurrentChunk().setBlock(selectedBlock.getBlockX(), selectedBlock.getBlockY(), BlockType.AIR);
 						Component.inventory.addItemToInventory(selectedBlock.getBlockType());
 					} else {
-						selectedBlock.damage(0.03);
+						selectedBlock.damage(0.05);
 					}
 				}
 			}
@@ -157,36 +157,38 @@ public class World {
 	 * @param g - The java.awt.Graphics object (for drawing images to the display)
 	 */
 	public void draw(Graphics g) {
-		for(Block[] blockArray : this.getCurrentChunk().getBlocks()) {
-			for(Block b : blockArray) {
-				
-				//Frustum culling (only rendering blocks that are visible)
-				int frustumWidth = ((Component.size.width / Component.pixelSize) / Block.TILE_SIZE);
-				int frustumHeight = ((Component.size.height / Component.pixelSize) / Block.TILE_SIZE);
-				
-				//Check to ensure that the block is within half of the frustum's height (plus one for a buffer)
-				if(b.getBlockY() - this.getPlayer().getBlockY() <= ((frustumHeight / 2) + 1)) {
-					if(b.getBlockY() - this.getPlayer().getBlockY() >= -((frustumHeight / 2) + 1)) {
-					//Make sure that the block is within half of the frustum's width (plus one for a buffer)
-						if((b.getBlockX() - this.getPlayer().getBlockX() <= (frustumWidth / 2) + 1)) {
-							if((b.getBlockX() - this.getPlayer().getBlockX() >= -((frustumWidth / 2) + 1))) {
-								b.Render(g);
-							}
-						}
-					}
-				}
-				
-				//Draw the selection box (for destroying and placing blocks)
-				int selectedX = (int) ((Mouse.getX() / 2) + Component.sX);
-				int selectedY = (int) ((Mouse.getY() / 2) + Component.sY);
-				
-				//Make sure that the point is within a block and is within the destroyable range
-				if(b.contains(new Point(selectedX, selectedY)) && Mouse.isBlockInRange() && !Inventory.isOpen) {
-					if(b.getBlockType().isSolid()) {
-						g.setColor(new Color(0, 0, 0, 64));
-						
-						g.fillRect(b.getLocation().x - (int) Component.sX, b.getLocation().y - (int) Component.sY, Block.TILE_SIZE, Block.TILE_SIZE);
-					}
+		//Frustum culling (only rendering blocks that are visible)
+		int frustumWidth = ((Component.size.width / Component.pixelSize) / Block.TILE_SIZE);
+		int frustumHeight = ((Component.size.height / Component.pixelSize) / Block.TILE_SIZE);
+		
+		int minFrustumX = getPlayer().getBlockX() - (frustumWidth / 2) - 2;
+		int maxFrustumX = getPlayer().getBlockX() + (frustumWidth / 2) + 2;
+		if(minFrustumX < 0) minFrustumX = 0;
+		if(maxFrustumX >= Chunk.CHUNK_WIDTH) maxFrustumX = Chunk.CHUNK_WIDTH - 1;
+		
+		int minFrustumY = getPlayer().getBlockY() - (frustumHeight / 2) - 2;
+		int maxFrustumY = getPlayer().getBlockY() + (frustumHeight / 2) + 2;
+		if(minFrustumY < 0) minFrustumY = 0;
+		if(maxFrustumY >= Chunk.CHUNK_HEIGHT) maxFrustumY = Chunk.CHUNK_HEIGHT - 1;
+		
+		for(int x = minFrustumX; x < maxFrustumX; x++) {
+			for(int y = minFrustumY; y < maxFrustumY; y++) {
+				getCurrentChunk().getBlock(x, y).Render(g);
+			}
+		}
+		
+		//Draw the selection box (for destroying and placing blocks)
+		int selectedX = (int) ((Mouse.getX() / 2) + Component.sX) / Block.TILE_SIZE;
+		int selectedY = (int) ((Mouse.getY() / 2) + Component.sY) / Block.TILE_SIZE;
+		
+		Block b = getCurrentChunk().getBlock(selectedX, selectedY);
+		if(b != null) {
+			//Make sure that the point is within a block and is within the destroyable range
+			if(Mouse.isBlockInRange() && !Inventory.isOpen) {
+				if(b.getBlockType().isSolid()) {
+					g.setColor(new Color(0, 0, 0, 64));
+					
+					g.fillRect(b.getLocation().x - (int) Component.sX, b.getLocation().y - (int) Component.sY, Block.TILE_SIZE, Block.TILE_SIZE);
 				}
 			}
 		}

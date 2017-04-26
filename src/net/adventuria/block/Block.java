@@ -21,12 +21,12 @@ public class Block extends Rectangle {
 
 	public Block(Location loc, BlockType ID) {
 		this.type = ID;
-		this.bx = loc.getX();
-		this.by = loc.getY();
+		this.bx = (int) Math.round(loc.getX());
+		this.by = (int) Math.round(loc.getY());
 		
 		this.hardness = ID.getHardness();
 		
-		setBounds(loc.getX() * TILE_SIZE, loc.getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+		setBounds((int) Math.round(loc.getX() * TILE_SIZE), (int) Math.round(loc.getY() * TILE_SIZE), TILE_SIZE, TILE_SIZE);
 
 		this.type = ID;
 	}
@@ -36,7 +36,7 @@ public class Block extends Rectangle {
 	}
 
 	public void damage(double strength) {
-		hardness -= strength;
+		hardness -= hardness == 255 ? 0 : strength;
 	}
 
 	public double getHardness() {

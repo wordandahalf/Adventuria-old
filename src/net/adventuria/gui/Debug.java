@@ -25,7 +25,7 @@ public class Debug {
 			int y1 = (int) Math.round(Component.world.getPlayer().getBoundingRectangle().y - Component.sY);
 			g.drawRect(x1, y1, Component.world.getPlayer().getBoundingRectangle().width, Component.world.getPlayer().getBoundingRectangle().height);
 			g.setColor(new Color(255, 127, 127, 200));
-			g.drawRect((Component.world.getPlayer().getBlockX() * 20) - (int) Component.sX, Component.world.getPlayer().getBlockY() * 20 - (int) Component.sY, 20, 40);
+			g.drawRect((int) Math.round(Component.world.getPlayer().getBlockX() * 20) - (int) Component.sX, (int) Math.round(Component.world.getPlayer().getBlockY() * 20) - (int) Component.sY, 20, 40);
 		}
 	}
 }

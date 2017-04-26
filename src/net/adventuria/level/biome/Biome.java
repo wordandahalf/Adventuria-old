@@ -6,7 +6,8 @@ import java.awt.Color;
 public enum Biome {
 	PLAINS(0, "Plains", new Color(70, 120, 230)),
 	DESERT(1, "Desert", new Color(70, 120, 230)),
-	OCEAN(2, "Ocean", new Color(70, 120, 230));
+	OCEAN(2, "Ocean", new Color(70, 120, 230)),
+	TUNDRA(3, "Tundra", new Color(70, 120, 230));
 	
 	private int id;
 	private String name;
@@ -31,6 +32,6 @@ public enum Biome {
 	}
 	
 	public static Biome getRandomBiome() {
-		return Biome.values()[new Random().nextInt(3)];
+		return Biome.values()[new Random().nextInt(Biome.values().length)];
 	}
 }

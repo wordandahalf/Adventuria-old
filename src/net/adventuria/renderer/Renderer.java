@@ -1,5 +1,6 @@
 package net.adventuria.renderer;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Renderer {
@@ -43,19 +44,40 @@ public class Renderer {
 	 */
 	public void remove(RenderableObject o) {
 		switch(o.getRenderPosition()) {
-		case BACKGROUND:
-			BACKGROUND_OBJECTS.remove(o);
-			break;
-		case ENTITY:
-			ENTITIES.remove(o);
-			break;
-		case FOREGROUND:
-			FOREGROUND_OBJECTS.remove(o);
-			break;
-		default:
-			INVISIBLE_OBJECTS.remove(o);
-			break;
-	}
+			case BACKGROUND:
+				BACKGROUND_OBJECTS.remove(o);
+				break;
+			case ENTITY:
+				ENTITIES.remove(o);
+				break;
+			case FOREGROUND:
+				FOREGROUND_OBJECTS.remove(o);
+				break;
+			default:
+				INVISIBLE_OBJECTS.remove(o);
+				break;
+		}
 	}
 	
+	public void render(Graphics g) {
+		for(RenderableObject o : BACKGROUND_OBJECTS) {
+			o.render(g);
+			o.tick();
+		}
+		for(RenderableObject o : ENTITIES) {
+			o.render(g);
+			o.tick();
+		}
+		for(RenderableObject o : FOREGROUND_OBJECTS) {
+			o.render(g);
+			o.tick();
+		}
+		for(RenderableObject o : INVISIBLE_OBJECTS) {
+			o.tick();
+		}
+	}
+	
+	public void cull() {
+		
+	}
 }
