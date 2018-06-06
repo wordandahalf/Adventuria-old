@@ -1,6 +1,5 @@
 package io.github.wordandahalf.adventuria;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.Dimension;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -11,6 +10,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import io.github.wordandahalf.adventuria.assets.AssetManager;
+import io.github.wordandahalf.adventuria.controls.ControlManager;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
 import io.github.wordandahalf.adventuria.world.WorldManager;
 
@@ -54,24 +54,7 @@ public class AdventuriaGame extends BasicGame {
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {		
-		//TODO: Separate input class
-		float movementSpeed = 5f;
-		
-		if(container.getInput().isKeyDown(Keyboard.KEY_LSHIFT)) {
-			movementSpeed /= 2;
-		}
-		
-		if(container.getInput().isKeyDown(Keyboard.KEY_LCONTROL)) {
-			movementSpeed *= 2;
-		}
-		
-		if(container.getInput().isKeyDown(Keyboard.KEY_D)) {
-			Renderer.getCamera().setX(Renderer.getCamera().getX() + movementSpeed);
-		}
-		
-		if(container.getInput().isKeyDown(Keyboard.KEY_A)) {
-			Renderer.getCamera().setX(Renderer.getCamera().getX() - movementSpeed);
-		}
+		ControlManager.updateInputs(container.getInput());
 	}
 	
 	public static void main(String[] args) {

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.AdventuriaGame;
-import io.github.wordandahalf.adventuria.world.Chunk;
-import io.github.wordandahalf.adventuria.world.block.Block;
 
 public class Renderer {
 	

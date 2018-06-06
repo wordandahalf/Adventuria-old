@@ -1,12 +1,17 @@
 package io.github.wordandahalf.adventuria.engine.rendering;
 
+import java.util.HashMap;
+
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import io.github.wordandahalf.adventuria.controls.ControlManager;
+import io.github.wordandahalf.adventuria.controls.Controllable;
 import io.github.wordandahalf.adventuria.engine.physics.Tickable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
 
-public class Camera implements Tickable, Renderable {
+public class Camera implements Tickable, Renderable, Controllable {
 	public static final float CULL_LENIENCY = 0.5f;
 	
 	private float x, y;
@@ -21,6 +26,7 @@ public class Camera implements Tickable, Renderable {
 		this.height = height;
 		
 		Renderer.add(this);
+		ControlManager.add(this);
 	}
 	
 	//TODO: Better culling system?
@@ -93,5 +99,28 @@ public class Camera implements Tickable, Renderable {
 	@Override
 	public RenderPosition getRenderPosition() {
 		return RenderPosition.UI;
+	}
+
+	@Override
+	public void updateInputs(HashMap<Integer, Boolean> keyStates) {
+		float movementSpeed = 5f;
+		
+		if(keyStates.get(Keyboard.KEY_LSHIFT)) {
+			movementSpeed /= 2;
+		}
+		if(keyStates.get(Keyboard.KEY_LCONTROL)) {
+			movementSpeed *= 2;
+		}
+		if(keyStates.get(Keyboard.KEY_D)) {
+			Renderer.getCamera().setX(Renderer.getCamera().getX() + movementSpeed);
+		}
+		if(keyStates.get(Keyboard.KEY_A)) {
+			Renderer.getCamera().setX(Renderer.getCamera().getX() - movementSpeed);
+		}
+	}
+
+	@Override
+	public int[] getRegisteredKeys() {
+		return new int[] {Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_LSHIFT, Keyboard.KEY_LCONTROL};
 	}
 }
