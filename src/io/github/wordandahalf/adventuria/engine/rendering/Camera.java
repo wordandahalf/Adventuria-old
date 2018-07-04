@@ -7,11 +7,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.controls.ControlManager;
-import io.github.wordandahalf.adventuria.controls.Controllable;
+import io.github.wordandahalf.adventuria.controls.KeyboardControllable;
 import io.github.wordandahalf.adventuria.engine.physics.Tickable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
 
-public class Camera implements Tickable, Renderable, Controllable {
+public class Camera implements Tickable, Renderable, KeyboardControllable {
 	public static final float CULL_LENIENCY = 0.5f;
 	
 	private float x, y;
@@ -103,7 +103,7 @@ public class Camera implements Tickable, Renderable, Controllable {
 
 	@Override
 	public void updateInputs(HashMap<Integer, Boolean> keyStates) {
-		float movementSpeed = 5f;
+		float movementSpeed = 2f;
 		
 		if(keyStates.get(Keyboard.KEY_LSHIFT)) {
 			movementSpeed /= 2;

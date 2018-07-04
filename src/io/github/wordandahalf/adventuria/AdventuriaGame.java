@@ -11,6 +11,8 @@ import org.newdawn.slick.SlickException;
 
 import io.github.wordandahalf.adventuria.assets.AssetManager;
 import io.github.wordandahalf.adventuria.controls.ControlManager;
+import io.github.wordandahalf.adventuria.debug.MouseDebugTooltip;
+import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
 import io.github.wordandahalf.adventuria.world.WorldManager;
 
@@ -18,6 +20,8 @@ public class AdventuriaGame extends BasicGame {
 	public static final String GAME_TITLE = "Adventuria";
 	public static final String GAME_VERSION = "0.5 Beta";
 
+	public static boolean DEBUG_MODE = true;
+	
 	//TODO: Make separate window manager
 	public static Dimension WINDOW_SIZE;
 	
@@ -50,11 +54,16 @@ public class AdventuriaGame extends BasicGame {
 		WorldManager.addWorld("main");
 		WorldManager.setCurrentWorld("main");
 		WorldManager.getCurrentWorld().generate();
+		
+		if(DEBUG_MODE)
+			new MouseDebugTooltip();
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {		
 		ControlManager.updateInputs(container.getInput());
+		
+		PhysicsEngine.update();
 	}
 	
 	public static void main(String[] args) {

@@ -19,9 +19,7 @@ public class DefaultGenerator extends ChunkGenerator {
 	}
 	
 	@Override
-	public Chunk generate(int chunkX, int chunkY) {
-		System.out.println("Generating a chunk at (" + chunkX + ", " + chunkY + ")");
-		
+	public Chunk generate(int chunkX, int chunkY) {		
 		Chunk chunk = new Chunk(chunkX, chunkY);
 		
 		for(int x = 0; x < Chunk.CHUNK_WIDTH; x++) {

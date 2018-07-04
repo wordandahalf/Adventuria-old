@@ -1,11 +1,19 @@
 package io.github.wordandahalf.adventuria.utils;
 
-public class Pair<Right, Left> {
-	public Right right;
-	public Left left;
+public class Pair<Left, Right> {
+	public final Left left;
+	public final Right right;
 	
-	public Pair(Right right, Left left) {
-		this.right = right;
+	public Pair(Left left, Right right) {
 		this.left = left;
+		this.right = right;
 	}
+	
+	@Override
+	public String toString() {
+		return "(" + this.left + ", " + this.right + ")";
+	}
+	
+	public Left getLeft() { return this.left; }
+	public Right getRight() { return this.right; }
 }
