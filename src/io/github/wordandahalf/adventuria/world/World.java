@@ -11,13 +11,12 @@ import io.github.wordandahalf.adventuria.utils.Pair;
 import io.github.wordandahalf.adventuria.world.block.BlockType;
 import io.github.wordandahalf.adventuria.world.generator.ChunkGeneratorWorker;
 import io.github.wordandahalf.adventuria.world.generator.DefaultGenerator;
-import io.github.wordandahalf.adventuria.world.utls.ChunkRegistery;
 
 public class World {
 	public static final int PREGENERATED_CHUNKS = 5;
 	
 	private DefaultGenerator generator;
-	private ChunkRegistery chunkRegistery;
+	private BiKeyHashMap<Integer, Integer, Chunk> chunkRegistery;
 
 	private Sky sky;
 	
@@ -25,7 +24,7 @@ public class World {
 	
 	public World() {
 		this.generator = new DefaultGenerator();
-		this.chunkRegistery = new ChunkRegistery();
+		this.chunkRegistery = new BiKeyHashMap<>();
 		this.generationThread = Executors.newSingleThreadExecutor();
 		
 		this.sky = new Sky();
@@ -33,7 +32,7 @@ public class World {
 	}
 	
 	public Chunk getChunk(int x, int y) {
-		return this.chunkRegistery.getChunk(x, y);
+		return this.chunkRegistery.get(x, y);
 	}
 	
 	public BlockType getBlock(int chunkX, int chunkY, int x, int y) {
@@ -60,8 +59,7 @@ public class World {
 			
 			for(Pair<Integer, Integer> location : workers.keySet()) {
 				try {
-					this.chunkRegistery.setChunk(location.left, location.right, workers.get(location.left, location.right).get());
-					System.out.println("Stored a chunk at " + location.left + ", " + location.right);
+					this.chunkRegistery.put(location.left, location.right, workers.get(location.left, location.right).get());
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}

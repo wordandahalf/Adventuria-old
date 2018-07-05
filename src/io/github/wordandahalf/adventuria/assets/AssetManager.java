@@ -17,23 +17,37 @@ import io.github.wordandahalf.adventuria.AdventuriaGame;
 public class AssetManager {
 	public static final String NULL_TEXTURE = "null";
 	
-	private static HashMap<String, Image> 		textures = new HashMap<String, Image>();
+	private static final HashMap<String, Image> textures = new HashMap<String, Image>();
+	
+	private static boolean hasStartedLoading = false;
 	
 	public static void load() {
-		try {
-			URL assetFolder = new URL(Paths.get("").toAbsolutePath().toUri().toURL(), "file:assets/");
-			System.out.println("Loading assets from " + assetFolder.getPath());
-			
-			URL textureFolder = new URL(assetFolder, AdventuriaGame.class.getPackageName().replace(".", "/") + "/" + "textures");
-			for(File texture : new File(textureFolder.toURI()).listFiles()) {
-				textures.put(texture.getName().substring(0, texture.getName().lastIndexOf(".")), new Image(TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(texture.getAbsolutePath()))));
+		if(!hasStartedLoading) {
+			try {
+				hasStartedLoading = true;
+				
+				URL assetFolder = new URL(Paths.get("").toAbsolutePath().toUri().toURL(), "file:assets/");
+				System.out.println("Loading assets from " + assetFolder.getPath());
+				
+				URL textureFolder = new URL(assetFolder, AdventuriaGame.class.getPackageName().replace(".", "/") + "/" + "textures");
+				for(File textureFile : new File(textureFolder.toURI()).listFiles()) {
+					Image texture = new Image(TextureLoader.getTexture("PNG", 
+						ResourceLoader.getResourceAsStream(textureFile.getAbsolutePath())
+					));
+					
+					textures.put(
+						textureFile.getName().substring(0, textureFile.getName().lastIndexOf(".")), texture
+					);
+				}
+
+				System.out.println("Loaded " + textures.values().size() + " textures!");
+				
+				textures.put(NULL_TEXTURE, new Image(0, 0));
+			} catch (IOException | URISyntaxException | SlickException e) {
+				e.printStackTrace();
 			}
-			
-			textures.put(NULL_TEXTURE, new Image(0, 0));
-		} catch (IOException | URISyntaxException | SlickException e) {
-			e.printStackTrace();
 		}
 	}
 	
-	public static Image getTexture(String alias) { return textures.get(alias); }
+	public static Image getTexture(String alias) { return (textures.get(alias) != null ? textures.get(alias) : textures.get(NULL_TEXTURE)); }
 }

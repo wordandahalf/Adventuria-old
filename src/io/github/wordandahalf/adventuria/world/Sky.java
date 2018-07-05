@@ -3,12 +3,12 @@ package io.github.wordandahalf.adventuria.world;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import io.github.wordandahalf.adventuria.AdventuriaGame;
 import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
 import io.github.wordandahalf.adventuria.engine.physics.Tickable;
 import io.github.wordandahalf.adventuria.engine.rendering.Camera;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
+import io.github.wordandahalf.adventuria.engine.rendering.WindowManager;
 
 public class Sky implements Renderable, Tickable {
 	public static final int DAY = 0, NIGHT = 1, DUSK = 2, DAWN = 3, OVERCAST = 4;
@@ -93,7 +93,7 @@ public class Sky implements Renderable, Tickable {
 	@Override
 	public void render(Graphics g, Camera cam) {
 		g.setColor(currentColor);
-		g.fillRect(0, 0, AdventuriaGame.WINDOW_SIZE.getWidth(), AdventuriaGame.WINDOW_SIZE.getHeight());
+		g.fillRect(0, 0, WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight());
 		if (time != DAY) {
 			if(time == DUSK || time == DAWN) {
 				double intervals = 500 / ((TRANSFER_TIME * 0.9) - (TRANSFER_TIME * 0.2));
@@ -106,7 +106,7 @@ public class Sky implements Renderable, Tickable {
 				starFade = 255;
 			//TODO: gr.drawImage(AssetManager.getTexture("sky_night"), 0, 0, Component.pixel.width, Component.pixel.height, null);
 			g.setColor(new Color(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), (int) starFade));
-			g.fillRect(0, 0, AdventuriaGame.WINDOW_SIZE.getWidth(), AdventuriaGame.WINDOW_SIZE.getHeight());
+			g.fillRect(0, 0, WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight());
 		}
 		if (time == DAY) {
 			//TODO: gr.drawImage(AssetManager.getTexture("sky_sun"), sunMoonX, sunMoonY, 80, 80, null);

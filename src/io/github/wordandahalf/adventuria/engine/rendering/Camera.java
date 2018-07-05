@@ -31,21 +31,21 @@ public class Camera implements Tickable, Renderable, KeyboardControllable {
 	
 	//TODO: Better culling system?
 	public boolean isPointVisible(float x, float y) {
-		if((x >= (this.x * (1 - Camera.CULL_LENIENCY))) && (x <= ((this.x + this.width) * (1 + Camera.CULL_LENIENCY)))) {
+		/*if((x >= (this.x * (1 - Camera.CULL_LENIENCY))) && (x <= ((this.x + this.width) * (1 + Camera.CULL_LENIENCY)))) {
 			if((y >= this.y * (1 - Camera.CULL_LENIENCY)) && (y <= (this.y + this.height) * (1 + Camera.CULL_LENIENCY))) {
 				return true;
 			}
 		}
 		
-		return false;
+		return false;*/
 		
-		/*if((x >= this.x) && (x <= (this.x + this.width))) {
+		if((x >= this.x) && (x <= (this.x + this.width))) {
 			if((y >= this.y) && (y <= (this.y + this.height))) {
 				return true;
 			}
 		}
 		
-		return false;*/
+		return false;
 	}
 	
 	public boolean isBoxVisible(float x, float y, float width, float height) {

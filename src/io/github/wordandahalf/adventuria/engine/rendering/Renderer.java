@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 
-import io.github.wordandahalf.adventuria.AdventuriaGame;
-
 public class Renderer {
 	
 	/*
@@ -24,7 +22,7 @@ public class Renderer {
 	private static final ArrayList<Renderable> UI_OBJECTS = new ArrayList<>();
 	private static final ArrayList<Renderable> INVISIBLE_OBJECTS = new ArrayList<>();
 	
-	private static Camera camera = new Camera(0, 0, AdventuriaGame.WINDOW_SIZE.getWidth(), AdventuriaGame.WINDOW_SIZE.getHeight());
+	private static Camera camera = new Camera(0, 0, WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight());
 	
 	public static Camera getCamera() { return camera; }
 	
