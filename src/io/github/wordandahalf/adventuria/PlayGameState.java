@@ -25,6 +25,8 @@ public class PlayGameState extends BasicGameState {
 			e.printStackTrace();
 		}
 		
+		PhysicsEngine.init();
+		
 		WorldManager.addWorld("main");
 		WorldManager.setCurrentWorld("main");
 		WorldManager.getCurrentWorld().generate();
@@ -60,12 +62,7 @@ public class PlayGameState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		ControlManager.updateInputs(container.getInput());
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				PhysicsEngine.update(delta);
-			}
-		}).start();
+		PhysicsEngine.update(delta);
 	}
 
 	@Override
