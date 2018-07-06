@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import io.github.wordandahalf.adventuria.controls.ControlManager;
+import io.github.wordandahalf.adventuria.debug.DebugScreen;
 import io.github.wordandahalf.adventuria.debug.MouseDebugTooltip;
 import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
@@ -31,8 +31,11 @@ public class PlayGameState extends BasicGameState {
 		WorldManager.setCurrentWorld("main");
 		WorldManager.getCurrentWorld().generate();
 		
-		if(AdventuriaGame.DEBUG_MODE)
+		if(AdventuriaGame.DEBUG_MODE) {
 			new MouseDebugTooltip();
+		}
+		
+		new DebugScreen(AdventuriaGame.DEBUG_MODE);
 	}
 	
 	@Override
@@ -60,8 +63,6 @@ public class PlayGameState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		ControlManager.updateInputs(container.getInput());
-		
 		PhysicsEngine.update(delta);
 	}
 

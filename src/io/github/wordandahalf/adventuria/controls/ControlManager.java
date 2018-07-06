@@ -5,11 +5,24 @@ import java.util.HashMap;
 
 import org.newdawn.slick.Input;
 
-public class ControlManager {
+import io.github.wordandahalf.adventuria.AdventuriaGame;
+import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
+import io.github.wordandahalf.adventuria.engine.physics.Tickable;
+
+public class ControlManager implements Tickable {
 	private static ArrayList<KeyboardControllable> registeredKeyboardControllables = new ArrayList<>();
 	private static ArrayList<MouseControllable> registeredMouseControllables = new ArrayList<>();
 	
-	public static void updateInputs(Input input) {
+	static {
+		PhysicsEngine.add(new ControlManager());
+	}
+	
+	@Override
+	public void update() {
+		updateInputs(AdventuriaGame.getAppContainer().getInput());
+	}
+	
+	private static void updateInputs(Input input) {
 		for(KeyboardControllable controllable : registeredKeyboardControllables) {
 			HashMap<Integer, Boolean> keyStates = new HashMap<>();
 			
