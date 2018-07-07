@@ -15,6 +15,7 @@ import io.github.wordandahalf.adventuria.engine.rendering.Camera;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
+import io.github.wordandahalf.adventuria.world.Sky;
 
 public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 	private boolean alwaysEnabled, enabled;
@@ -50,6 +51,7 @@ public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 		
 		g.drawString("FPS: " + AdventuriaGame.getAppContainer().getFPS(), 10, 10);
 		g.drawString("TPS: " + PhysicsEngine.getTPS(), 10, 30);
+		g.drawString("Time: " + Sky.ticksRemaining + ", (isDay = " + Sky.isDay() + ")", 10, 50);
 	}
 
 	@Override
