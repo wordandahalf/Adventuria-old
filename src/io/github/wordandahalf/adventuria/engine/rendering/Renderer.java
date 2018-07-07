@@ -49,12 +49,7 @@ public class Renderer {
 				break;
 		}
 	}
-	
-	/* TODO: 
-	 * See if it is more efficient to remove 'o' from all lists
-	 * ==========================> OR <==========================
-	 * Test which list it belongs to and only remove it from that list -----> [This is the current method]
-	 */
+
 	public static void remove(Renderable o) {
 		switch(o.getRenderPosition()) {
 			case BACKGROUND:
