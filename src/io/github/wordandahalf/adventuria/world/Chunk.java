@@ -51,18 +51,16 @@ public class Chunk implements Renderable {
 			
 			for(Block[] bA : this.blocks) {
 				for(Block b : bA) {
-					try {
-						int actualX = (b.getBlockX() * Block.TILE_SIZE) + (this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE);
-						int actualY = (b.getBlockY() * Block.TILE_SIZE) + (this.y * Chunk.CHUNK_HEIGHT * Block.TILE_SIZE);
-						
-						if(camera.isPointVisible(actualX, actualY)) {
-							g.drawImage(AssetManager.getTexture(b.getBlockType().getTexture()), actualX - camera.getX(), actualY - camera.getY());
-							g.drawRect(actualX - camera.getX(), actualY - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
-						} else {
-							g.setColor(Color.cyan);
-							g.drawRect(actualX - camera.getX(), actualY - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
-						}
-					} catch(Exception e) {}
+					int actualX = (b.getBlockX() * Block.TILE_SIZE) + (this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE);
+					int actualY = (b.getBlockY() * Block.TILE_SIZE) + (this.y * Chunk.CHUNK_HEIGHT * Block.TILE_SIZE);
+
+					if(camera.isPointVisible(actualX, actualY)) {
+						g.drawImage(AssetManager.getTexture(b.getBlockType().getTexture()), actualX - camera.getX(), actualY - camera.getY());
+						g.drawRect(actualX - camera.getX(), actualY - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
+					} else {
+						g.setColor(Color.cyan);
+						g.drawRect(actualX - camera.getX(), actualY - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
+					}
 				}
 			}
 		}		
