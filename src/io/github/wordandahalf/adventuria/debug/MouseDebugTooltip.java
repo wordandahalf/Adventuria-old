@@ -36,7 +36,7 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 	}
 
 	@Override
-	public void render(Graphics g, Camera camera) {
+	public boolean render(Graphics g, Camera camera) {
 		float absoluteMouseX = this.mouseX + camera.getX();
 		float absoluteMouseY = this.mouseY + camera.getY();
 		
@@ -74,6 +74,7 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 		g.drawString("Camera: (" + camera.getX() + ", " + camera.getY() + ")", 
 				this.mouseX + 7, this.mouseY + 50);
 		
+		return true;
 	}
 
 	@Override

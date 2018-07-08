@@ -21,8 +21,8 @@ public class EntityBase implements Renderable, Collidable, Tickable {
 	}
 
 	@Override
-	public void render(Graphics g, Camera camera) {
-		
+	public boolean render(Graphics g, Camera camera) {
+		return true;
 	}
 
 	@Override

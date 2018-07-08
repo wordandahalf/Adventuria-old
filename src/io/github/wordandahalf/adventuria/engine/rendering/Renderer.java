@@ -24,6 +24,9 @@ public class Renderer {
 	
 	private static Camera camera = new Camera(0, 0, WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight());
 	
+	private static int drawnObjects = 0, draws = 0;
+	public static int getDrawnObjects() { return drawnObjects; }
+	
 	public static Camera getCamera() { return camera; }
 	
 	public static void setCamera(Camera camera) {
@@ -71,17 +74,25 @@ public class Renderer {
 	}
 	
 	public static void render(Graphics g) {
+		draws = 0;
+		
 		for(Renderable o : BACKGROUND_OBJECTS) {
-			o.render(g, camera);
+			if(o.render(g, camera))
+				draws++;
 		}
 		for(Renderable o : ENTITIES) {
-			o.render(g, camera);
+			if(o.render(g, camera))
+				draws++;
 		}
 		for(Renderable o : FOREGROUND_OBJECTS) {
-			o.render(g, camera);
+			if(o.render(g, camera))
+				draws++;
 		}
 		for(Renderable o : UI_OBJECTS) {
-			o.render(g, camera);
+			if(o.render(g, camera))
+				draws++;
 		}
+		
+		drawnObjects = draws;
 	}
 }

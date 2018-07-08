@@ -43,15 +43,18 @@ public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 	}
 
 	@Override
-	public void render(Graphics g, Camera camera) {
+	public boolean render(Graphics g, Camera camera) {
 		if(!enabled)
-			return;
+			return false;
 		
 		g.setColor(Color.white);
 		
 		g.drawString("FPS: " + AdventuriaGame.getAppContainer().getFPS(), 10, 10);
 		g.drawString("TPS: " + PhysicsEngine.getTPS(), 10, 30);
 		g.drawString("Time: " + Sky.ticksRemaining + ", (isDay = " + Sky.isDay() + ")", 10, 50);
+		g.drawString("Draws: " + Renderer.getDrawnObjects(), 10, 70);
+		
+		return true;
 	}
 
 	@Override

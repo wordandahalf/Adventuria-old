@@ -42,28 +42,31 @@ public class Chunk implements Renderable {
 	public void setBlock(int x, int y, BlockType type) { this.blocks[x][y] = new Block(x, y, type); }
 
 	@Override
-	public void render(Graphics g, Camera camera) {
+	public boolean render(Graphics g, Camera camera) {
 		g.setColor(Color.green);
-		g.drawRect((this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE) - camera.getX(), (this.y * CHUNK_HEIGHT * Block.TILE_SIZE) - camera.getHeight(), Chunk.CHUNK_WIDTH * Block.TILE_SIZE, Chunk.CHUNK_HEIGHT * Block.TILE_SIZE);
+		g.drawRect((this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE) - camera.getX(), (this.y * CHUNK_HEIGHT * Block.TILE_SIZE) - camera.getY(), Chunk.CHUNK_WIDTH * Block.TILE_SIZE, Chunk.CHUNK_HEIGHT * Block.TILE_SIZE);
 		
 		if(camera.isBoxVisible(this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE, this.y * Chunk.CHUNK_HEIGHT * Block.TILE_SIZE, Chunk.CHUNK_WIDTH * Block.TILE_SIZE, Chunk.CHUNK_HEIGHT * Block.TILE_SIZE)) {
 			g.setColor(Color.orange);
 			
 			for(Block[] bA : this.blocks) {
 				for(Block b : bA) {
+					if(b == null || b.getBlockType() == BlockType.AIR)
+						continue;
+					
 					int actualX = (b.getBlockX() * Block.TILE_SIZE) + (this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE);
 					int actualY = (b.getBlockY() * Block.TILE_SIZE) + (this.y * Chunk.CHUNK_HEIGHT * Block.TILE_SIZE);
 
-					if(camera.isPointVisible(actualX, actualY)) {
+					if(camera.isBoxVisible(actualX, actualY, Block.TILE_SIZE, Block.TILE_SIZE)) {
 						g.drawImage(AssetManager.getTexture(b.getBlockType().getTexture()), actualX - camera.getX(), actualY - camera.getY());
-						g.drawRect(actualX - camera.getX(), actualY - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
-					} else {
-						g.setColor(Color.cyan);
-						g.drawRect(actualX - camera.getX(), actualY - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
 					}
 				}
 			}
-		}		
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override

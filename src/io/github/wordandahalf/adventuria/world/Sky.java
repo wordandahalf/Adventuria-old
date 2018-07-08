@@ -41,10 +41,12 @@ public class Sky implements Renderable, Tickable {
 	}
 	
 	@Override
-	public void render(Graphics g, Camera camera)
+	public boolean render(Graphics g, Camera camera)
 	{
 		g.setColor(skyColor);
 		g.fillRect(0, 0, WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight());
+	
+		return true;
 	}
 	
 	@Override

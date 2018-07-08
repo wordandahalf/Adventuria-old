@@ -3,15 +3,11 @@ package io.github.wordandahalf.adventuria.engine.rendering;
 import java.util.HashMap;
 
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.controls.ControlManager;
 import io.github.wordandahalf.adventuria.controls.KeyboardControllable;
-import io.github.wordandahalf.adventuria.engine.physics.Tickable;
-import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
 
-public class Camera implements Tickable, Renderable, KeyboardControllable {
+public class Camera implements KeyboardControllable {
 	public static final float CULL_LENIENCY = 0.5f;
 	
 	private float x, y;
@@ -25,52 +21,37 @@ public class Camera implements Tickable, Renderable, KeyboardControllable {
 		this.width = width;
 		this.height = height;
 		
-		Renderer.add(this);
 		ControlManager.add(this);
 	}
 	
-	//TODO: Better culling system?
 	public boolean isPointVisible(float x, float y) {
-		/*if((x >= (this.x * (1 - Camera.CULL_LENIENCY))) && (x <= ((this.x + this.width) * (1 + Camera.CULL_LENIENCY)))) {
-			if((y >= this.y * (1 - Camera.CULL_LENIENCY)) && (y <= (this.y + this.height) * (1 + Camera.CULL_LENIENCY))) {
-				return true;
-			}
-		}
-		
-		return false;*/
-		
-		if((x >= this.x) && (x <= (this.x + this.width))) {
-			if((y >= this.y) && (y <= (this.y + this.height))) {
-				return true;
-			}
-		}
-		
-		return false;
+		return (((x - this.x) <= this.width) 	&& ((x - this.x) > 0)) &&
+			   (((y - this.y) <= this.height) 	&& ((y - this.y) > 0));
 	}
 	
 	public boolean isBoxVisible(float x, float y, float width, float height) {
-		if(this.x >= x && this.x <= (x + width)) {
-			if(this.y >= y && this.y <= (y + height)) {
-				return true;
-			}
+		//Box is within camera
+		if(isPointVisible(x, y) || isPointVisible(x + width, y)
+		|| isPointVisible(x, y + height) || isPointVisible(x + width, y + height))
+			return true;
+		
+		if(!((y <= this.y) && ((y + height) >= (this.y + this.height)))) {
+			return false;
 		}
 		
-		if((this.x + this.width) >= x && (this.x + this.width) <= (x + width)) {
-			if(this.y >= y && this.y <= (y + height)) {
-				return true;
-			}
+		//Box encompasses camera
+		if((x <=  this.x) && ((x + width) >= (this.x + this.width))) {
+			return true;
 		}
 		
-		if((this.x + this.width) >= x && (this.x + this.width) <= (x + width)) {
-			if((this.y + this.height) >= y && (this.y + this.height) <= (y + height)) {
-				return true;
-			}
+		//Box encompasses camera but is offset to the right
+		if((x >=  this.x) && (x <= (this.x + this.width)) && ((x + width) >= (this.x + this.width))) {
+			return true;
 		}
 		
-		if(this.x >= x && this.x <= (x + width)) {
-			if((this.y + this.height) >= y && (this.y + this.height) <= (y + height)) {
-				return true;
-			}
+		//Box encompasses camera but is offset to the left
+		if((x <=  this.x) && ((x + width) > this.x) && ((x + width) <= (this.x + this.width))) {
+			return true;
 		}
 		
 		return false;
@@ -84,22 +65,6 @@ public class Camera implements Tickable, Renderable, KeyboardControllable {
 	
 	public float getWidth() { return this.width; }
 	public float getHeight() { return this.height; }
-
-	@Override
-	public void update() {
-		
-	}
-
-	@Override
-	public void render(Graphics g, Camera camera) {
-		g.setColor(Color.red);
-		g.drawRect(this.x - camera.getX(), this.y - camera.getY(), this.width, this.height);
-	}
-
-	@Override
-	public RenderPosition getRenderPosition() {
-		return RenderPosition.UI;
-	}
 
 	@Override
 	public void updateInputs(HashMap<Integer, Boolean> keyStates) {
