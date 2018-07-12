@@ -2,7 +2,7 @@ title: Adventuria
 description: 
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-midnight
+theme: jekyll-theme-tactile
 
 gems:
   - jekyll-mentions
