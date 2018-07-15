@@ -1,6 +1,7 @@
 package io.github.wordandahalf.adventuria.world.generator;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -8,6 +9,22 @@ import io.github.wordandahalf.adventuria.utils.Pair;
 import io.github.wordandahalf.adventuria.world.Chunk;
 
 public class ChunkGenerationManager {
+	private static class ChunkGenerationWorker implements Callable<Chunk> {
+		private ChunkGenerator generator;
+		
+		private final Pair<Integer, Integer> position;
+		
+		public ChunkGenerationWorker(ChunkGenerator generator, Pair<Integer, Integer> position) {
+			this.generator = generator;
+			this.position = position;
+		}
+
+		@Override
+		public Chunk call() throws Exception {
+			return this.generator.generate(position.left, position.right);
+		}
+	}
+	
 	public static final int NUMBER_CHUNK_GENERATION_THREADS = 2;
 	public static final int MAX_CHUNK_GENERATION_DISTANCE = 8;
 	
