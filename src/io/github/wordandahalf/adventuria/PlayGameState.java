@@ -13,6 +13,7 @@ import io.github.wordandahalf.adventuria.debug.MouseDebugTooltip;
 import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
 import io.github.wordandahalf.adventuria.world.WorldManager;
+import io.github.wordandahalf.adventuria.world.generator.ChunkGenerationManager;
 
 public class PlayGameState extends BasicGameState {
 	private Image buffer;
@@ -27,6 +28,7 @@ public class PlayGameState extends BasicGameState {
 		
 		PhysicsEngine.init();
 		
+		ChunkGenerationManager.init();
 		WorldManager.addWorld("main");
 		WorldManager.setCurrentWorld("main");
 		WorldManager.getCurrentWorld().generate();

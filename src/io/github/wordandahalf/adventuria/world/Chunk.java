@@ -1,6 +1,5 @@
 package io.github.wordandahalf.adventuria.world;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.assets.AssetManager;
@@ -43,12 +42,7 @@ public class Chunk implements Renderable {
 
 	@Override
 	public boolean render(Graphics g, Camera camera) {
-		g.setColor(Color.green);
-		g.drawRect((this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE) - camera.getX(), (this.y * CHUNK_HEIGHT * Block.TILE_SIZE) - camera.getY(), Chunk.CHUNK_WIDTH * Block.TILE_SIZE, Chunk.CHUNK_HEIGHT * Block.TILE_SIZE);
-		
 		if(camera.isBoxVisible(this.x * Chunk.CHUNK_WIDTH * Block.TILE_SIZE, this.y * Chunk.CHUNK_HEIGHT * Block.TILE_SIZE, Chunk.CHUNK_WIDTH * Block.TILE_SIZE, Chunk.CHUNK_HEIGHT * Block.TILE_SIZE)) {
-			g.setColor(Color.orange);
-			
 			for(Block[] bA : this.blocks) {
 				for(Block b : bA) {
 					if(b == null || b.getBlockType() == BlockType.AIR)

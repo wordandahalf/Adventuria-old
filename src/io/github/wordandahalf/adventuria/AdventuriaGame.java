@@ -30,7 +30,7 @@ public class AdventuriaGame extends StateBasedGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer game = new AppGameContainer(new AdventuriaGame());
-			//game.setTargetFrameRate(120);
+			game.setTargetFrameRate(300);
 			game.setShowFPS(false);
 			WindowManager.WINDOW = new Dimension((int) (game.getScreenWidth() * 0.75f), (int) (game.getScreenHeight() * 0.75f));
 			game.setDisplayMode(WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight(), false);

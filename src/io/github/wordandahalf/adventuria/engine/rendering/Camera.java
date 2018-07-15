@@ -76,16 +76,22 @@ public class Camera implements KeyboardControllable {
 		if(keyStates.get(Keyboard.KEY_LCONTROL)) {
 			movementSpeed *= 2;
 		}
-		if(keyStates.get(Keyboard.KEY_D)) {
-			Renderer.getCamera().setX(Renderer.getCamera().getX() + movementSpeed);
+		if(keyStates.get(Keyboard.KEY_W)) {
+			Renderer.getCamera().setY(Renderer.getCamera().getY() - movementSpeed);
 		}
 		if(keyStates.get(Keyboard.KEY_A)) {
 			Renderer.getCamera().setX(Renderer.getCamera().getX() - movementSpeed);
+		}
+		if(keyStates.get(Keyboard.KEY_S)) {
+			Renderer.getCamera().setY(Renderer.getCamera().getY() + movementSpeed);
+		}
+		if(keyStates.get(Keyboard.KEY_D)) {
+			Renderer.getCamera().setX(Renderer.getCamera().getX() + movementSpeed);
 		}
 	}
 
 	@Override
 	public int[] getRegisteredKeys() {
-		return new int[] {Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_LSHIFT, Keyboard.KEY_LCONTROL};
+		return new int[] {Keyboard.KEY_W, Keyboard.KEY_A, Keyboard.KEY_S, Keyboard.KEY_D, Keyboard.KEY_LSHIFT, Keyboard.KEY_LCONTROL};
 	}
 }

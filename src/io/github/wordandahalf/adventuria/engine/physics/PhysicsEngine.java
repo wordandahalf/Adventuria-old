@@ -6,8 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class PhysicsEngine {
-	public static final float 	UPDATES_PER_SECOND = 60;
-	public static final float	MILLISECONDS_PER_UPDATE = (1 / UPDATES_PER_SECOND) * 1000;
+	public static final double 	UPDATES_PER_SECOND = 60.0D;
+	public static final double	MILLISECONDS_PER_UPDATE = (1.0D / UPDATES_PER_SECOND) * 1000.0D;
 	
 	private static ArrayList<Tickable> tickables = new ArrayList<>();
 	
@@ -44,7 +44,7 @@ public class PhysicsEngine {
 				@Override
 				public void run() {
 					try {
-						Thread.sleep((long) (MILLISECONDS_PER_UPDATE - delta));
+						Thread.sleep((long) Math.ceil(MILLISECONDS_PER_UPDATE - delta));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

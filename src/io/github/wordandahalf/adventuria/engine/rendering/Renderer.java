@@ -1,6 +1,8 @@
 package io.github.wordandahalf.adventuria.engine.rendering;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.newdawn.slick.Graphics;
 
@@ -16,11 +18,11 @@ public class Renderer {
 		BACKGROUND, ENTITY, FOREGROUND, UI, INVISIBLE;
 	}
 
-	private static final ArrayList<Renderable> BACKGROUND_OBJECTS = new ArrayList<>();
-	private static final ArrayList<Renderable> ENTITIES = new ArrayList<>();
-	private static final ArrayList<Renderable> FOREGROUND_OBJECTS = new ArrayList<>();
-	private static final ArrayList<Renderable> UI_OBJECTS = new ArrayList<>();
-	private static final ArrayList<Renderable> INVISIBLE_OBJECTS = new ArrayList<>();
+	private static final List<Renderable> BACKGROUND_OBJECTS = new ArrayList<>();
+	private static final List<Renderable> ENTITIES = new ArrayList<>();
+	private static final List<Renderable> FOREGROUND_OBJECTS = new ArrayList<>();
+	private static final List<Renderable> UI_OBJECTS = new ArrayList<>();
+	private static final List<Renderable> INVISIBLE_OBJECTS = new ArrayList<>();
 	
 	private static Camera camera = new Camera(0, 0, WindowManager.WINDOW.getWidth(), WindowManager.WINDOW.getHeight());
 	
@@ -76,21 +78,25 @@ public class Renderer {
 	public static void render(Graphics g) {
 		draws = 0;
 		
-		for(Renderable o : BACKGROUND_OBJECTS) {
-			if(o.render(g, camera))
-				draws++;
-		}
-		for(Renderable o : ENTITIES) {
-			if(o.render(g, camera))
-				draws++;
-		}
-		for(Renderable o : FOREGROUND_OBJECTS) {
-			if(o.render(g, camera))
-				draws++;
-		}
-		for(Renderable o : UI_OBJECTS) {
-			if(o.render(g, camera))
-				draws++;
+		try {
+			for(Renderable o : Collections.synchronizedList(BACKGROUND_OBJECTS)) {
+				if(o.render(g, camera))
+					draws++;
+			}
+			for(Renderable o : Collections.synchronizedList(ENTITIES)) {
+				if(o.render(g, camera))
+					draws++;
+			}
+			for(Renderable o : Collections.synchronizedList(FOREGROUND_OBJECTS)) {
+				if(o.render(g, camera))
+					draws++;
+			}
+			for(Renderable o : Collections.synchronizedList(UI_OBJECTS)) {
+				if(o.render(g, camera))
+					draws++;
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		
 		drawnObjects = draws;

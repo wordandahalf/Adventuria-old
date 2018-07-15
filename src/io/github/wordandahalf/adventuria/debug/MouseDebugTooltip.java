@@ -40,8 +40,8 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 		float absoluteMouseX = this.mouseX + camera.getX();
 		float absoluteMouseY = this.mouseY + camera.getY();
 		
-		int relativeBlockX = (int) (Math.floor(absoluteMouseX / Block.TILE_SIZE)) % Chunk.CHUNK_WIDTH;
-		int relativeBlockY = (int) (Math.floor(absoluteMouseY / Block.TILE_SIZE)) % Chunk.CHUNK_HEIGHT;
+		int relativeBlockX = (int) ((Math.floor(absoluteMouseX / Block.TILE_SIZE)) + Chunk.CHUNK_WIDTH) % Chunk.CHUNK_WIDTH;
+		int relativeBlockY = (int) ((Math.floor(absoluteMouseY / Block.TILE_SIZE)) + Chunk.CHUNK_HEIGHT) % Chunk.CHUNK_HEIGHT;
 		
 		int chunkX = (int) Math.floor(Math.floor(absoluteMouseX / Block.TILE_SIZE) / Chunk.CHUNK_WIDTH);
 		int chunkY = (int) Math.floor(Math.floor(absoluteMouseY / Block.TILE_SIZE) / Chunk.CHUNK_HEIGHT);
@@ -52,7 +52,7 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 		float actualX = (absoluteMouseX - (absoluteMouseX % Block.TILE_SIZE)) - (camera.getX());
 		float actualY = (absoluteMouseY - (absoluteMouseY % Block.TILE_SIZE)) - (camera.getY());
 		
-		BlockType type = WorldManager.getCurrentWorld().getBlock(chunkX, chunkY, relativeBlockX, relativeBlockY);
+		BlockType type = WorldManager.getCurrentWorld().getBlock(absoluteBlockX, absoluteBlockY);
 		
 		g.setColor(new Color(1f, 1f, 1f, 0.8f));
 		g.fillRect(actualX, actualY, Block.TILE_SIZE, Block.TILE_SIZE);
