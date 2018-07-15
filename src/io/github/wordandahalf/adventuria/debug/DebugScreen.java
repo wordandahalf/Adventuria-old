@@ -16,7 +16,7 @@ import io.github.wordandahalf.adventuria.engine.rendering.Renderable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
 import io.github.wordandahalf.adventuria.world.Sky;
-import io.github.wordandahalf.adventuria.world.WorldManager;
+import io.github.wordandahalf.adventuria.world.generator.ChunkGenerationManager;
 
 public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 	private boolean alwaysEnabled, enabled;
@@ -54,10 +54,10 @@ public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 		g.drawString("TPS: " + PhysicsEngine.getTPS(), 10, 30);
 		g.drawString("Time: " + Sky.ticksRemaining + ", (isDay = " + Sky.isDay() + ")", 10, 50);
 		g.drawString("Draws: " + Renderer.getDrawnObjects(), 10, 70);
-		g.drawString("Generating: " + WorldManager.getCurrentWorld().getGenerator().getLastGeneratedChunk() + 
-					" (currently): " + WorldManager.getCurrentWorld().getGenerator().getAmountGenerating() +
-					" (next): " + WorldManager.getCurrentWorld().getGenerator().getNextChunk(
-							WorldManager.getCurrentWorld().getGenerator().getLastGeneratedChunk()), 
+		g.drawString("Generating: " + ChunkGenerationManager.getLastGeneratedChunk() + 
+					" (currently): " + ChunkGenerationManager.getAmountGenerating() +
+					" (next): " + ChunkGenerationManager.getNextChunk(
+							ChunkGenerationManager.getLastGeneratedChunk()), 
 					10, 90);
 		
 		return true;

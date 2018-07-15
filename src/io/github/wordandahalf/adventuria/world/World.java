@@ -56,9 +56,9 @@ public class World implements Tickable {
 	
 	@Override
 	public void update() {
-		Pair<Integer, Integer> next = this.generator.getNextChunk(this.generator.getLastGeneratedChunk());
+		Pair<Integer, Integer> next = ChunkGenerationManager.getNextChunk(ChunkGenerationManager.getLastGeneratedChunk());
 		
-		if(this.generator.canGenerate() && (MathUtils.distance(this.getCurrentChunk(), next) < ChunkGenerationManager.MAX_CHUNK_GENERATION_DISTANCE)) {
+		if(ChunkGenerationManager.canGenerate() && (MathUtils.distance(this.getCurrentChunk(), next) < ChunkGenerationManager.MAX_CHUNK_GENERATION_DISTANCE)) {
 			ChunkGenerationManager.queueChunk(this.generator, next);
 		}
 		
