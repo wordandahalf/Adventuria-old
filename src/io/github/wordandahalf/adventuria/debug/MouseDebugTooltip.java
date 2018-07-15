@@ -79,6 +79,6 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 
 	@Override
 	public RenderPosition getRenderPosition() {
-		return RenderPosition.FOREGROUND;
+		return RenderPosition.UI;
 	}
 }

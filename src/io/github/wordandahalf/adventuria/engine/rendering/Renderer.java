@@ -1,7 +1,6 @@
 package io.github.wordandahalf.adventuria.engine.rendering;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.newdawn.slick.Graphics;
@@ -35,7 +34,7 @@ public class Renderer {
 		Renderer.camera = camera;
 	}
 	
-	public static void add(Renderable o) {
+	public static synchronized void add(Renderable o) {
 		switch(o.getRenderPosition()) {
 			case BACKGROUND:
 				BACKGROUND_OBJECTS.add(o);
@@ -55,7 +54,7 @@ public class Renderer {
 		}
 	}
 
-	public static void remove(Renderable o) {
+	public static synchronized void remove(Renderable o) {
 		switch(o.getRenderPosition()) {
 			case BACKGROUND:
 				BACKGROUND_OBJECTS.remove(o);
@@ -75,28 +74,24 @@ public class Renderer {
 		}
 	}
 	
-	public static void render(Graphics g) {
+	public static synchronized void render(Graphics g) {
 		draws = 0;
 		
-		try {
-			for(Renderable o : Collections.synchronizedList(BACKGROUND_OBJECTS)) {
-				if(o.render(g, camera))
-					draws++;
-			}
-			for(Renderable o : Collections.synchronizedList(ENTITIES)) {
-				if(o.render(g, camera))
-					draws++;
-			}
-			for(Renderable o : Collections.synchronizedList(FOREGROUND_OBJECTS)) {
-				if(o.render(g, camera))
-					draws++;
-			}
-			for(Renderable o : Collections.synchronizedList(UI_OBJECTS)) {
-				if(o.render(g, camera))
-					draws++;
-			}
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
+		for(Renderable o : BACKGROUND_OBJECTS) {
+			if(o.render(g, camera))
+				draws++;
+		}
+		for(Renderable o : ENTITIES) {
+			if(o.render(g, camera))
+				draws++;
+		}
+		for(Renderable o : FOREGROUND_OBJECTS) {
+			if(o.render(g, camera))
+				draws++;
+		}
+		for(Renderable o : UI_OBJECTS) {
+			if(o.render(g, camera))
+				draws++;
 		}
 		
 		drawnObjects = draws;
