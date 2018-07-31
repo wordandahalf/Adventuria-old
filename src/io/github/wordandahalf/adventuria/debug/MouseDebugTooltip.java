@@ -49,13 +49,10 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 		int absoluteBlockX = relativeBlockX + (chunkX * Chunk.CHUNK_WIDTH);
 		int absoluteBlockY = relativeBlockY + (chunkY * Chunk.CHUNK_HEIGHT);
 		
-		float actualX = (absoluteMouseX - (absoluteMouseX % Block.TILE_SIZE)) - (camera.getX());
-		float actualY = (absoluteMouseY - (absoluteMouseY % Block.TILE_SIZE)) - (camera.getY());
-		
 		BlockType type = WorldManager.getCurrentWorld().getBlock(absoluteBlockX, absoluteBlockY);
 		
 		g.setColor(new Color(1f, 1f, 1f, 0.8f));
-		g.fillRect(actualX, actualY, Block.TILE_SIZE, Block.TILE_SIZE);
+		g.fillRect((absoluteBlockX * Block.TILE_SIZE) - camera.getX(), (absoluteBlockY * Block.TILE_SIZE) - camera.getY(), Block.TILE_SIZE, Block.TILE_SIZE);
 		
 		g.setColor(new Color(1f, 1f, 1f, 0.5f));
 		g.fillRect(this.mouseX, this.mouseY, 17 * Block.TILE_SIZE, 5 * Block.TILE_SIZE);

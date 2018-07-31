@@ -29,7 +29,7 @@ public class AssetManager {
 				URL assetFolder = new URL(Paths.get("").toAbsolutePath().toUri().toURL(), "file:assets/");
 				System.out.println("Loading assets from " + assetFolder.getPath());
 				
-				URL textureFolder = new URL(assetFolder, AdventuriaGame.class.getPackage().getName().replace(".", "/") + "/" + "textures");
+				URL textureFolder = new URL(assetFolder, AdventuriaGame.class.getPackage().getName() + "/" + "textures");
 				for(File textureFile : new File(textureFolder.toURI()).listFiles()) {
 					Image texture = new Image(TextureLoader.getTexture("PNG", 
 						ResourceLoader.getResourceAsStream(textureFile.getAbsolutePath())

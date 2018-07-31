@@ -4,3 +4,4 @@ bin/
 *.advlevel
 .classpath
 .project
+test/

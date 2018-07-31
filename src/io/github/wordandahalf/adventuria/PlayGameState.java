@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import io.github.wordandahalf.adventuria.controls.ControlManager;
 import io.github.wordandahalf.adventuria.debug.DebugScreen;
 import io.github.wordandahalf.adventuria.debug.MouseDebugTooltip;
 import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
@@ -27,6 +28,8 @@ public class PlayGameState extends BasicGameState {
 		}
 		
 		PhysicsEngine.init();
+		
+		ControlManager.init();
 		
 		ChunkGenerationManager.init();
 		WorldManager.addWorld("main");

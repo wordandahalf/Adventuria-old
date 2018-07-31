@@ -13,7 +13,7 @@ public class ControlManager implements Tickable {
 	private static ArrayList<KeyboardControllable> registeredKeyboardControllables = new ArrayList<>();
 	private static ArrayList<MouseControllable> registeredMouseControllables = new ArrayList<>();
 	
-	static {
+	public static void init() {
 		PhysicsEngine.add(new ControlManager());
 	}
 	
