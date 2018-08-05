@@ -1,11 +1,15 @@
 package io.github.wordandahalf.adventuria.world.block;
 
+import java.io.Serializable;
+
 import io.github.wordandahalf.adventuria.engine.physics.Collidable;
 import io.github.wordandahalf.adventuria.engine.physics.Tickable;
 
-public class Block implements Collidable, Tickable {
+public class Block implements Collidable, Tickable, Serializable {
+	private static final long serialVersionUID = -3169945812526827903L;
+
 	//TODO: Dynamically detect tile size
-	public static int TILE_SIZE = 16;
+	public static transient int TILE_SIZE = 16;
 	
 	private int x, y;
 	

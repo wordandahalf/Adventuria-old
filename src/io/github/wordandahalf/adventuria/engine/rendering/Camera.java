@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.lwjgl.input.Keyboard;
 
 import io.github.wordandahalf.adventuria.controls.ControlManager;
+import io.github.wordandahalf.adventuria.controls.KeyState;
 import io.github.wordandahalf.adventuria.controls.KeyboardControllable;
 
 public class Camera implements KeyboardControllable {
@@ -67,25 +68,25 @@ public class Camera implements KeyboardControllable {
 	public float getHeight() { return this.height; }
 
 	@Override
-	public void updateInputs(HashMap<Integer, Boolean> keyStates) {
+	public void updateInputs(HashMap<Integer, KeyState> keyStates) {
 		float movementSpeed = 2f;
 		
-		if(keyStates.get(Keyboard.KEY_LSHIFT)) {
+		if(keyStates.get(Keyboard.KEY_LSHIFT) == KeyState.DOWN) {
 			movementSpeed /= 2;
 		}
-		if(keyStates.get(Keyboard.KEY_LCONTROL)) {
+		if(keyStates.get(Keyboard.KEY_LCONTROL) == KeyState.DOWN) {
 			movementSpeed *= 2;
 		}
-		if(keyStates.get(Keyboard.KEY_W)) {
+		if(keyStates.get(Keyboard.KEY_W) == KeyState.DOWN) {
 			Renderer.getCamera().setY(Renderer.getCamera().getY() - movementSpeed);
 		}
-		if(keyStates.get(Keyboard.KEY_A)) {
+		if(keyStates.get(Keyboard.KEY_A) == KeyState.DOWN) {
 			Renderer.getCamera().setX(Renderer.getCamera().getX() - movementSpeed);
 		}
-		if(keyStates.get(Keyboard.KEY_S)) {
+		if(keyStates.get(Keyboard.KEY_S) == KeyState.DOWN) {
 			Renderer.getCamera().setY(Renderer.getCamera().getY() + movementSpeed);
 		}
-		if(keyStates.get(Keyboard.KEY_D)) {
+		if(keyStates.get(Keyboard.KEY_D) == KeyState.DOWN) {
 			Renderer.getCamera().setX(Renderer.getCamera().getX() + movementSpeed);
 		}
 	}

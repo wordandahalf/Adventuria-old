@@ -1,5 +1,7 @@
 package io.github.wordandahalf.adventuria.world;
 
+import java.io.Serializable;
+
 import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.assets.AssetManager;
@@ -10,9 +12,11 @@ import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPositio
 import io.github.wordandahalf.adventuria.world.block.Block;
 import io.github.wordandahalf.adventuria.world.block.BlockType;
 
-public class Chunk implements Renderable {
-	public static final int CHUNK_WIDTH = 256;
-	public static final int CHUNK_HEIGHT = 128;
+public class Chunk implements Renderable, Serializable {
+	private static final long serialVersionUID = -2981886018539227915L;
+	
+	public static final transient int CHUNK_WIDTH = 256;
+	public static final transient int CHUNK_HEIGHT = 128;
 	
 	private final int x, y;
 	
@@ -29,6 +33,8 @@ public class Chunk implements Renderable {
 	
 	public int getX() { return this.x; }
 	public int getY() { return this.y; }
+	
+	public Block[][] getBlocks() { return this.blocks; }
 	
 	public BlockType getBlock(int x, int y) { 
 		try {

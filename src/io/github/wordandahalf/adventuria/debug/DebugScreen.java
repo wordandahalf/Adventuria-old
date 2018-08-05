@@ -1,5 +1,6 @@
 package io.github.wordandahalf.adventuria.debug;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.lwjgl.input.Keyboard;
@@ -8,6 +9,7 @@ import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.AdventuriaGame;
 import io.github.wordandahalf.adventuria.controls.ControlManager;
+import io.github.wordandahalf.adventuria.controls.KeyState;
 import io.github.wordandahalf.adventuria.controls.KeyboardControllable;
 import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
 import io.github.wordandahalf.adventuria.engine.physics.Tickable;
@@ -16,7 +18,9 @@ import io.github.wordandahalf.adventuria.engine.rendering.Renderable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer.RenderPosition;
 import io.github.wordandahalf.adventuria.world.Sky;
+import io.github.wordandahalf.adventuria.world.WorldManager;
 import io.github.wordandahalf.adventuria.world.generator.ChunkGenerationManager;
+import io.github.wordandahalf.adventuria.world.io.AdventuriaWorldSaver;
 
 public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 	private boolean alwaysEnabled, enabled;
@@ -31,16 +35,25 @@ public class DebugScreen implements Tickable, Renderable, KeyboardControllable {
 	}
 	
 	@Override
-	public void updateInputs(HashMap<Integer, Boolean> keyStates) {
-		if(keyStates.get(Keyboard.KEY_F3) || alwaysEnabled)
-			enabled = true;
-		else
-			enabled = false;
+	public void updateInputs(HashMap<Integer, KeyState> keyStates) {		
+		if(keyStates.get(Keyboard.KEY_F) == KeyState.TOGGLED) {
+			try {
+				AdventuriaWorldSaver.save(WorldManager.getCurrentWorld());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(alwaysEnabled)
+			return;
+		
+		if(keyStates.get(Keyboard.KEY_F3) == KeyState.TOGGLED)
+			enabled = !enabled;
 	}
 
 	@Override
 	public int[] getRegisteredKeys() {
-		return new int[] { Keyboard.KEY_F3 };
+		return new int[] { Keyboard.KEY_F3, Keyboard.KEY_F, Keyboard.KEY_L };
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package io.github.wordandahalf.adventuria.world;
 
+import java.util.Collection;
+
 import io.github.wordandahalf.adventuria.engine.physics.PhysicsEngine;
 import io.github.wordandahalf.adventuria.engine.physics.Tickable;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderer;
@@ -29,6 +31,8 @@ public class World implements Tickable {
 	}
 	
 	public DefaultGenerator getGenerator() { return this.generator; }
+	
+	public Collection<Chunk> getChunks() { return chunkRegistery.values(); }
 	
 	public Chunk getChunk(int x, int y) {
 		return this.chunkRegistery.get(x, y);

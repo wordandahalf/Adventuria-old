@@ -5,8 +5,9 @@ import io.github.wordandahalf.adventuria.world.block.BlockType;
 import io.github.wordandahalf.adventuria.world.generator.utils.OpenSimplexNoise;
 
 public class DefaultGenerator extends ChunkGenerator {
+	private static final long serialVersionUID = 593980842149292300L;
 	
-	private OpenSimplexNoise 		noise;
+	private transient OpenSimplexNoise noise;
 	
 	public DefaultGenerator() {
 		super();

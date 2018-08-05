@@ -10,7 +10,7 @@ import io.github.wordandahalf.adventuria.engine.rendering.WindowManager;
 
 public class AdventuriaGame extends StateBasedGame {
 	public static final String GAME_TITLE = "Adventuria";
-	public static final String GAME_VERSION = "0.5 Beta";
+	public static final String GAME_VERSION = "0.0.1 Alpha";
 
 	public static boolean DEBUG_MODE = true;
 	

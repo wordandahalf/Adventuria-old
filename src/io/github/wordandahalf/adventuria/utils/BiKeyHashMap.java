@@ -1,5 +1,7 @@
 package io.github.wordandahalf.adventuria.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,5 +44,15 @@ public class BiKeyHashMap<K1, K2, V> {
 		}
 		
 		return (Set<Pair<K1, K2>>) keys;
+	}
+	
+	public Collection<V> values() {
+		ArrayList<V> values = new ArrayList<>();
+		
+		hashMap.values().iterator().forEachRemaining((arg) -> {
+			values.addAll(arg.values());
+		});
+		
+		return values;
 	}
 }

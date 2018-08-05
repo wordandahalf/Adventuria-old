@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import io.github.wordandahalf.adventuria.controls.ControlManager;
+import io.github.wordandahalf.adventuria.controls.KeyState;
 import io.github.wordandahalf.adventuria.controls.MouseControllable;
 import io.github.wordandahalf.adventuria.engine.rendering.Camera;
 import io.github.wordandahalf.adventuria.engine.rendering.Renderable;
@@ -25,7 +26,7 @@ public class MouseDebugTooltip implements MouseControllable, Renderable {
 	}
 	
 	@Override
-	public void updateInputs(HashMap<Integer, Boolean> buttonStates, int mouseX, int mouseY) {
+	public void updateInputs(HashMap<Integer, KeyState> buttonStates, int mouseX, int mouseY) {
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
 	}
